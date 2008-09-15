@@ -1,0 +1,22 @@
+TODO
+- Add falling frames for player
+- Add textures for platforms
+- Add texture for background
+- Cycle coordinates after a while, to avoid overflow issues
+- Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
+- Show current "floor" in the UI
+- Add pause button to the UI
+- Add different platform types
+- Keep track of health
+- Add health to UI
+- Make falling off the bottom kill the player
+- Make hitting the top kill the player
+- Add local high scores
+- Add reporting of high scores to a server
+- Add default.png
+- Add application icon
+- Add difficulty levels
+
+DONE
+- Add textures for player
+- Add walking animation for player
