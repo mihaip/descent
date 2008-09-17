@@ -16,9 +16,9 @@
 
 @interface PIDEntity : NSObject {
  @protected
-	PIDSprite *sprite_;
-	CGPoint position_;
-	NSMutableArray *children_;
+   PIDSprite *sprite_;
+   CGPoint position_;
+   NSMutableArray *children_;
 }
 
 - initWithSprite:(PIDSprite *)sprite position:(CGPoint) position;

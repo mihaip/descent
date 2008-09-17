@@ -14,8 +14,8 @@
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
-	game_ = [[PIDGame alloc] initWithView:glView];
-	[game_ begin];
+   game_ = [[PIDGame alloc] initWithView:glView];
+   [game_ begin];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -27,9 +27,9 @@
 }
 
 - (void)dealloc {
-	[window release];
-	[game_ release];
-	[super dealloc];
+   [window release];
+   [game_ release];
+   [super dealloc];
 }
 
 @end

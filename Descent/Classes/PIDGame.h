@@ -12,14 +12,14 @@
 
 @interface PIDGame : NSObject < PIDEventTarget > {
  @private
-	EAGLView *glView_;
-	
-	double descentPosition_;
-	double platformGenerationTriggerPosition_;
-	
-	// Game entities
-	PIDPlayer *player_;
-	NSMutableArray *platforms_;
+   EAGLView *glView_;
+   
+   double descentPosition_;
+   double platformGenerationTriggerPosition_;
+   
+   // Game entities
+   PIDPlayer *player_;
+   NSMutableArray *platforms_;
 }
 
 - initWithView:(EAGLView *)glView;

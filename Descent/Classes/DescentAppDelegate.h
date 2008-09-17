@@ -13,10 +13,10 @@
 @class EAGLView;
 
 @interface DescentAppDelegate : NSObject <UIApplicationDelegate> {
-	IBOutlet UIWindow *window;
-	IBOutlet EAGLView *glView;
+   IBOutlet UIWindow *window;
+   IBOutlet EAGLView *glView;
  @private
-	PIDGame* game_;
+   PIDGame* game_;
 }
 
 @property (nonatomic, retain) UIWindow *window;

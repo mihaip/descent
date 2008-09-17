@@ -12,16 +12,16 @@
 
 - initWithRed:(float)red green:(float)green blue:(float)blue {
   if (self = [self init]) {
-	  red_ = red;
-		green_ = green;
-		blue_ = blue;
-	}
-	
-	return self;
+    red_ = red;
+    green_ = green;
+    blue_ = blue;
+  }
+
+  return self;
 }
 
 - (void)apply {
-	glColor4f(red_, green_, blue_, 1.0);
+  glColor4f(red_, green_, blue_, 1.0);
 }
 
 @end

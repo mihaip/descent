@@ -11,18 +11,18 @@
 @implementation PIDSprite
 
 - initWithSize:(CGSize)size  {
-	if (self = [super init]) {
-		size_ = size;
-	}
-	return self;
+   if (self = [super init]) {
+      size_ = size;
+   }
+   return self;
 }
 
 - (CGSize)size {
-  return size_;	
+  return size_;   
 }
 
 - (void)draw {
-	// Subclasses should actually implement this
+   // Subclasses should actually implement this
 }
 
 @end

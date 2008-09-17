@@ -10,25 +10,25 @@
 #import "PIDPlatform.h"
 
 typedef enum {
-	kLeft = -1,
-	kNone = 0,
-	kRight = 1,
+  kLeft = -1,
+  kNone = 0,
+  kRight = 1,
 } PIDPlayerHorizontalDirection;
 
 typedef enum  {
-	kSideTop,
-	kSideRight,
-	kSideBottom,
-	kSideLeft,
+   kSideTop,
+   kSideRight,
+   kSideBottom,
+   kSideLeft,
 } PIDSide;
 
 @interface PIDPlayer : PIDEntity {
  @private
-	PIDPlayerHorizontalDirection horizontalDirection_;
-	double verticalSpeed_;
-	double minX_, maxX_, minY_, maxY_;
-	NSTimer* walkingFrameTimer_;
-	int walkingFrameCounter_;
+   PIDPlayerHorizontalDirection horizontalDirection_;
+   double verticalSpeed_;
+   double minX_, maxX_, minY_, maxY_;
+   NSTimer* walkingFrameTimer_;
+   int walkingFrameCounter_;
 }
 
 - initWithPosition:(CGPoint)position;

@@ -10,9 +10,9 @@
 
 @interface PIDTextureSprite : PIDSprite {
  @private
-	GLuint texture_;
-	int frame_;
-	int frameCount_;
+   GLuint texture_;
+   int frame_;
+   int frameCount_;
 }
 
 - initWithImage:(NSString*) path size:(CGSize)size frames:(int)frames;

@@ -7,9 +7,9 @@
 //
 
 @interface PIDColor : NSObject {
-	float red_;
-	float green_;
-	float blue_;
+   float red_;
+   float green_;
+   float blue_;
 }
 
 - initWithRed:(float)red green:(float)green blue:(float)blue;

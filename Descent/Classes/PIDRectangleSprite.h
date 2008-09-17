@@ -10,7 +10,7 @@
 #import "PIDSprite.h"
 
 @interface PIDRectangleSprite : PIDSprite {
-	PIDColor *color_;
+   PIDColor *color_;
 }
 
 -initWithSize:(CGSize)size color:(PIDColor *)color;
