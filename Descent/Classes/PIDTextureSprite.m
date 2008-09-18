@@ -28,51 +28,53 @@ static const GLshort kSquareTexcoords[] = {
 
 - initWithImage:(NSString*) path size:(CGSize)size frames:(int)frameCount {
   if (self = [super initWithSize:size]) {
-   CGImageRef textureImage = [UIImage imageNamed:path].CGImage;
+    CGImageRef textureImage = [UIImage imageNamed:path].CGImage;
 
-   // Get the width and height of the image
-   size_t textureWidth = CGImageGetWidth(textureImage);
-   size_t textureHeight = CGImageGetHeight(textureImage);
+    // Get the width and height of the image
+    textureSize_ = CGSizeMake(
+        CGImageGetWidth(textureImage), CGImageGetHeight(textureImage));
 
-   // Render image into a byte array, which we can feed to OpenGL
-   GLubyte *textureData = (GLubyte *) malloc(textureWidth * textureHeight * 4);
-   CGContextRef textureContext = 
+    // Render image into a byte array, which we can feed to OpenGL
+    GLubyte *textureData = 
+        (GLubyte *) malloc(textureSize_.width * textureSize_.height * 4);
+    CGContextRef textureContext = 
        CGBitmapContextCreate(textureData,
-                             textureWidth,
-                             textureHeight,
+                             textureSize_.width,
+                             textureSize_.height,
                              8,
-                             textureWidth * 4,
+                             textureSize_.width * 4,
                              CGImageGetColorSpace(textureImage),
                              kCGImageAlphaPremultipliedLast);
-   CGContextDrawImage(textureContext,
-                      CGRectMake(0.0, 0.0, textureWidth, textureHeight),
-                      textureImage);
-   CGContextRelease(textureContext);
+    CGRect textureRect = 
+        CGRectMake(0.0, 0.0, textureSize_.width, textureSize_.height);
+    CGContextClearRect(textureContext, textureRect);
+    CGContextDrawImage(textureContext, textureRect, textureImage);
+    CGContextRelease(textureContext);
 
-   glGenTextures(1, &texture_);
-   // Bind the texture name. 
-   glBindTexture(GL_TEXTURE_2D, texture_);
-   // Speidfy a 2D texture image, provideing the a pointer to the image data in memory
-   glTexImage2D(GL_TEXTURE_2D, 
-                0, //level
-                GL_RGBA, // format
-                textureWidth, 
-                textureHeight, 
-                0, // border
-                GL_RGBA, 
-                GL_UNSIGNED_BYTE,
-                textureData);
+    glGenTextures(1, &texture_);
+    // Bind the texture name. 
+    glBindTexture(GL_TEXTURE_2D, texture_);
+    // Speidfy a 2D texture image, provideing the a pointer to the image data in memory
+    glTexImage2D(GL_TEXTURE_2D, 
+                 0, // level
+                 GL_RGBA, // format
+                 textureSize_.width, 
+                 textureSize_.height, 
+                 0, // border
+                 GL_RGBA, 
+                 GL_UNSIGNED_BYTE,
+                 textureData);
 
-   // Don't need our copy of the texture data anymore, since OpenGL has it
-   free(textureData);
+    // Don't need our copy of the texture data anymore, since OpenGL has it
+    free(textureData);
 
-   // Don't want previously set colors to affect us
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); 
+    // Don't want previously set colors to affect us
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); 
 
-   // Use simple linear blending (no mip maps)
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // Use simple linear blending (no mip maps)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-   frameCount_ = frameCount;
+    frameCount_ = frameCount;
   }
   return self;
 }
@@ -97,9 +99,10 @@ static const GLshort kSquareTexcoords[] = {
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
   // Offset texture coordinates based on the current frame
+  // TODO(mihaip): see if we can use glDrawTexiOES extension instead
   glMatrixMode(GL_TEXTURE);
   glLoadIdentity();
-  glScalef(1.0/((GLfloat) frameCount_), 1.0, 1.0);
+  glScalef(size_.width/textureSize_.width, 1.0, 1.0);
   glTranslatef(frame_, 0, 0);
   glMatrixMode(GL_MODELVIEW);
 
