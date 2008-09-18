@@ -119,25 +119,29 @@
   [player_ resetMovementConstraints];
 
   // First constrain movement by viewing rect
-  [player_ addMovementConstraint:0 onSide:kSideLeft];
-  [player_ addMovementConstraint:-descentPosition_ onSide:kSideBottom];
-  [player_ addMovementConstraint:viewSize.width onSide:kSideRight];
-  [player_ addMovementConstraint:-descentPosition_ + viewSize.height onSide:kSideTop];
+  [player_ addMovementConstraint:0
+                          onSide:kSideLeft];
+  [player_ addMovementConstraint:-descentPosition_
+                          onSide:kSideBottom];
+  [player_ addMovementConstraint:viewSize.width
+                          onSide:kSideRight];
+  [player_ addMovementConstraint:-descentPosition_ + viewSize.height
+                          onSide:kSideTop];
   
   // Then by platforms
   CGRect playerBounds = [player_ bounds];
-  double playerBottom = playerBounds.origin.y;
-  double playerTop = playerBottom + playerBounds.size.height;
-  double playerLeft = playerBounds.origin.x;
-  double playerRight = playerLeft + playerBounds.size.width;
+  double playerBottom = CGRectGetMinY(playerBounds);
+  double playerTop = CGRectGetMaxY(playerBounds);
+  double playerLeft = CGRectGetMinX(playerBounds);
+  double playerRight = CGRectGetMaxX(playerBounds);
   CGPoint playerPosition = [player_ position];
   
   for (PIDPlatform *platform in platforms_) {
     CGRect platformBounds = [platform bounds];
-    double platformBottom = platformBounds.origin.y;
-    double platformTop = platformBottom + platformBounds.size.height;
-    double platformLeft = platformBounds.origin.x;
-    double platformRight = platformLeft + platformBounds.size.width;
+    double platformBottom = CGRectGetMinY(platformBounds);
+    double platformTop = CGRectGetMaxY(platformBounds);
+    double platformLeft = CGRectGetMinX(platformBounds);
+    double platformRight = CGRectGetMaxX(platformBounds);
     CGPoint platformPosition = [platform position];
     
     // Platforms that are in the same vertical "column" as the player constraint
