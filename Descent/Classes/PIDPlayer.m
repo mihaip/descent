@@ -27,9 +27,8 @@ static PIDTextureSprite *kPlayerSprite;
   if (initialized) return;
   initialized = YES;
   
-  CGSize playerSize = {32, 32};
   kPlayerSprite = [[PIDTextureSprite alloc] initWithImage:@"player.png"
-                                                     size:playerSize
+                                                     size:CGSizeMake(32, 32)
                                                    frames:8];
   [kPlayerSprite setFrame:3];
 }
