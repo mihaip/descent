@@ -1,9 +1,9 @@
 //
-//  PIDGame.h
-//  Descent
+//   PIDGame.h
+//   Descent
 //
-//  Created by Mihai Parparita on 9/10/08.
-//  Copyright 2008 persistent.info. All rights reserved.
+//   Created by Mihai Parparita on 9/10/08.
+//   Copyright 2008 persistent.info. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,14 +12,14 @@
 
 @interface PIDGame : NSObject < PIDEventTarget > {
  @private
-   EAGLView *glView_;
-   
-   double descentPosition_;
-   double platformGenerationTriggerPosition_;
-   
-   // Game entities
-   PIDPlayer *player_;
-   NSMutableArray *platforms_;
+  EAGLView *glView_;
+  
+  double descentPosition_;
+  double platformGenerationTriggerPosition_;
+  
+  // Game entities
+  PIDPlayer *player_;
+  NSMutableArray *platforms_;
 }
 
 - initWithView:(EAGLView *)glView;

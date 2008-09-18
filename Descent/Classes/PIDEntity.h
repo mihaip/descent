@@ -1,9 +1,9 @@
 //
-//  PIDEntity.h
-//  Descent
+//   PIDEntity.h
+//   Descent
 //
-//  Created by Mihai Parparita on 9/9/08.
-//  Copyright 2008 persistent.info. All rights reserved.
+//   Created by Mihai Parparita on 9/9/08.
+//   Copyright 2008 persistent.info. All rights reserved.
 //
 
 #import "PIDSprite.h"
@@ -16,9 +16,9 @@
 
 @interface PIDEntity : NSObject {
  @protected
-   PIDSprite *sprite_;
-   CGPoint position_;
-   NSMutableArray *children_;
+  PIDSprite *sprite_;
+  CGPoint position_;
+  NSMutableArray *children_;
 }
 
 - initWithSprite:(PIDSprite *)sprite position:(CGPoint) position;

@@ -1,9 +1,9 @@
 //
-//  DescentAppDelegate.m
-//  Descent
+//    DescentAppDelegate.m
+//    Descent
 //
-//  Created by Mihai Parparita on 9/7/08.
-//  Copyright persistent.info 2008. All rights reserved.
+//    Created by Mihai Parparita on 9/7/08.
+//    Copyright persistent.info 2008. All rights reserved.
 //
 
 #import "DescentAppDelegate.h"
@@ -14,8 +14,8 @@
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
-   game_ = [[PIDGame alloc] initWithView:glView];
-   [game_ begin];
+  game_ = [[PIDGame alloc] initWithView:glView];
+  [game_ begin];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -27,9 +27,9 @@
 }
 
 - (void)dealloc {
-   [window release];
-   [game_ release];
-   [super dealloc];
+  [window release];
+  [game_ release];
+  [super dealloc];
 }
 
 @end
