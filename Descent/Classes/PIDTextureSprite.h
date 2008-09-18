@@ -11,6 +11,7 @@
 @interface PIDTextureSprite : PIDSprite {
  @private
   GLuint texture_;
+  CGSize textureSize_;
   int frame_;
   int frameCount_;
 }
