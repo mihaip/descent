@@ -1,6 +1,7 @@
 TODO
 
 M0
+- Add FPS display
 - Add falling frames for player
 - Add textures for platforms
 - Show current "floor" in the UI
