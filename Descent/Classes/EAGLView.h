@@ -42,6 +42,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
   NSTimer *animationTimer;
   NSTimeInterval animationInterval;
   NSTimeInterval lastTickDate_;
+  double framesPerSecond_;
   
   int viewportOffsetX_, viewportOffsetY_;
   
@@ -58,6 +59,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 
 - (PIDEntity *)root;
 - (CGSize)size;
+- (double)framesPerSecond;
 - (void)setEventTarget:(id <PIDEventTarget>)eventTarget;
 
 @end

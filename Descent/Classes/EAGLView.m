@@ -65,6 +65,7 @@
     }
     
     animationInterval = 1.0 / 60.0;
+    framesPerSecond_ = 0.0;
 
     root_ = [[PIDEntity alloc] initWithSprite:[PIDSprite new]];       
   }
@@ -74,6 +75,15 @@
 - (void)handleTick {
   NSTimeInterval tickDate = [NSDate timeIntervalSinceReferenceDate];
   NSTimeInterval tickInterval = tickDate - lastTickDate_;
+  
+  double currentFramesPerSecond = 1.0 / tickInterval;
+  if (framesPerSecond_ == 0.0) {
+    framesPerSecond_ = currentFramesPerSecond;
+  } else {
+    // Basic smoothing of FPS measurement
+    framesPerSecond_ = (framesPerSecond_ + currentFramesPerSecond)/2.0;
+  }
+    
   lastTickDate_ = tickDate;
   
   [eventTarget_ handleTick:tickInterval];
@@ -180,6 +190,10 @@
 
 - (CGSize)size {
   return self.frame.size;
+}
+
+- (double)framesPerSecond {
+  return framesPerSecond_;
 }
 
 - (void)setEventTarget:(id <PIDEventTarget>)eventTarget {
