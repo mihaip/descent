@@ -1,7 +1,6 @@
 TODO
 
 M0
-- Add FPS display
 - Add falling frames for player
 - Add textures for platforms
 - Show current "floor" in the UI
@@ -25,5 +24,6 @@ M2
 - Add local high scores
 
 DONE
+- Add FPS display
 - Add textures for player
 - Add walking animation for player
