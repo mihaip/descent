@@ -25,6 +25,9 @@
 		915437EB0E7C5D6600FAF93D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915437EA0E7C5D6600FAF93D /* CoreGraphics.framework */; };
 		91543A3B0E7DBF5900FAF93D /* PIDTextureSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 91543A3A0E7DBF5900FAF93D /* PIDTextureSprite.m */; };
 		91543A760E7DCA8500FAF93D /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 91543A750E7DCA8500FAF93D /* player.png */; };
+		9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */; };
+		91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FCCCC90E81F92C004A2033 /* numbers.png */; };
+		91FCCD6B0E8202B2004A2033 /* PIDFixedEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,11 @@
 		91543A390E7DBF5900FAF93D /* PIDTextureSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDTextureSprite.h; sourceTree = "<group>"; };
 		91543A3A0E7DBF5900FAF93D /* PIDTextureSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDTextureSprite.m; sourceTree = "<group>"; };
 		91543A750E7DCA8500FAF93D /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
+		9175D4D80E8B1973000B8787 /* PIDNumbersDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDNumbersDisplay.h; sourceTree = "<group>"; };
+		9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDNumbersDisplay.m; sourceTree = "<group>"; };
+		91FCCCC90E81F92C004A2033 /* numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numbers.png; sourceTree = "<group>"; };
+		91FCCD690E8202B2004A2033 /* PIDFixedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFixedEntity.h; sourceTree = "<group>"; };
+		91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDFixedEntity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +132,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				91FCCCC90E81F92C004A2033 /* numbers.png */,
 				91543A750E7DCA8500FAF93D /* player.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -150,6 +159,10 @@
 				91543A3A0E7DBF5900FAF93D /* PIDTextureSprite.m */,
 				915433310E77797900FAF93D /* PIDEntity.h */,
 				915433320E77797900FAF93D /* PIDEntity.m */,
+				9175D4D80E8B1973000B8787 /* PIDNumbersDisplay.h */,
+				9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */,
+				91FCCD690E8202B2004A2033 /* PIDFixedEntity.h */,
+				91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */,
 				915432900E776E8A00FAF93D /* PIDColor.h */,
 				915432910E776E8A00FAF93D /* PIDColor.m */,
 				9154328B0E776A8700FAF93D /* PIDRectangleSprite.h */,
@@ -217,6 +230,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				91543A760E7DCA8500FAF93D /* player.png in Resources */,
+				91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +252,8 @@
 				915434F10E78B72200FAF93D /* PIDPlatform.m in Sources */,
 				9154361B0E7C4B5B00FAF93D /* PIDPlayer.m in Sources */,
 				91543A3B0E7DBF5900FAF93D /* PIDTextureSprite.m in Sources */,
+				91FCCD6B0E8202B2004A2033 /* PIDFixedEntity.m in Sources */,
+				9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +264,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mihai PARPARITA";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -255,6 +272,7 @@
 				GCC_PREFIX_HEADER = Descent_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Descent;
+				PROVISIONING_PROFILE = DefaultProfileUuid;
 			};
 			name = Debug;
 		};
@@ -274,13 +292,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.1;
 			};
 			name = Debug;
 		};
@@ -293,7 +310,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.1;
 			};
 			name = Release;
 		};
