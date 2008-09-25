@@ -26,6 +26,7 @@
 
 - (void)addChild:(PIDEntity *)child;
 - (BOOL)removeChild:(PIDEntity *)child;
+- (void)removeAllChildren;
 
 - (CGPoint)position;
 - (void)setPosition:(CGPoint)position;

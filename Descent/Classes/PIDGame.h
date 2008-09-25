@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EAGLView.h"
 #import "PIDPlayer.h"
+#import "PIDNumbersDisplay.h"
 
 @interface PIDGame : NSObject < PIDEventTarget > {
  @private
@@ -20,6 +21,7 @@
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;
+  PIDNumbersDisplay* fpsDisplay_;
 }
 
 - initWithView:(EAGLView *)glView;

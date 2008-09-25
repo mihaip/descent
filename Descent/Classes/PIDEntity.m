@@ -39,6 +39,9 @@
   }
 }
 
+- (void)removeAllChildren {
+  [children_ removeAllObjects];
+}
 
 - (CGPoint)position {
   return position_;

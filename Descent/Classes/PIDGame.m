@@ -7,7 +7,7 @@
 //
 
 #import "PIDGame.h"
-#import "PIDRectangleSprite.h"
+#import "PIDTextureSprite.h"
 #import "PIDPlatform.h"
 
 #define kDescentSpeed 50 // In pixels/s
@@ -18,6 +18,8 @@
 - (void)initPlatforms;
 - (void)addPlatformWithPosition:(CGPoint)platformPosition;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
+- (void)updatePlatforms;
+- (void)updateMovementConstraints;
 @end
 
 @implementation PIDGame
@@ -35,6 +37,9 @@
     
     [self initPlayer];
     [self initPlatforms];
+    
+    fpsDisplay_ = [[PIDNumbersDisplay alloc] initWithPosition:CGPointMake(8, 10)];
+    [[glView_ root] addChild:fpsDisplay_];
     
     glView_.animationInterval = 1.0 / 60.0;
   }
@@ -92,33 +97,52 @@
   [self addPlatformWithPosition:platformPosition];
 }
 
-- (void)handleTick:(double)ticks {
+- (void)updatePlatforms {
+  // Nothing to do until we're at the trigger position
+  if (descentPosition_ <= platformGenerationTriggerPosition_) return;
+  
+  // Add a new platform
+  platformGenerationTriggerPosition_ = descentPosition_ + 55 + (random() % 20);
+  
+  [self addPlatformWithRandomPositionBetween:-platformGenerationTriggerPosition_
+                                         and:-descentPosition_];
+
+  // Also check if any platforms scrolled off the top and so can be removed
   CGSize viewSize = [glView_ size];
-
-  descentPosition_ += kDescentSpeed * ticks;
-  if (descentPosition_ > platformGenerationTriggerPosition_) {
-    platformGenerationTriggerPosition_ = descentPosition_ + 55 + (random() % 20);
-    
-    [self addPlatformWithRandomPositionBetween:-platformGenerationTriggerPosition_
-                                           and:-descentPosition_];
-
-    // Also check if any platforms scrolled off the top and so can be removed
-    NSMutableArray *platformsToRemove = [NSMutableArray arrayWithCapacity:1];
-    for (PIDPlatform *platform in platforms_) {
-      if ([platform bounds].origin.y > -descentPosition_ + viewSize.height) {
-        [platformsToRemove addObject:platform];
-      }
-    }
-    for (PIDPlatform *platform in platformsToRemove) {
-      [[glView_ root] removeChild:platform];
-      [platforms_ removeObject:platform];
+  
+  NSMutableArray *platformsToRemove = [NSMutableArray arrayWithCapacity:1];
+  for (PIDPlatform *platform in platforms_) {
+    if ([platform bounds].origin.y > -descentPosition_ + viewSize.height) {
+      [platformsToRemove addObject:platform];
     }
   }
+  for (PIDPlatform *platform in platformsToRemove) {
+    [[glView_ root] removeChild:platform];
+    [platforms_ removeObject:platform];
+  }
+}
+
+- (void)handleTick:(double)ticks {
+  double fps = [glView_ framesPerSecond];
+  NSString* fpsString = [NSString stringWithFormat:@"%4.1f", fps];
+  [fpsDisplay_ setValue:fpsString];
+  
+  descentPosition_ += kDescentSpeed * ticks;
+
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   
+  [self updatePlatforms];
+  
+  [self updateMovementConstraints];
+  
+  [player_ handleTick:ticks];
+}
+
+- (void)updateMovementConstraints {
   [player_ resetMovementConstraints];
 
   // First constrain movement by viewing rect
+  CGSize viewSize = [glView_ size];
   [player_ addMovementConstraint:0
                           onSide:kSideLeft];
   [player_ addMovementConstraint:-descentPosition_
@@ -172,8 +196,6 @@
       }
     }
   }
-  
-  [player_ handleTick:ticks]; 
 }
 
 - (void)handleTouchBegin:(CGPoint)touchPoint {
