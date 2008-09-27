@@ -138,7 +138,7 @@
   descentPosition_ += kDescentSpeed * ticks;
   
   int floor = descentPosition_/[glView_ size].height;
-  [floorDisplay_ setValue:[NSString stringWithFormat:@"%d", floor]];
+  [floorDisplay_ setValue:[NSString stringWithFormat:@"%3d", floor]];
   
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   

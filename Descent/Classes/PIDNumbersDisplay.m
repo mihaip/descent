@@ -10,7 +10,7 @@
 #import "PIDTextureSprite.h"
 #import "PIDSprite.h"
 
-#define kDigitWidth 11
+#define kDigitWidth 9
 #define kDigitHeight 16
 
 static PIDTextureSprite *kNumbersSprite;
@@ -31,8 +31,10 @@ static PIDSprite *kNullSprite;
                           position:CGPointMake(position * kDigitWidth, 0)]) {
     if (value >= '0' && value <= '9') {
       frame_ = value - '0';
-    } else if (value == '.') {
+    } else if (value == ' ') {
       frame_ = 10;
+    } else if (value == '.') {
+      frame_ = 11;
     } else {
       NSLog(@"Warning, unknown character: %d", value);
       frame_ = 0;
