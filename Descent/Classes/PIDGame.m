@@ -39,9 +39,14 @@
     [self initPlatforms];
 
 #if SHOW_FPS
-    fpsDisplay_ = [[PIDNumbersDisplay alloc] initWithPosition:CGPointMake(8, 10)];
+    fpsDisplay_ = [[PIDNumbersDisplay alloc]
+                   initWithPosition:CGPointMake(8, 10)];
     [[glView_ root] addChild:fpsDisplay_];
 #endif
+    
+    floorDisplay_ = [[PIDNumbersDisplay alloc] 
+                     initWithPosition:CGPointMake(8, [glView_ size].height - 10)];
+    [[glView_ root] addChild:floorDisplay_];
     
     glView_.animationInterval = 1.0 / 60.0;
   }
@@ -127,12 +132,14 @@
 - (void)handleTick:(double)ticks {
 #if SHOW_FPS
   double fps = [glView_ framesPerSecond];
-  NSString* fpsString = [NSString stringWithFormat:@"%4.1f", fps];
-  [fpsDisplay_ setValue:fpsString];
+  [fpsDisplay_ setValue:[NSString stringWithFormat:@"%4.1f", fps]];
 #endif
   
   descentPosition_ += kDescentSpeed * ticks;
-
+  
+  int floor = descentPosition_/[glView_ size].height;
+  [floorDisplay_ setValue:[NSString stringWithFormat:@"%d", floor]];
+  
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   
   [self updatePlatforms];
@@ -236,9 +243,18 @@
 
 - (void)dealoc {
   [glView_ release];
-  [player_ release];
+  
+  [player_ release];  
   [platforms_ makeObjectsPerformSelector:@selector(release)];
   [platforms_ release];
+
+#if SHOW_FPS
+  [fpsDisplay_ release];
+#endif
+  
+  [floorDisplay_ release];
+  
+  [super dealloc];  
 }
 
 @end

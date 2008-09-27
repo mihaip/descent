@@ -24,8 +24,9 @@
   PIDPlayer *player_;
   NSMutableArray *platforms_;
 #if SHOW_FPS
-  PIDNumbersDisplay* fpsDisplay_;
+  PIDNumbersDisplay *fpsDisplay_;
 #endif
+  PIDNumbersDisplay *floorDisplay_;
 }
 
 - initWithView:(EAGLView *)glView;
