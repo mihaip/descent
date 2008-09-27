@@ -37,9 +37,11 @@
     
     [self initPlayer];
     [self initPlatforms];
-    
+
+#if SHOW_FPS
     fpsDisplay_ = [[PIDNumbersDisplay alloc] initWithPosition:CGPointMake(8, 10)];
     [[glView_ root] addChild:fpsDisplay_];
+#endif
     
     glView_.animationInterval = 1.0 / 60.0;
   }
@@ -123,9 +125,11 @@
 }
 
 - (void)handleTick:(double)ticks {
+#if SHOW_FPS
   double fps = [glView_ framesPerSecond];
   NSString* fpsString = [NSString stringWithFormat:@"%4.1f", fps];
   [fpsDisplay_ setValue:fpsString];
+#endif
   
   descentPosition_ += kDescentSpeed * ticks;
 

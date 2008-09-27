@@ -11,6 +11,8 @@
 #import "PIDPlayer.h"
 #import "PIDNumbersDisplay.h"
 
+#define SHOW_FPS 0
+
 @interface PIDGame : NSObject < PIDEventTarget > {
  @private
   EAGLView *glView_;
@@ -21,7 +23,9 @@
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;
+#if SHOW_FPS
   PIDNumbersDisplay* fpsDisplay_;
+#endif
 }
 
 - initWithView:(EAGLView *)glView;
