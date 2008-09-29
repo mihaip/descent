@@ -9,16 +9,14 @@
 #import "PIDNumbersDisplay.h"
 #import "PIDTextureSprite.h"
 #import "PIDSprite.h"
+#import "PIDEntityWithFrame.h"
 
 #define kDigitWidth 9
 #define kDigitHeight 16
 
 static PIDTextureSprite *kNumbersSprite;
 
-@interface PIDDigit : PIDEntity {
-@private
-  int frame_;
-}
+@interface PIDDigit : PIDEntityWithFrame {}
 
 - initWithValue:(unichar)value position:(int)position;
 @end
@@ -26,26 +24,21 @@ static PIDTextureSprite *kNumbersSprite;
 @implementation PIDDigit
 
 - initWithValue:(unichar)value position:(int)position {
-  if (self = [super initWithSprite:kNumbersSprite 
-                          position:CGPointMake(position * kDigitWidth, 0)]) {
-    if (value >= '0' && value <= '9') {
-      frame_ = value - '0';
-    } else if (value == ' ') {
-      frame_ = 10;
-    } else if (value == '.') {
-      frame_ = 11;
-    } else {
-      NSLog(@"Warning, unknown character: %d", value);
-      frame_ = 0;
-    }
+  int frame;
+  if (value >= '0' && value <= '9') {
+    frame = value - '0';
+  } else if (value == ' ') {
+    frame = 10;
+  } else if (value == '.') {
+    frame = 11;
+  } else {
+    NSLog(@"Warning, unknown character: %d", value);
+    frame = 0;
   }
   
-  return self;
-}
-
-- (void)draw {
-  [kNumbersSprite setFrame:frame_];
-  [super draw];
+  return [super initWithSprite:kNumbersSprite 
+                      position:CGPointMake(position * kDigitWidth, 0)
+                         frame:frame];
 }
 
 @end

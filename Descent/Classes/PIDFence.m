@@ -7,47 +7,10 @@
 //
 
 #import "PIDFence.h"
+#import "PIDEntityWithFrame.h"
 #import "PIDTextureSprite.h"
 
 static PIDTextureSprite *kCapsSprite;
-
-@interface PIDCap : PIDEntity {
- @private
-  int frame_;
-}
-
-- initWithFrame:(int)frame position:(CGPoint) position;
-
-@end
-
-@implementation PIDCap
-
-+ (void)initialize {
-  static BOOL initialized = NO; 
-  if (initialized) return;
-  initialized = YES;
-  
-  kCapsSprite = [[PIDTextureSprite alloc] initWithImage:@"caps.png"
-                                                   size:CGSizeMake(20, 12)
-                                                 frames:2];
-}
-
-- initWithFrame:(int)frame position:(CGPoint) position {
-  if (self = [super initWithSprite:kCapsSprite position:position]) {
-    frame_ = frame;
-  }
-  
-  return self;
-}
-
-- (void)draw {
-  [kCapsSprite setFrame:frame_];
-  
-  [super draw];
-}
-
-@end
-
 
 @interface PIDLightiningSprite : PIDSprite {
  @private
@@ -221,13 +184,24 @@ static GLfloat kLineLightness[] = {0.0, 0.4, 0.9};
 
 @implementation PIDFence
 
++ (void)initialize {
+  static BOOL initialized = NO; 
+  if (initialized) return;
+  initialized = YES;
+  
+  kCapsSprite = [[PIDTextureSprite alloc] initWithImage:@"caps.png"
+                                                   size:CGSizeMake(20, 12)
+                                                 frames:2];
+}
+
 - initWithPosition:(CGPoint)position size:(CGSize)size {
   if (self = [super initWithSprite:kNullSprite position:position]) {
-    PIDEntity *leftCap = [[PIDCap alloc] initWithFrame:0
-                                              position:CGPointMake(-size.width/2 + 10, 0)];
-    PIDEntity *rightCap = [[PIDCap alloc] initWithFrame:1
-                                              position:CGPointMake(size.width/2 - 10, 0)];
-
+    PIDEntity *leftCap = [[PIDEntityWithFrame alloc] initWithSprite:kCapsSprite
+                                                           position:CGPointMake(-size.width/2 + 10, 0)
+                                                              frame:0];
+    PIDEntity *rightCap = [[PIDEntityWithFrame alloc] initWithSprite:kCapsSprite
+                                                           position:CGPointMake(size.width/2 - 10, 0)
+                                                              frame:1];
     PIDSprite *lightningSprite = [[PIDLightiningSprite alloc] 
         initWithSize:CGSizeMake(size.width - 40, size.height)];
     PIDEntity *lightning = [[PIDEntity alloc] initWithSprite:lightningSprite
