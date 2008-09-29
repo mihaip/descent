@@ -38,6 +38,12 @@
     descentPosition_ = 0;
     platformGenerationTriggerPosition_ = 0;
     
+    // Make sure that fixed entities appear in front of regualr ones
+    normalLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
+    fixedLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
+    [[glView_ root] addChild:normalLayer_];
+    [[glView_ root] addChild:fixedLayer_];
+    
     [self initPlayer];
     [self initPlatforms];
     [self initFence];
@@ -45,12 +51,12 @@
 #if SHOW_FPS
     fpsDisplay_ = [[PIDNumbersDisplay alloc]
                    initWithPosition:CGPointMake(8, 10)];
-    [[glView_ root] addChild:fpsDisplay_];
+    [fixedLayer_ addChild:fpsDisplay_];
 #endif
     
     floorDisplay_ = [[PIDNumbersDisplay alloc] 
                      initWithPosition:CGPointMake(8, [glView_ size].height - 10)];
-    [[glView_ root] addChild:floorDisplay_];
+    [fixedLayer_ addChild:floorDisplay_];
     
     glView_.animationInterval = 1.0 / 60.0;
   }
@@ -66,7 +72,7 @@
   };
   player_ = [[PIDPlayer alloc] initWithPosition:playerPosition];
   
-  [[glView_ root] addChild:player_];
+  [normalLayer_ addChild:player_];
 }
 
 - (void)initPlatforms {
@@ -90,7 +96,7 @@
   PIDPlatform* platform = [[PIDPlatform alloc] 
                            initWithPosition:platformPosition];
   
-  [[glView_ root] addChild:platform];
+  [normalLayer_ addChild:platform];
   
   [platforms_ addObject:platform];
   
@@ -119,7 +125,7 @@
   CGSize fenceSize = {viewSize.width, kFenceHeight};
   fence_ = [[PIDFence alloc] initWithPosition:fencePosition size:fenceSize];
   
-  [[glView_ root] addChild:fence_];
+  [fixedLayer_ addChild:fence_];
 }
 
 - (void)updatePlatforms {
@@ -142,7 +148,7 @@
     }
   }
   for (PIDPlatform *platform in platformsToRemove) {
-    [[glView_ root] removeChild:platform];
+    [normalLayer_ removeChild:platform];
     [platforms_ removeObject:platform];
   }
 }

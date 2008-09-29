@@ -21,6 +21,9 @@
   double descentPosition_;
   double platformGenerationTriggerPosition_;
   
+  PIDEntity *normalLayer_;
+  PIDEntity *fixedLayer_;
+  
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;
