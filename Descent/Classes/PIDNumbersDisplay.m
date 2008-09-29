@@ -14,7 +14,6 @@
 #define kDigitHeight 16
 
 static PIDTextureSprite *kNumbersSprite;
-static PIDSprite *kNullSprite;
 
 @interface PIDDigit : PIDEntity {
 @private
@@ -62,7 +61,6 @@ static PIDSprite *kNullSprite;
                         initWithImage:@"numbers.png"
                                  size:CGSizeMake(kDigitWidth, kDigitHeight)
                                frames:10];  
-  kNullSprite = [[PIDSprite alloc] initWithSize:CGSizeMake(0, 0)];
 }
 
 - initWithPosition:(CGPoint)position {

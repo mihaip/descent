@@ -6,7 +6,6 @@
 //  Copyright 2008 persistent.info. All rights reserved.
 //
 
-
 @interface PIDSprite : NSObject {
  @protected
   CGSize size_;
@@ -19,3 +18,6 @@
 - (void)draw;
 
 @end
+
+PIDSprite *kNullSprite;
+
