@@ -29,10 +29,12 @@
   NSMutableArray *platforms_;
   PIDFence *fence_;
   
+  // Status
 #if SHOW_FPS
   PIDNumbersDisplay *fpsDisplay_;
 #endif
   PIDNumbersDisplay *floorDisplay_;
+  PIDFixedEntity *statusBackground_;
 }
 
 - initWithView:(EAGLView *)glView;

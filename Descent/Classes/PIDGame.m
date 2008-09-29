@@ -20,6 +20,7 @@
 - (void)initPlayer;
 - (void)initPlatforms;
 - (void)initFence;
+- (void)initStatus;
 - (void)addPlatformWithPosition:(CGPoint)platformPosition;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
@@ -48,16 +49,8 @@
     [self initPlayer];
     [self initPlatforms];
     [self initFence];
-
-#if SHOW_FPS
-    fpsDisplay_ = [[PIDNumbersDisplay alloc]
-                   initWithPosition:CGPointMake(8, 10)];
-    [fixedLayer_ addChild:fpsDisplay_];
-#endif
     
-    floorDisplay_ = [[PIDNumbersDisplay alloc] 
-                     initWithPosition:CGPointMake(8, 11)];
-    [fixedLayer_ addChild:floorDisplay_];
+    [self initStatus];
     
     glView_.animationInterval = 1.0 / 60.0;
   }
@@ -154,6 +147,30 @@
     [normalLayer_ removeChild:platform];
     [platforms_ removeObject:platform];
   }
+}
+
+- (void)initStatus {
+#if SHOW_FPS
+  fpsDisplay_ = [[PIDNumbersDisplay alloc]
+                 initWithPosition:CGPointMake(7, 9)];
+  [fixedLayer_ addChild:fpsDisplay_];
+#endif
+  
+  // Image is only 32 pixels wide, but we stretch it to the width of the whole
+  // screen
+  CGSize viewSize = [glView_ size];
+  PIDTextureSprite *statusBackgroundSprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"status.png" 
+                                         size:CGSizeMake(viewSize.width, 32) 
+                                       frames:1];
+  statusBackground_ = [[PIDFixedEntity alloc] initWithSprite:statusBackgroundSprite
+                                                    position:CGPointMake(160, 16)];
+  [fixedLayer_ addChild:statusBackground_];
+  [statusBackgroundSprite release];
+
+  floorDisplay_ = [[PIDNumbersDisplay alloc] 
+                   initWithPosition:CGPointMake(8, 11)];
+  [fixedLayer_ addChild:floorDisplay_];  
 }
 
 - (void)handleTick:(double)ticks {
