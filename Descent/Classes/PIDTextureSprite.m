@@ -102,7 +102,7 @@ static const GLshort kSquareTexcoords[] = {
   // TODO(mihaip): see if we can use glDrawTexiOES extension instead
   glMatrixMode(GL_TEXTURE);
   glLoadIdentity();
-  glScalef(size_.width/textureSize_.width, 1.0, 1.0);
+  glScalef(size_.width/textureSize_.width, size_.height/textureSize_.height, 1.0);
   glTranslatef(frame_, 0, 0);
   glMatrixMode(GL_MODELVIEW);
 
