@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EAGLView.h"
 #import "PIDPlayer.h"
+#import "PIDFence.h"
 #import "PIDNumbersDisplay.h"
 
 #define SHOW_FPS 0
@@ -23,6 +24,8 @@
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;
+  PIDFence *fence_;
+  
 #if SHOW_FPS
   PIDNumbersDisplay *fpsDisplay_;
 #endif

@@ -1,6 +1,7 @@
 TODO
 
 M0
+- fix textures (numbers are slightly distorted)
 - Add falling frames for player
 - Add textures for platforms
 - Show current "floor" in the UI
@@ -8,6 +9,7 @@ M0
 - Add health to UI
 - Make falling off the bottom kill the player
 - Make hitting the top kill the player
+- Make fixed entities appear above other entities
 
 M1
 - Add texture for background
@@ -27,3 +29,4 @@ DONE
 - Add FPS display
 - Add textures for player
 - Add walking animation for player
+- Add electric "fence" along the top

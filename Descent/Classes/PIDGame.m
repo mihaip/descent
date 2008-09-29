@@ -11,11 +11,14 @@
 #import "PIDPlatform.h"
 
 #define kDescentSpeed 50 // In pixels/s
+#define kFenceHeight 20
+#define kStatusBarHeight 16
 
 // Private methods
 @interface PIDGame ()
 - (void)initPlayer;
 - (void)initPlatforms;
+- (void)initFence;
 - (void)addPlatformWithPosition:(CGPoint)platformPosition;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
@@ -30,13 +33,14 @@
     [glView_ setEventTarget:self];
     
     // For now use a fixed seed so that repeated runs are reproducible
-    srandom(26);
+    srandom(27);
     
     descentPosition_ = 0;
     platformGenerationTriggerPosition_ = 0;
     
     [self initPlayer];
     [self initPlatforms];
+    [self initFence];
 
 #if SHOW_FPS
     fpsDisplay_ = [[PIDNumbersDisplay alloc]
@@ -57,7 +61,9 @@
 - (void)initPlayer {
   CGSize viewSize = [glView_ size];
   // Center player in view
-  CGPoint playerPosition = {viewSize.width / 2, viewSize.height};
+  CGPoint playerPosition = {
+    viewSize.width / 2, viewSize.height - kStatusBarHeight - kFenceHeight
+  };
   player_ = [[PIDPlayer alloc] initWithPosition:playerPosition];
   
   [[glView_ root] addChild:player_];
@@ -72,7 +78,7 @@
     if (i == 0) {
       CGPoint platformPosition;
       platformPosition.x = viewSize.width / 2;
-      platformPosition.y = viewSize.height / 2 - 40;
+      platformPosition.y = viewSize.height / 2;
       [self addPlatformWithPosition:platformPosition];
     } else {
       [self addPlatformWithRandomPositionBetween:0 and:viewSize.height];
@@ -102,6 +108,18 @@
   platformPosition.y = minY +(random() % (maxY - minY));
   
   [self addPlatformWithPosition:platformPosition];
+}
+
+- (void)initFence {
+  CGSize viewSize = [glView_ size];
+  
+  CGPoint fencePosition = {
+    viewSize.width / 2, viewSize.height - kStatusBarHeight - kFenceHeight/2
+  };
+  CGSize fenceSize = {viewSize.width, kFenceHeight};
+  fence_ = [[PIDFence alloc] initWithPosition:fencePosition size:fenceSize];
+  
+  [[glView_ root] addChild:fence_];
 }
 
 - (void)updatePlatforms {
