@@ -11,6 +11,7 @@
 #import "PIDPlatform.h"
 
 #define kDescentSpeed 50 // In pixels/s
+#define kPlayerHeight 32
 #define kFenceHeight 20
 #define kStatusBarHeight 16
 
@@ -55,7 +56,7 @@
 #endif
     
     floorDisplay_ = [[PIDNumbersDisplay alloc] 
-                     initWithPosition:CGPointMake(8, [glView_ size].height - 10)];
+                     initWithPosition:CGPointMake(8, 11)];
     [fixedLayer_ addChild:floorDisplay_];
     
     glView_.animationInterval = 1.0 / 60.0;
@@ -68,7 +69,7 @@
   CGSize viewSize = [glView_ size];
   // Center player in view
   CGPoint playerPosition = {
-    viewSize.width / 2, viewSize.height - kStatusBarHeight - kFenceHeight
+    viewSize.width / 2, viewSize.height - kFenceHeight - kPlayerHeight
   };
   player_ = [[PIDPlayer alloc] initWithPosition:playerPosition];
   
@@ -78,7 +79,7 @@
 - (void)initPlatforms {
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 5; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
     if (i == 0) {
@@ -87,7 +88,9 @@
       platformPosition.y = viewSize.height / 2;
       [self addPlatformWithPosition:platformPosition];
     } else {
-      [self addPlatformWithRandomPositionBetween:0 and:viewSize.height];
+      // Other platforms start in the bottom half the screen, so that the
+      // player can fall on the one that was created above
+      [self addPlatformWithRandomPositionBetween:0 and:viewSize.height/2];
     }    
   }
 }
@@ -120,7 +123,7 @@
   CGSize viewSize = [glView_ size];
   
   CGPoint fencePosition = {
-    viewSize.width / 2, viewSize.height - kStatusBarHeight - kFenceHeight/2
+    viewSize.width / 2, viewSize.height - kFenceHeight/2
   };
   CGSize fenceSize = {viewSize.width, kFenceHeight};
   fence_ = [[PIDFence alloc] initWithPosition:fencePosition size:fenceSize];
