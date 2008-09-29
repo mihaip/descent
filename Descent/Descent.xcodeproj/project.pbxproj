@@ -28,6 +28,10 @@
 		9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */; };
 		9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D6070E8E9AAE000B8787 /* PIDFence.m */; };
 		9175D8030E904F8D000B8787 /* caps.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8020E904F8D000B8787 /* caps.png */; };
+		9175D8B10E906AD3000B8787 /* status.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8B00E906AD3000B8787 /* status.png */; };
+		9175D8F90E907276000B8787 /* health-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8F80E907276000B8787 /* health-stars.png */; };
+		9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */; };
+		9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */; };
 		91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FCCCC90E81F92C004A2033 /* numbers.png */; };
 		91FCCD6B0E8202B2004A2033 /* PIDFixedEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */; };
 /* End PBXBuildFile section */
@@ -70,6 +74,12 @@
 		9175D6060E8E9AAE000B8787 /* PIDFence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFence.h; sourceTree = "<group>"; };
 		9175D6070E8E9AAE000B8787 /* PIDFence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDFence.m; sourceTree = "<group>"; };
 		9175D8020E904F8D000B8787 /* caps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caps.png; sourceTree = "<group>"; };
+		9175D8B00E906AD3000B8787 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status.png; sourceTree = "<group>"; };
+		9175D8F80E907276000B8787 /* health-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "health-stars.png"; sourceTree = "<group>"; };
+		9175D8FC0E90728A000B8787 /* PIDHealthDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDHealthDisplay.h; sourceTree = "<group>"; };
+		9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDHealthDisplay.m; sourceTree = "<group>"; };
+		9175D94E0E907578000B8787 /* PIDEntityWithFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDEntityWithFrame.h; sourceTree = "<group>"; };
+		9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDEntityWithFrame.m; sourceTree = "<group>"; };
 		91FCCCC90E81F92C004A2033 /* numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numbers.png; sourceTree = "<group>"; };
 		91FCCD690E8202B2004A2033 /* PIDFixedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFixedEntity.h; sourceTree = "<group>"; };
 		91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDFixedEntity.m; sourceTree = "<group>"; };
@@ -137,6 +147,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9175D8F80E907276000B8787 /* health-stars.png */,
+				9175D8B00E906AD3000B8787 /* status.png */,
 				9175D8020E904F8D000B8787 /* caps.png */,
 				91FCCCC90E81F92C004A2033 /* numbers.png */,
 				91543A750E7DCA8500FAF93D /* player.png */,
@@ -165,6 +177,8 @@
 				91543A3A0E7DBF5900FAF93D /* PIDTextureSprite.m */,
 				915433310E77797900FAF93D /* PIDEntity.h */,
 				915433320E77797900FAF93D /* PIDEntity.m */,
+				9175D94E0E907578000B8787 /* PIDEntityWithFrame.h */,
+				9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */,
 				9175D4D80E8B1973000B8787 /* PIDNumbersDisplay.h */,
 				9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */,
 				91FCCD690E8202B2004A2033 /* PIDFixedEntity.h */,
@@ -190,6 +204,8 @@
 				915434F00E78B72200FAF93D /* PIDPlatform.m */,
 				9175D6060E8E9AAE000B8787 /* PIDFence.h */,
 				9175D6070E8E9AAE000B8787 /* PIDFence.m */,
+				9175D8FC0E90728A000B8787 /* PIDHealthDisplay.h */,
+				9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -240,6 +256,8 @@
 				91543A760E7DCA8500FAF93D /* player.png in Resources */,
 				91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */,
 				9175D8030E904F8D000B8787 /* caps.png in Resources */,
+				9175D8B10E906AD3000B8787 /* status.png in Resources */,
+				9175D8F90E907276000B8787 /* health-stars.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +282,8 @@
 				91FCCD6B0E8202B2004A2033 /* PIDFixedEntity.m in Sources */,
 				9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */,
 				9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */,
+				9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */,
+				9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

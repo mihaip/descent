@@ -6,9 +6,9 @@ M0
 - Add textures for platforms
 - Show current "floor" in the UI
 - Add pause button to the UI
-- Add health to UI
 - Make falling off the bottom kill the player
 - Make hitting the top kill the player
+- Update health display as necessary
 
 M1
 - Add texture for background
@@ -30,3 +30,4 @@ DONE
 - Add walking animation for player
 - Add electric "fence" along the top
 - Make fixed entities appear above other entities
+- Add health to UI

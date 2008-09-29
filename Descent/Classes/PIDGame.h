@@ -11,6 +11,7 @@
 #import "PIDPlayer.h"
 #import "PIDFence.h"
 #import "PIDNumbersDisplay.h"
+#import "PIDHealthDisplay.h"
 
 #define SHOW_FPS 0
 
@@ -35,6 +36,7 @@
 #endif
   PIDNumbersDisplay *floorDisplay_;
   PIDFixedEntity *statusBackground_;
+  PIDHealthDisplay *healthDisplay_;
 }
 
 - initWithView:(EAGLView *)glView;

@@ -169,8 +169,11 @@
   [statusBackgroundSprite release];
 
   floorDisplay_ = [[PIDNumbersDisplay alloc] 
-                   initWithPosition:CGPointMake(8, 11)];
+                   initWithPosition:CGPointMake(7, 10)];
   [fixedLayer_ addChild:floorDisplay_];  
+  
+  healthDisplay_ = [[PIDHealthDisplay alloc] initWithPosition:CGPointMake(viewSize.width - 2, 10)];
+  [fixedLayer_ addChild:healthDisplay_];
 }
 
 - (void)handleTick:(double)ticks {
