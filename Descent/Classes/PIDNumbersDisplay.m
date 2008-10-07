@@ -65,6 +65,17 @@ static PIDTextureSprite *kNumbersSprite;
 }
 
 - (void)setValue:(NSString *)value {
+  // Only update if value has actually changed
+  if (currentValue_) {
+    if ([currentValue_ compare:value] == NSOrderedSame) {
+      return;
+    }
+    
+    [currentValue_ release];
+  }
+  
+  currentValue_ = [value retain];  
+  
   [self removeAllChildren];
   
   for (int i = 0; i < [value length]; i++) {

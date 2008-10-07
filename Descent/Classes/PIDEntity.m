@@ -66,33 +66,26 @@
   return bounds;
 }
 
+- (double)top {
+  return CGRectGetMaxY([self bounds]);
+}
+
+- (double)bottom {
+  return CGRectGetMinY([self bounds]);
+}  
+
+- (double)left {
+  return CGRectGetMinX([self bounds]);
+}
+
+- (double)right {
+  return CGRectGetMaxX([self bounds]);
+}
+
 // Simple bounding rectangle collision, subclasses may choose to implement more
 // accurate collision detection
-- (int)intersectsWith:(PIDEntity *)other {
-  CGRect ourBounds = [self bounds];
-  CGRect otherBounds = [other bounds];
-  CGRect intersection = CGRectIntersection(ourBounds, otherBounds);
-  
-  if (CGRectIsNull(intersection)) {
-    return kIntersectionNone;
-  }
-  
-  int sides = 0;
-  
-  if (ourBounds.origin.y == intersection.origin.y) {
-    sides |= kIntersectionSideBottom;
-  }
-  if (ourBounds.origin.x == intersection.origin.x) {
-    sides |= kIntersectionSideLeft;
-  }
-  if (ourBounds.origin.x + ourBounds.size.width == intersection.origin.x + intersection.size.width) {
-    sides |= kIntersectionSideRight;
-  }
-  if (ourBounds.origin.y + ourBounds.size.height == intersection.origin.y + intersection.size.height) {
-    sides |= kIntersectionSideTop;
-  }
-  
-  return sides;
+- (BOOL)intersectsWith:(PIDEntity *)other {
+  return CGRectIntersectsRect([self bounds], [other bounds]);
 }
 
 

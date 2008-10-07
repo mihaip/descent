@@ -10,6 +10,10 @@
 #import "PIDEntityWithFrame.h"
 #import "PIDTextureSprite.h"
 
+// While we're touching the player, for every period of this lenth (in seconds), 
+// one unit of health is removed
+#define kFencePlayerHurtTime 0.1
+
 static PIDTextureSprite *kCapsSprite;
 
 @interface PIDLightiningSprite : PIDSprite {
@@ -219,5 +223,39 @@ static GLfloat kLineLightness[] = {0.0, 0.4, 0.9};
   
   return self;
 }
+
+- (void)handleTick:(double)ticks {
+  if (!isHurtingPlayer_) return;
+  
+  hurtTime_ += ticks;
+  if (hurtTime_ > kFencePlayerHurtTime) {
+    [player_ decreaseHealth];
+    hurtTime_ = 0;
+  }
+}
+
+- (void)startHurtingPlayer:(PIDPlayer *)player {
+  isHurtingPlayer_ = YES;
+  player_ = [player retain];
+  hurtTime_ = 0;
+}
+
+- (void)stopHurtingPlayer {
+  isHurtingPlayer_ = NO;
+  [player_ release];
+}
+
+- (BOOL)isHurtingPlayer {
+  return isHurtingPlayer_;
+}
+
+- (void)dealloc {
+  if (player_) {
+    [player_ release];
+  }
+  
+  [super dealloc];
+}
+
 
 @end

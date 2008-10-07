@@ -7,14 +7,23 @@
 //
 
 #import "PIDEntity.h"
+#import "PIDPlayer.h"
 
 #define kPlatformWidth 60
 #define kPlatformHeight 10
 
-@interface PIDPlatform : PIDEntity {
+typedef enum {
+  kPlatformNormal,
+  kPlatformBouncy,
+} PIDPlatformType;
 
+
+@interface PIDPlatform : PIDEntity {
+ @private
+  PIDPlatformType type_;
 }
 
 - initWithPosition:(CGPoint)position;
+- (void)handlePlayerLanding:(PIDPlayer *)player;
 
 @end

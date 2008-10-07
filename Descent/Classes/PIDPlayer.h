@@ -7,7 +7,8 @@
 //
 
 #import "PIDEntity.h"
-#import "PIDPlatform.h"
+
+#define kMaxHealth 7
 
 typedef enum {
   kLeft = -1,
@@ -24,9 +25,18 @@ typedef enum  {
 
 @interface PIDPlayer : PIDEntity {
  @private
+  int health_;
+  BOOL landed_;
+  
+  // Movement
   PIDPlayerHorizontalDirection horizontalDirection_;
   double verticalSpeed_;
+  
+  // Constraints
   double minX_, maxX_, minY_, maxY_;
+  PIDEntity *minXEntity_, *maxXEntity_, *minYEntity_, *maxYEntity_;
+  
+  // Animation
   NSTimer* walkingFrameTimer_;
   int walkingFrameCounter_;
 }
@@ -34,7 +44,18 @@ typedef enum  {
 - initWithPosition:(CGPoint)position;
 - (void)setHorizontalDirection:(PIDPlayerHorizontalDirection)direction;
 
-- (void)addMovementConstraint:(double)value onSide:(PIDSide)side;
+- (void)addMovementConstraint:(double)value 
+                       entity:(PIDEntity *)entity 
+                       onSide:(PIDSide)side;
 - (void)resetMovementConstraints;
+- (PIDEntity *)hitEntityOnSide:(PIDSide)side;
+
+- (int)health;
+- (void)increaseHealth;
+- (void)decreaseHealth;
+
+- (void)bounce;
+
+- (BOOL)landed;
 
 @end

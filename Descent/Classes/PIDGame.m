@@ -12,6 +12,8 @@
 
 #define kDescentSpeed 50 // In pixels/s
 #define kPlayerHeight 32
+// Enough room for the player to fit along the top
+#define kFenceTop kPlayerHeight/2
 #define kFenceHeight 20
 #define kStatusBarHeight 16
 
@@ -61,11 +63,10 @@
 - (void)initPlayer {
   CGSize viewSize = [glView_ size];
   // Center player in view
-  CGPoint playerPosition = {
-    viewSize.width / 2, viewSize.height - kFenceHeight - kPlayerHeight
-  };
-  player_ = [[PIDPlayer alloc] initWithPosition:playerPosition];
-  
+  player_ = [[PIDPlayer alloc] 
+             initWithPosition:CGPointMake(viewSize.width / 2, 
+                                          viewSize.height - kFenceTop - 
+                                              kFenceHeight/2 - kPlayerHeight)];
   [normalLayer_ addChild:player_];
 }
 
@@ -115,11 +116,11 @@
 - (void)initFence {
   CGSize viewSize = [glView_ size];
   
-  CGPoint fencePosition = {
-    viewSize.width / 2, viewSize.height - kFenceHeight/2
-  };
-  CGSize fenceSize = {viewSize.width, kFenceHeight};
-  fence_ = [[PIDFence alloc] initWithPosition:fencePosition size:fenceSize];
+  fence_ = [[PIDFence alloc] 
+            initWithPosition:CGPointMake(viewSize.width / 2,
+                                         viewSize.height - kFenceTop - 
+                                             kFenceHeight/2)
+                        size:CGSizeMake(viewSize.width, kFenceHeight)];
   
   [fixedLayer_ addChild:fence_];
 }
@@ -174,6 +175,7 @@
   
   healthDisplay_ = [[PIDHealthDisplay alloc] initWithPosition:CGPointMake(viewSize.width - 2, 10)];
   [fixedLayer_ addChild:healthDisplay_];
+  [healthDisplay_ update:player_];
 }
 
 - (void)handleTick:(double)ticks {
@@ -194,6 +196,26 @@
   [self updateMovementConstraints];
   
   [player_ handleTick:ticks];
+  
+  if ([player_ top] > [fence_ top] - descentPosition_) {
+    if (![fence_ isHurtingPlayer]) {
+      [fence_ startHurtingPlayer:player_];
+    }
+  } else if ([fence_ isHurtingPlayer]) {
+    [fence_ stopHurtingPlayer];
+  }
+    
+  [fence_ handleTick:ticks];
+  
+  if ([player_ landed]) {
+    PIDEntity *landedEntity = [player_ hitEntityOnSide:kSideBottom];
+    if ([landedEntity isKindOfClass:[PIDPlatform class]]) {
+      PIDPlatform *landedPlatform = (PIDPlatform*) landedEntity;
+      [landedPlatform handlePlayerLanding:player_];
+    }
+  }
+
+  [healthDisplay_ update:player_];
 }
 
 - (void)updateMovementConstraints {
@@ -202,28 +224,30 @@
   // First constrain movement by viewing rect
   CGSize viewSize = [glView_ size];
   [player_ addMovementConstraint:0
+                          entity:normalLayer_
                           onSide:kSideLeft];
   [player_ addMovementConstraint:-descentPosition_
+                          entity:normalLayer_
                           onSide:kSideBottom];
   [player_ addMovementConstraint:viewSize.width
+                          entity:normalLayer_
                           onSide:kSideRight];
   [player_ addMovementConstraint:-descentPosition_ + viewSize.height
+                          entity:normalLayer_
                           onSide:kSideTop];
   
   // Then by platforms
-  CGRect playerBounds = [player_ bounds];
-  double playerBottom = CGRectGetMinY(playerBounds);
-  double playerTop = CGRectGetMaxY(playerBounds);
-  double playerLeft = CGRectGetMinX(playerBounds);
-  double playerRight = CGRectGetMaxX(playerBounds);
+  double playerBottom = [player_ bottom];
+  double playerTop = [player_ top];
+  double playerLeft = [player_ left];
+  double playerRight = [player_ right];
   CGPoint playerPosition = [player_ position];
   
   for (PIDPlatform *platform in platforms_) {
-    CGRect platformBounds = [platform bounds];
-    double platformBottom = CGRectGetMinY(platformBounds);
-    double platformTop = CGRectGetMaxY(platformBounds);
-    double platformLeft = CGRectGetMinX(platformBounds);
-    double platformRight = CGRectGetMaxX(platformBounds);
+    double platformBottom = [platform bottom];
+    double platformTop = [platform top];
+    double platformLeft = [platform left];
+    double platformRight = [platform right];
     CGPoint platformPosition = [platform position];
     
     // Platforms that are in the same vertical "column" as the player constraint
@@ -233,9 +257,13 @@
 
       // Player is above platform
       if (playerPosition.y > platformPosition.y) {
-        [player_ addMovementConstraint:platformTop onSide:kSideBottom];
+        [player_ addMovementConstraint:platformTop 
+                                entity:platform 
+                                onSide:kSideBottom];
       } else { // Player is below platform
-        [player_ addMovementConstraint:platformBottom onSide:kSideTop];
+        [player_ addMovementConstraint:platformBottom 
+                                 entity:platform
+                                onSide:kSideTop];
       }
     }
 
@@ -248,9 +276,13 @@
       
       // Player is to the left of the platform
       if (playerPosition.x < platformPosition.x) {
-        [player_ addMovementConstraint:platformLeft onSide:kSideRight];
+        [player_ addMovementConstraint:platformLeft 
+                                entity:platform
+                                onSide:kSideRight];
       } else { // Player is to the right of the platform
-        [player_ addMovementConstraint:platformRight onSide:kSideLeft];
+        [player_ addMovementConstraint:platformRight
+                                 entity:platform
+                                onSide:kSideLeft];
       }
     }
   }

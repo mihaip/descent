@@ -7,13 +7,13 @@
 //
 
 #import "PIDFixedEntity.h"
-
-#define kMaxHealth 7
+#import "PIDPlayer.h"
 
 @interface PIDHealthDisplay : PIDFixedEntity {
-
+ @private
+  int currentValue_;
 }
 
-- (void)setHealth:(int)health;
+- (void)update:(PIDPlayer *)player;
 
 @end

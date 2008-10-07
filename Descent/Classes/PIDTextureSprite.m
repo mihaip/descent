@@ -91,7 +91,7 @@ static const GLshort kSquareTexcoords[] = {
   // Enable use of the texture
   glEnable(GL_TEXTURE_2D);
   // Set a blending function to use
-  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   // Enable blending
   glEnable(GL_BLEND);
 

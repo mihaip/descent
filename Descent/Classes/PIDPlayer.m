@@ -12,6 +12,7 @@
 #define kPlayerHorizontalSpeed 150.0 // In pixels/s
 #define kPlayerVerticalAcceleration 800.0 // In pixels/s/s
 #define kPlayerVerticalMaxSpeed 1200.0 // In pixels/s
+#define kPlayerBounce 300.0 // In pixels/s
 
 static PIDTextureSprite *kPlayerSprite;
 
@@ -35,6 +36,8 @@ static PIDTextureSprite *kPlayerSprite;
 
 - initWithPosition:(CGPoint)position {
   if (self = [super initWithSprite:kPlayerSprite position:position]) {
+    health_ = kMaxHealth;
+    
     horizontalDirection_ = kNone;
     verticalSpeed_ = 0.0;
     [self resetMovementConstraints];
@@ -79,6 +82,7 @@ static PIDTextureSprite *kPlayerSprite;
   }
   
   // Move player vertically
+  double previousSpeed = verticalSpeed_;
   verticalSpeed_ += kPlayerVerticalAcceleration * ticks;
   if (verticalSpeed_ > kPlayerVerticalMaxSpeed) {
     verticalSpeed_ = kPlayerVerticalMaxSpeed;
@@ -97,31 +101,109 @@ static PIDTextureSprite *kPlayerSprite;
   if (top > maxY_) {newPosition.y = maxY_ - size.height/2;}
 
   // If we've been stopped, then reset our speed back to 0
+  landed_ = NO;
   if (position_.y == newPosition.y) {
+    if (previousSpeed != 0) {
+      landed_ = YES;
+    }
     verticalSpeed_ = 0;
   }
     
   position_ = newPosition;
 }
 
-- (void)addMovementConstraint:(double)value onSide:(PIDSide)side {
+- (void)addMovementConstraint:(double)value 
+                       entity:(PIDEntity *)entity 
+                       onSide:(PIDSide)side {
   switch (side) {
-    case kSideLeft: if (value > minX_) minX_ = value; break;
-    case kSideRight: if (value < maxX_) maxX_ = value; break;
-    case kSideTop: if (value < maxY_) maxY_ = value; break;
-    case kSideBottom: if (value > minY_) minY_ = value; break;
+    case kSideLeft: 
+      if (value > minX_) {
+        minX_ = value; 
+        if (minXEntity_) [minXEntity_ release];
+        minXEntity_ = [entity retain];
+      }
+      break;
+    case kSideRight: 
+      if (value < maxX_) {
+        maxX_ = value;
+        if (maxXEntity_) [maxXEntity_ release];
+        maxXEntity_ = [entity retain];
+      }
+      break;
+    case kSideTop: 
+      if (value < maxY_) {
+        maxY_ = value; 
+        if (maxYEntity_) [maxYEntity_ release];
+        maxYEntity_ = [entity retain];
+      }
+      break;
+    case kSideBottom:
+      if (value > minY_) {
+        minY_ = value;
+        if (minYEntity_) [minYEntity_ release];
+        minYEntity_ = [entity retain];
+      }
+      break;
   }
 }
 
+- (PIDEntity *)hitEntityOnSide:(PIDSide)side {
+  switch (side) {
+    case kSideTop: return maxYEntity_;
+    case kSideRight: return maxXEntity_;
+    case kSideBottom: return minYEntity_;
+    case kSideLeft: return minXEntity_;
+  }
+  
+  return NULL;
+}
+
+
 - (void)resetMovementConstraints {
   minX_ = -DBL_MAX;
+  if (minXEntity_) [minXEntity_ release];
+  minXEntity_ = NULL;
+
   maxX_ = DBL_MAX;
+  if (maxXEntity_) [maxXEntity_ release];
+  maxXEntity_ = NULL;
+  
   minY_ = -DBL_MAX;
+  if (minYEntity_) [minYEntity_ release];
+  minYEntity_ = NULL;
+
   maxY_ = DBL_MAX;
+  if (maxYEntity_) [maxYEntity_ release];
+  maxYEntity_ = NULL;
+}
+
+- (int)health {
+  return health_;
+}
+
+- (void)increaseHealth {
+  if (health_ < kMaxHealth) {
+    health_++;
+  }
+}
+
+- (void)decreaseHealth {
+  if (health_ > 0) {
+    health_--;
+  }
+}  
+
+- (BOOL)landed {
+  return landed_;
+}
+
+- (void)bounce {
+  verticalSpeed_ -= kPlayerBounce;
 }
 
 - (void)dealloc {
   [walkingFrameTimer_ invalidate];
+  [self resetMovementConstraints];
   [super dealloc];
 }
 

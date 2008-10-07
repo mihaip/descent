@@ -2,22 +2,20 @@ TODO
 
 M0
 - fix textures (numbers are slightly distorted)
-- Add falling frames for player
-- Add textures for platforms
-- Show current "floor" in the UI
 - Add pause button to the UI
 - Make falling off the bottom kill the player
-- Make hitting the top kill the player
-- Update health display as necessary
+- Player can get stuck to bottom of platform when bouncing
+- Game start/stop/pause support
 
 M1
+- Add falling frames for player
+- Add textures for platforms
 - Add texture for background
 - Cycle coordinates after a while, to avoid overflow issues
 - Add default.png
 - Add application icon
 - Add difficulty levels
 - Add different platform types
-- Keep track of health
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 
 M2
@@ -31,3 +29,8 @@ DONE
 - Add electric "fence" along the top
 - Make fixed entities appear above other entities
 - Add health to UI
+- Show current "floor" in the UI
+- Only update floor display when necessary
+- Update health display as necessary
+- Bouncy platforms
+- Make hitting the top kill the player

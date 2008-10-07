@@ -26,16 +26,20 @@ static PIDTextureSprite *kStarsSprite;
 
 - initWithPosition:(CGPoint)position {
   if (self = [super initWithSprite:kNullSprite position:position]) {
-    [self setHealth:kMaxHealth];
   }
   
   return self;
 }
 
-- (void)setHealth:(int)health {
+- (void)update:(PIDPlayer *)player {
+  int health = [player health];
+  
+  if (currentValue_ == health) return;
+  currentValue_ = health;
+  
   [self removeAllChildren];
   
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i <= kMaxHealth; i++) {
     PIDEntity *star = [[PIDEntityWithFrame alloc] initWithSprite:kStarsSprite
                                                         position:CGPointMake((i - 8) * 16 + 8, 0)
                                                            frame:i <= health ? 0 : 1];

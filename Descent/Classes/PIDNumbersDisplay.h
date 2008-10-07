@@ -9,7 +9,8 @@
 #import "PIDFixedEntity.h"
 
 @interface PIDNumbersDisplay : PIDFixedEntity {
-
+ @private
+  NSString *currentValue_;
 }
 
 - initWithPosition:(CGPoint)position;

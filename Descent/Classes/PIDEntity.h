@@ -8,12 +8,6 @@
 
 #import "PIDSprite.h"
 
-#define kIntersectionNone (0)
-#define kIntersectionSideTop (1 << 0)
-#define kIntersectionSideRight (1 << 1)
-#define kIntersectionSideBottom (1 << 2)
-#define kIntersectionSideLeft (1 << 3)
-
 @interface PIDEntity : NSObject {
  @protected
   PIDSprite *sprite_;
@@ -32,7 +26,12 @@
 - (void)setPosition:(CGPoint)position;
 
 - (CGRect)bounds;
-- (int)intersectsWith:(PIDEntity *)other;
+- (double)top;
+- (double)bottom;
+- (double)left;
+- (double)right;
+
+- (BOOL)intersectsWith:(PIDEntity *)other;
 
 - (void)handleTick:(double)ticks;
 
