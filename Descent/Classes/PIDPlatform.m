@@ -12,6 +12,7 @@
 
 static PIDRectangleSprite *kPlatformNormalSprite;
 static PIDRectangleSprite *kPlatformBouncySprite;
+static PIDRectangleSprite *kPlatformKillerSprite;
 
 @implementation PIDPlatform
 
@@ -32,6 +33,12 @@ static PIDRectangleSprite *kPlatformBouncySprite;
                                                    blue:0.2];
   kPlatformBouncySprite = [[PIDRectangleSprite alloc] initWithSize:platformSize
                                                              color:bouncyColor];
+
+  PIDColor *killerColor = [[PIDColor alloc] initWithRed:0.8 
+                                                  green:0.2 
+                                                   blue:0.2];
+  kPlatformKillerSprite = [[PIDRectangleSprite alloc] initWithSize:platformSize
+                                                             color:killerColor];
   
   
   [normalColor release];
@@ -48,6 +55,10 @@ static PIDRectangleSprite *kPlatformBouncySprite;
       type = kPlatformBouncy; 
       sprite = kPlatformBouncySprite;
       break;
+    case 2:
+      type = kPlatformKiller;
+      sprite = kPlatformKillerSprite;
+      break;
     default:
       type = kPlatformNormal; 
       sprite = kPlatformNormalSprite;
@@ -63,6 +74,9 @@ static PIDRectangleSprite *kPlatformBouncySprite;
 
 - (void)handlePlayerLanding:(PIDPlayer *)player {
   switch (type_) {
+    case kPlatformKiller:
+      [player decreaseHealth];
+      break;
     case kPlatformBouncy:
       [player increaseHealth];
       [player bounce];

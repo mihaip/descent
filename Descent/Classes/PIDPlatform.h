@@ -15,6 +15,7 @@
 typedef enum {
   kPlatformNormal,
   kPlatformBouncy,
+  kPlatformKiller,
 } PIDPlatformType;
 
 
