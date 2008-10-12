@@ -15,6 +15,7 @@
     sprite_ = [sprite retain];
     position_ = position;
     children_ = [[NSMutableArray alloc] initWithCapacity:10];
+    isEnabled_ = YES;
   }
   
   return self;
@@ -88,8 +89,13 @@
   return CGRectIntersectsRect([self bounds], [other bounds]);
 }
 
+- (BOOL)isPointInside:(CGPoint)point {
+  return CGRectContainsPoint([self bounds], point);
+}
 
 - (void)draw {
+  if (!isEnabled_) return;
+  
   glPushMatrix();
   glTranslatef(position_.x, position_.y, 0);
   
@@ -99,6 +105,19 @@
   
   glPopMatrix();
 }
+
+- (void)enable {
+  isEnabled_ = YES;
+}
+
+- (void)disable {
+  isEnabled_ = NO; 
+}
+
+- (BOOL)isEnabled {
+  return isEnabled_; 
+}
+
 
 - (void) dealloc{
   [sprite_ release];

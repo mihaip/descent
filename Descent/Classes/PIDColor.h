@@ -10,9 +10,11 @@
   float red_;
   float green_;
   float blue_;
+  float alpha_;
 }
 
 - initWithRed:(float)red green:(float)green blue:(float)blue;
+- initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha;
 - (void)apply;
 
 @end

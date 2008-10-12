@@ -6,6 +6,7 @@
 //   Copyright 2008 persistent.info. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "PIDTextureSprite.h"
 
 // TODO(mihaip): this should be in a buffer object (see section 2.9)
@@ -90,10 +91,6 @@ static const GLshort kSquareTexcoords[] = {
 
   // Enable use of the texture
   glEnable(GL_TEXTURE_2D);
-  // Set a blending function to use
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  // Enable blending
-  glEnable(GL_BLEND);
 
   glTexCoordPointer(2, GL_SHORT, 0, kSquareTexcoords);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -109,7 +106,6 @@ static const GLshort kSquareTexcoords[] = {
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
   glDisable(GL_TEXTURE_2D);
-  glDisable(GL_BLEND);
 
   glPopMatrix();
 }

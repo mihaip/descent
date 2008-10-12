@@ -2,10 +2,9 @@ TODO
 
 M0
 - fix textures (numbers are slightly distorted)
-- Add pause button to the UI
 - Make falling off the bottom kill the player
 - Player can get stuck to bottom of platform when bouncing
-- Game start/stop/pause support
+- Game start/stop support
 
 M1
 - Add falling frames for player
@@ -34,3 +33,4 @@ DONE
 - Update health display as necessary
 - Bouncy platforms
 - Make hitting the top kill the player
+- Add pause button to the UI

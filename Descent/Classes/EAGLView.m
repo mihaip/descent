@@ -23,7 +23,6 @@
 
 - (BOOL)createFramebuffer;
 - (void)destroyFramebuffer;
-- (void)draw;
 
 - (void)handleTick;
 - (CGPoint)getTouchPoint:(NSSet *)touches;
@@ -116,7 +115,6 @@
   [self draw];
 }
 
-
 - (BOOL)createFramebuffer {
   
   glGenFramebuffersOES(1, &viewFramebuffer);
@@ -142,6 +140,11 @@
   glOrthof(0, backingWidth, 
            0, backingHeight,
            -1, 1);    
+
+  // Set a blending function to use
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  // Enable blending
+  glEnable(GL_BLEND);
   
   return YES;
 }
@@ -160,8 +163,12 @@
 }
 
 - (void)startAnimation {
+  if (animationTimer) {
+    [self stopAnimation];
+  }
+  
   lastTickDate_ = [NSDate timeIntervalSinceReferenceDate];
-  self.animationTimer = 
+  animationTimer = 
       [NSTimer scheduledTimerWithTimeInterval:animationInterval 
                                        target:self 
                                      selector:@selector(handleTick) 
@@ -171,12 +178,11 @@
 
 
 - (void)stopAnimation {
-  [self.animationTimer invalidate];
-  self.animationTimer = nil;
+  [animationTimer invalidate];
+  animationTimer = nil;
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval {
-  
   animationInterval = interval;
   if (animationTimer) {
     [self stopAnimation];

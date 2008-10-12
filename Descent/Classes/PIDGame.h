@@ -37,6 +37,11 @@
   PIDNumbersDisplay *floorDisplay_;
   PIDFixedEntity *statusBackground_;
   PIDHealthDisplay *healthDisplay_;
+  
+  // Pausing
+  PIDFixedEntity *pauseCover_;
+  PIDFixedEntity *pauseButton_;
+  BOOL isPaused_;
 }
 
 - initWithView:(EAGLView *)glView;
@@ -50,5 +55,6 @@
 - (void)begin;
 - (void)pause;
 - (void)resume;
+- (BOOL)isPaused;
 
 @end

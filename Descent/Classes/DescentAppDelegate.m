@@ -23,7 +23,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-  [game_ resume];
+  // Don't resume the game, let the user choose when they want to resume
 }
 
 - (void)dealloc {

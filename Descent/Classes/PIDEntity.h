@@ -13,6 +13,7 @@
   PIDSprite *sprite_;
   CGPoint position_;
   NSMutableArray *children_;
+  BOOL isEnabled_;
 }
 
 - initWithSprite:(PIDSprite *)sprite position:(CGPoint) position;
@@ -32,9 +33,14 @@
 - (double)right;
 
 - (BOOL)intersectsWith:(PIDEntity *)other;
+- (BOOL)isPointInside:(CGPoint)point;
 
 - (void)handleTick:(double)ticks;
 
 - (void)draw;
+
+- (void)enable;
+- (void)disable;
+- (BOOL)isEnabled;
 
 @end

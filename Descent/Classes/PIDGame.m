@@ -6,6 +6,8 @@
 //   Copyright 2008 persistent.info. All rights reserved.
 //
 
+#import "PIDColor.h"
+#import "PIDRectangleSprite.h"
 #import "PIDGame.h"
 #import "PIDTextureSprite.h"
 #import "PIDPlatform.h"
@@ -151,31 +153,61 @@
 }
 
 - (void)initStatus {
+  CGSize viewSize = [glView_ size];
+  
+  PIDColor *pauseCoverColor = [[PIDColor alloc] initWithRed:0.0
+                                                      green:0.0
+                                                       blue:0.0
+                                                      alpha:0.9];
+  PIDRectangleSprite *pauseCoverSprite = [[PIDRectangleSprite alloc] 
+                                          initWithSize:viewSize
+                                                 color:pauseCoverColor];
+  pauseCover_ = [[PIDFixedEntity alloc] 
+                 initWithSprite:pauseCoverSprite
+                       position:CGPointMake(viewSize.width/2, 
+                                            viewSize.height/2)];
+  [pauseCover_ disable];
+  [fixedLayer_ addChild:pauseCover_];
+  [pauseCoverColor release];
+  
 #if SHOW_FPS
   fpsDisplay_ = [[PIDNumbersDisplay alloc]
                  initWithPosition:CGPointMake(7, 9)];
   [fixedLayer_ addChild:fpsDisplay_];
 #endif
   
-  // Image is only 32 pixels wide, but we stretch it to the width of the whole
-  // screen
-  CGSize viewSize = [glView_ size];
+  // Background image is only 32 pixels wide, but we stretch it to the width of 
+  // the whole screen
   PIDTextureSprite *statusBackgroundSprite = 
       [[PIDTextureSprite alloc] initWithImage:@"status.png" 
                                          size:CGSizeMake(viewSize.width, 32) 
                                        frames:1];
-  statusBackground_ = [[PIDFixedEntity alloc] initWithSprite:statusBackgroundSprite
-                                                    position:CGPointMake(160, 16)];
+  statusBackground_ = [[PIDFixedEntity alloc] 
+                       initWithSprite:statusBackgroundSprite
+                             position:CGPointMake(viewSize.width/2, 16)];
   [fixedLayer_ addChild:statusBackground_];
   [statusBackgroundSprite release];
 
+  // Floor display
   floorDisplay_ = [[PIDNumbersDisplay alloc] 
                    initWithPosition:CGPointMake(7, 10)];
   [fixedLayer_ addChild:floorDisplay_];  
   
-  healthDisplay_ = [[PIDHealthDisplay alloc] initWithPosition:CGPointMake(viewSize.width - 2, 10)];
+  // Health display
+  healthDisplay_ = [[PIDHealthDisplay alloc] 
+                    initWithPosition:CGPointMake(viewSize.width - 2, 10)];
   [fixedLayer_ addChild:healthDisplay_];
   [healthDisplay_ update:player_];
+  
+  // Pause button
+  PIDTextureSprite *pauseSprite = 
+  [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
+                                     size:CGSizeMake(90, 16) 
+                                   frames:1];
+  pauseButton_ = [[PIDFixedEntity alloc] initWithSprite:pauseSprite
+                                               position:CGPointMake(80, 10)];
+  [fixedLayer_ addChild:pauseButton_];
+  [pauseSprite release];
 }
 
 - (void)handleTick:(double)ticks {
@@ -289,6 +321,17 @@
 }
 
 - (void)handleTouchBegin:(CGPoint)touchPoint {
+  // Handle buttons
+  if ([pauseButton_ isPointInside:touchPoint]) {
+    if (isPaused_) {
+      [self resume];
+    } else {
+      [self pause];
+    }
+    return;
+  }
+  
+  // Otherwise map to player movement
   CGSize viewSize = [glView_ size];
   PIDPlayerHorizontalDirection playerDirection = kNone;
   if (touchPoint.x < viewSize.width * 0.4) {
@@ -312,12 +355,26 @@
   [glView_ startAnimation];
 }
 
-- (void)pause {
-  glView_.animationInterval = 1.0 / 5.0;
-  
+- (BOOL)isPaused {
+  return isPaused_;
 }
+
+- (void)pause {
+  [glView_ stopAnimation];
+
+  [pauseCover_ enable];
+  [glView_ draw];
+
+  isPaused_ = true;
+}
+
 - (void)resume {
-  glView_.animationInterval = 1.0 / 60.0;
+  [glView_ startAnimation];
+
+  [pauseCover_ disable];
+  [glView_ draw];
+  
+  isPaused_ = false;
 }
 
 - (void)dealoc {
