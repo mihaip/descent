@@ -12,8 +12,6 @@
 #import <OpenGLES/EAGLDrawable.h>
 
 #import "EAGLView.h"
-#import "PIDEntity.h"
-#import "PIDRectangleSprite.h"
 
 // A class extension to declare private methods
 @interface EAGLView ()
@@ -65,8 +63,6 @@
     
     animationInterval = 1.0 / 60.0;
     framesPerSecond_ = 0.0;
-
-    root_ = [[PIDEntity alloc] initWithSprite:[PIDSprite new]];       
   }
   return self;
 }
@@ -102,11 +98,10 @@
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  [root_ draw];
+  [eventTarget_ draw];
     
   [context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
-
 
 - (void)layoutSubviews {
   [EAGLContext setCurrentContext:context];
@@ -190,10 +185,6 @@
   }
 }
 
-- (PIDEntity *)root {
-  return root_;
-}
-
 - (CGSize)size {
   return self.frame.size;
 }
@@ -239,8 +230,6 @@
   if ([EAGLContext currentContext] == context) {
     [EAGLContext setCurrentContext:nil];
   }
-  
-  [root_ release];
   
   [context release];  
   [super dealloc];

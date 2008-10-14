@@ -10,13 +10,12 @@
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 
-#import "PIDEntity.h"
-
 @protocol PIDEventTarget
 - (void)handleTick:(double)ticks;
 - (void)handleTouchBegin:(CGPoint)touchPoint;
 - (void)handleTouchMove:(CGPoint)touchPoint;
 - (void)handleTouchEnd:(CGPoint)touchPoint;
+- (void)draw;
 @end
 
 /*
@@ -46,7 +45,6 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
   
   int viewportOffsetX_, viewportOffsetY_;
   
-  PIDEntity *root_;
   id <PIDEventTarget> eventTarget_;
 }
 
@@ -58,7 +56,6 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 
 - (void)setViewportOffsetX:(int)viewportOffsetX andY:(int)viewportOffsetY;
 
-- (PIDEntity *)root;
 - (CGSize)size;
 - (double)framesPerSecond;
 - (void)setEventTarget:(id <PIDEventTarget>)eventTarget;

@@ -44,11 +44,9 @@
     descentPosition_ = 0;
     platformGenerationTriggerPosition_ = 0;
     
-    // Make sure that fixed entities appear in front of regualr ones
+    // Make sure that fixed entities appear in front of regular ones
     normalLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
     fixedLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
-    [[glView_ root] addChild:normalLayer_];
-    [[glView_ root] addChild:fixedLayer_];
     
     [self initPlayer];
     [self initPlatforms];
@@ -360,6 +358,11 @@
 
 - (void)handleTouchEnd:(CGPoint)touchPoint {
   [player_ setHorizontalDirection:kNone];
+}
+
+- (void)draw {
+  [normalLayer_ draw];
+  [fixedLayer_ draw];
 }
 
 - (void)begin {

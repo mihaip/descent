@@ -51,6 +51,7 @@
 - (void)handleTouchBegin:(CGPoint)touchPoint;
 - (void)handleTouchMove:(CGPoint)touchPoint;
 - (void)handleTouchEnd:(CGPoint)touchPoint;
+- (void)draw;
 
 - (void)begin;
 - (void)pause;
