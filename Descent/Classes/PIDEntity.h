@@ -33,6 +33,7 @@
 - (double)right;
 
 - (BOOL)intersectsWith:(PIDEntity *)other;
+- (BOOL)intersectsWith:(PIDEntity *)other withMargin:(int)margin;
 - (BOOL)isPointInside:(CGPoint)point;
 
 - (void)handleTick:(double)ticks;

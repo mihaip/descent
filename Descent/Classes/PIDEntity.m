@@ -86,8 +86,19 @@
 // Simple bounding rectangle collision, subclasses may choose to implement more
 // accurate collision detection
 - (BOOL)intersectsWith:(PIDEntity *)other {
-  return CGRectIntersectsRect([self bounds], [other bounds]);
+  return [self intersectsWith:other withMargin:0];
 }
+
+- (BOOL)intersectsWith:(PIDEntity *)other withMargin:(int)margin {
+  CGRect ourBounds = [self bounds];
+  CGRect otherBounds = [other bounds];
+  
+  ourBounds = CGRectInset(ourBounds, -margin, -margin);
+  otherBounds = CGRectInset(otherBounds, -margin, -margin);
+  
+  return CGRectIntersectsRect(ourBounds, otherBounds);
+}
+
 
 - (BOOL)isPointInside:(CGPoint)point {
   return CGRectContainsPoint([self bounds], point);

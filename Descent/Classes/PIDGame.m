@@ -25,7 +25,7 @@
 - (void)initPlatforms;
 - (void)initFence;
 - (void)initStatus;
-- (void)addPlatformWithPosition:(CGPoint)platformPosition;
+- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
 - (void)updateMovementConstraints;
@@ -91,28 +91,39 @@
   }
 }
 
-- (void)addPlatformWithPosition:(CGPoint)platformPosition {
-  PIDPlatform* platform = [[PIDPlatform alloc] 
+- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition {
+  PIDPlatform *newPlatform = [[PIDPlatform alloc] 
                            initWithPosition:platformPosition];
+
+  // Make sure we don't hit any of the existing platforms
+  // TODO(mihaip): handle cases where user can be trapped (sunken platform
+  // between two raised platforms and/or wall)
+  for (PIDPlatform *platform in platforms_) {
+    if ([platform intersectsWith:newPlatform withMargin:5]) {
+      [newPlatform release];
+      return NO;
+    }
+  }
   
-  [normalLayer_ addChild:platform];
+  [normalLayer_ addChild:newPlatform];
+  [platforms_ addObject:newPlatform];
+  [newPlatform release];
   
-  [platforms_ addObject:platform];
-  
-  [platform release];
+  return YES;
 }
 
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY {
   CGSize viewSize = [glView_ size];
   CGPoint platformPosition;
+  BOOL addedPlatform;
   
-  // TODO(mihaip): take into account collisions with other platforms and minium
-  // spacing
-  platformPosition.x = 
-      (random() % ((int) viewSize.width - kPlatformWidth)) + kPlatformWidth/2;
-  platformPosition.y = minY +(random() % (maxY - minY));
-  
-  [self addPlatformWithPosition:platformPosition];
+  do {
+    platformPosition.x = 
+        (random() % ((int) viewSize.width - kPlatformWidth)) + kPlatformWidth/2;
+    platformPosition.y = minY +(random() % (maxY - minY));
+    
+    addedPlatform = [self addPlatformWithPosition:platformPosition];
+  } while (!addedPlatform);
 }
 
 - (void)initFence {
