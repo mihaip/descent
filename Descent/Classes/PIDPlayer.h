@@ -51,6 +51,7 @@ typedef enum  {
 - (PIDEntity *)hitEntityOnSide:(PIDSide)side;
 
 - (int)health;
+- (BOOL)isDead;
 - (void)increaseHealth;
 - (void)decreaseHealth;
 

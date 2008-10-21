@@ -11,6 +11,7 @@
 #import "PIDGame.h"
 #import "PIDTextureSprite.h"
 #import "PIDPlatform.h"
+#import "DescentAppDelegate.h"
 
 #define kDescentSpeed 50 // In pixels/s
 #define kPlayerHeight 32
@@ -29,6 +30,7 @@
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
 - (void)updateMovementConstraints;
+- (void)gameOver;
 @end
 
 @implementation PIDGame
@@ -48,9 +50,7 @@
     [self initPlatforms];
     [self initFence];
     
-    [self initStatus];
-    
-    glView_.animationInterval = 1.0 / 60.0;
+    [self initStatus];    
   }
   
   return self;
@@ -252,7 +252,11 @@
     }
   }
 
-  [healthDisplay_ update:player_];
+  if ([player_ isDead]) {
+    [self gameOver];
+  } else {
+    [healthDisplay_ update:player_];
+  }
 }
 
 - (void)updateMovementConstraints {
@@ -389,6 +393,10 @@
 
 - (void)resume {
   // Don't resume the game, let the user choose when they want unpause
+}
+
+- (void)gameOver {
+  [GetAppInstance() switchToMenu];  
 }
 
 - (void)dealoc {

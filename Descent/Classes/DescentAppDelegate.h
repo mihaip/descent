@@ -16,8 +16,6 @@
   IBOutlet UIWindow *window;
   IBOutlet EAGLView *glView;
  @private
-  PIDGame* game_;
-  PIDMenu* menu_;
   id <PIDEventTarget> eventTarget_;
 }
 

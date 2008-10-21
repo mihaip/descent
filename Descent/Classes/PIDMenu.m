@@ -26,7 +26,7 @@
     
     [self initButtons];
    
-    glView_.animationInterval = 1.0 / 60.0;
+    [glView_ setViewportOffsetX:0 andY:0];
   }
   
   return self;

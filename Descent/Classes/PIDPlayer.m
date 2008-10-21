@@ -188,10 +188,14 @@ static PIDTextureSprite *kPlayerSprite;
 }
 
 - (void)decreaseHealth {
-  if (health_ > 0) {
+  if (health_ >= 0) {
     health_--;
   }
-}  
+}
+
+- (BOOL)isDead {
+  return health_ < 0; 
+}
 
 - (BOOL)landed {
   return landed_;

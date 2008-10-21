@@ -3,23 +3,30 @@ TODO
 M0
 - fix textures (numbers are slightly distorted)
 - Make falling off the bottom kill the player
+- No need for top and bottom movement constraints anymore
 - Player can get stuck to bottom of platform when bouncing
-- Game start/stop support
+- Check for memory leaks when switching event targets
 
 M1
 - Add falling frames for player
 - Add textures for platforms
 - Add texture for background
-- Cycle coordinates after a while, to avoid overflow issues
-- Add default.png
-- Add application icon
 - Add difficulty levels
 - Add different platform types
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
+- Add stop button to the UI
 
 M2
-- Add reporting of high scores to a server
+- Better death sequence when dying from fence
+- Better death sequence when dying from killer platform
+- Add default.png
+- Add application icon
 - Add local high scores
+- Sounds
+
+M3
+- Cycle coordinates after a while, to avoid overflow issues
+- Add reporting of high scores to a server
 
 DONE
 - Add FPS display
@@ -34,3 +41,5 @@ DONE
 - Bouncy platforms
 - Make hitting the top kill the player
 - Add pause button to the UI
+- Game start/stop support
+- Health at zero ends the game

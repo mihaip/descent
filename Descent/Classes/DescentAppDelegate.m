@@ -17,12 +17,8 @@
   // For now use a fixed seed so that repeated runs are reproducible
   srandom(27);
   
-  menu_ = [[PIDMenu alloc] initWithView:glView];
-  game_ = [[PIDGame alloc] initWithView:glView];
-
-  [glView startAnimation];  
-  
   [self switchToMenu];
+  [glView startAnimation];  
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -38,16 +34,23 @@
 }
 
 - (void)switchToGame {
-  eventTarget_ = game_; 
+  if (eventTarget_) {
+    // TODO(mihaip): it'd be nice if this cast wasn't necessary
+    [((NSObject*) eventTarget_) release];
+  }
+  
+  eventTarget_ = [[PIDGame alloc] initWithView:glView]; 
 }
 
 - (void)switchToMenu {
-  eventTarget_ = menu_; 
+  if (eventTarget_) {
+    // TODO(mihaip): it'd be nice if this cast wasn't necessary
+    [((NSObject*) eventTarget_) release];
+  }
+  eventTarget_ = [[PIDMenu alloc] initWithView:glView]; 
 }
 
 - (void)dealloc {
-  [window release];
-  [game_ release];
   [super dealloc];
 }
 
