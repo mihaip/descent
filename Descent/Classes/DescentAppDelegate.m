@@ -14,16 +14,35 @@
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
+  // For now use a fixed seed so that repeated runs are reproducible
+  srandom(27);
+  
+  menu_ = [[PIDMenu alloc] initWithView:glView];
   game_ = [[PIDGame alloc] initWithView:glView];
-  [game_ begin];
+
+  [glView startAnimation];  
+  
+  [self switchToMenu];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-  [game_ pause];
+  [eventTarget_ suspend];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-  // Don't resume the game, let the user choose when they want to resume
+  [eventTarget_ resume];
+}
+
+- (id <PIDEventTarget>)eventTarget {
+  return eventTarget_;
+}
+
+- (void)switchToGame {
+  eventTarget_ = game_; 
+}
+
+- (void)switchToMenu {
+  eventTarget_ = menu_; 
 }
 
 - (void)dealloc {

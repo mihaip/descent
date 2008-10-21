@@ -33,6 +33,7 @@
 		9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */; };
 		9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */; };
 		91FA77540EA2A9CE000D813F /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FA77530EA2A9CE000D813F /* pause.png */; };
+		91FA78D50EA431F2000D813F /* PIDMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FA78D40EA431F2000D813F /* PIDMenu.m */; };
 		91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FCCCC90E81F92C004A2033 /* numbers.png */; };
 		91FCCD6B0E8202B2004A2033 /* PIDFixedEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,8 @@
 		9175D94E0E907578000B8787 /* PIDEntityWithFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDEntityWithFrame.h; sourceTree = "<group>"; };
 		9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDEntityWithFrame.m; sourceTree = "<group>"; };
 		91FA77530EA2A9CE000D813F /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		91FA78D30EA431F2000D813F /* PIDMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDMenu.h; sourceTree = "<group>"; };
+		91FA78D40EA431F2000D813F /* PIDMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDMenu.m; sourceTree = "<group>"; };
 		91FCCCC90E81F92C004A2033 /* numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numbers.png; sourceTree = "<group>"; };
 		91FCCD690E8202B2004A2033 /* PIDFixedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFixedEntity.h; sourceTree = "<group>"; };
 		91FCCD6A0E8202B2004A2033 /* PIDFixedEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDFixedEntity.m; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				91FA78D10EA431D0000D813F /* Menu */,
 				915436750E7C4EEA00FAF93D /* Game */,
 				915436740E7C4EE300FAF93D /* Base */,
 				28FD14FC0DC6FC130079059D /* EAGLView.h */,
@@ -213,6 +217,15 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
+		91FA78D10EA431D0000D813F /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				91FA78D30EA431F2000D813F /* PIDMenu.h */,
+				91FA78D40EA431F2000D813F /* PIDMenu.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -288,6 +301,7 @@
 				9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */,
 				9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */,
 				9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */,
+				91FA78D50EA431F2000D813F /* PIDMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

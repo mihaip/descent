@@ -6,7 +6,6 @@
 //   Copyright 2008 persistent.info. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "EAGLView.h"
 #import "PIDPlayer.h"
 #import "PIDFence.h"
@@ -52,10 +51,11 @@
 - (void)handleTouchMove:(CGPoint)touchPoint;
 - (void)handleTouchEnd:(CGPoint)touchPoint;
 - (void)draw;
-
-- (void)begin;
-- (void)pause;
+- (void)suspend;
 - (void)resume;
+
+- (void)pause;
+- (void)unpause;
 - (BOOL)isPaused;
 
 @end

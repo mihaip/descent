@@ -36,10 +36,6 @@
 - initWithView:(EAGLView *)glView {
   if (self = [super init]) {
     glView_ = [glView retain];
-    [glView_ setEventTarget:self];
-    
-    // For now use a fixed seed so that repeated runs are reproducible
-    srandom(27);
     
     descentPosition_ = 0;
     platformGenerationTriggerPosition_ = 0;
@@ -333,7 +329,7 @@
   // Handle buttons
   if ([pauseButton_ isPointInside:touchPoint]) {
     if (isPaused_) {
-      [self resume];
+      [self unpause];
     } else {
       [self pause];
     }
@@ -365,30 +361,34 @@
   [fixedLayer_ draw];
 }
 
-- (void)begin {
-  [glView_ startAnimation];
-}
-
 - (BOOL)isPaused {
   return isPaused_;
 }
 
 - (void)pause {
   [glView_ stopAnimation];
-
+  
   [pauseCover_ enable];
   [glView_ draw];
-
+  
   isPaused_ = true;
 }
 
-- (void)resume {
+- (void)unpause {
   [glView_ startAnimation];
-
+  
   [pauseCover_ disable];
   [glView_ draw];
-  
+
   isPaused_ = false;
+}
+
+- (void)suspend {
+  [self pause];
+}
+
+- (void)resume {
+  // Don't resume the game, let the user choose when they want unpause
 }
 
 - (void)dealoc {

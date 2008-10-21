@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 
+#import "DescentAppDelegate.h"
 #import "EAGLView.h"
 
 // A class extension to declare private methods
@@ -25,6 +26,7 @@
 - (void)handleTick;
 - (CGPoint)getTouchPoint:(NSSet *)touches;
 
+- (id <PIDEventTarget>)eventTarget;
 @end
 
 @implementation EAGLView
@@ -81,7 +83,7 @@
     
   lastTickDate_ = tickDate;
   
-  [eventTarget_ handleTick:tickInterval];
+  [[self eventTarget] handleTick:tickInterval];
   [self draw];
 }
 
@@ -98,7 +100,7 @@
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  [eventTarget_ draw];
+  [[self eventTarget] draw];
     
   [context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
@@ -193,20 +195,16 @@
   return framesPerSecond_;
 }
 
-- (void)setEventTarget:(id <PIDEventTarget>)eventTarget {
-  eventTarget_ = eventTarget;
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [eventTarget_ handleTouchBegin:[self getTouchPoint:touches]];
+  [[self eventTarget] handleTouchBegin:[self getTouchPoint:touches]];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-  [eventTarget_ handleTouchMove:[self getTouchPoint:touches]];
+  [[self eventTarget] handleTouchMove:[self getTouchPoint:touches]];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  [eventTarget_ handleTouchEnd:[self getTouchPoint:touches]];
+  [[self eventTarget] handleTouchEnd:[self getTouchPoint:touches]];
 }
 
 - (CGPoint)getTouchPoint:(NSSet *)touches {
@@ -221,6 +219,10 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   NSLog(@"touchesCancelled");   
+}
+
+- (id <PIDEventTarget>)eventTarget {
+  return [GetAppInstance() eventTarget];
 }
 
 - (void)dealloc {

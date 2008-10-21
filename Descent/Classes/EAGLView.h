@@ -15,7 +15,11 @@
 - (void)handleTouchBegin:(CGPoint)touchPoint;
 - (void)handleTouchMove:(CGPoint)touchPoint;
 - (void)handleTouchEnd:(CGPoint)touchPoint;
+
 - (void)draw;
+
+- (void)suspend;
+- (void)resume;
 @end
 
 /*
@@ -44,8 +48,6 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
   double framesPerSecond_;
   
   int viewportOffsetX_, viewportOffsetY_;
-  
-  id <PIDEventTarget> eventTarget_;
 }
 
 @property NSTimeInterval animationInterval;
@@ -58,6 +60,5 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 
 - (CGSize)size;
 - (double)framesPerSecond;
-- (void)setEventTarget:(id <PIDEventTarget>)eventTarget;
 
 @end

@@ -8,17 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+#import "EAGLView.h"
 #import "PIDGame.h"
-
-@class EAGLView;
+#import "PIDMenu.h"
 
 @interface DescentAppDelegate : NSObject <UIApplicationDelegate> {
   IBOutlet UIWindow *window;
   IBOutlet EAGLView *glView;
  @private
   PIDGame* game_;
+  PIDMenu* menu_;
+  id <PIDEventTarget> eventTarget_;
 }
 
 @property (nonatomic, retain) UIWindow *window;
 
+- (id <PIDEventTarget>)eventTarget;
+- (void)switchToGame;
+- (void)switchToMenu;
+
 @end
+
+static DescentAppDelegate* GetAppInstance() {
+  return (DescentAppDelegate*) ([UIApplication sharedApplication].delegate);
+}
