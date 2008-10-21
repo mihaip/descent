@@ -12,7 +12,7 @@
 
 // While we're touching the player, for every period of this lenth (in seconds), 
 // one unit of health is removed
-#define kFencePlayerHurtTime 0.1
+#define kFencePlayerHurtTime 0.06
 
 static PIDTextureSprite *kCapsSprite;
 
