@@ -2,8 +2,6 @@ TODO
 
 M0
 - fix textures (numbers are slightly distorted)
-- Make falling off the bottom kill the player
-- No need for top and bottom movement constraints anymore
 - Player can get stuck to bottom of platform when bouncing
 - Check for memory leaks when switching event targets
 
@@ -43,3 +41,5 @@ DONE
 - Add pause button to the UI
 - Game start/stop support
 - Health at zero ends the game
+- Make falling off the bottom kill the player
+- No need for top and bottom movement constraints anymore

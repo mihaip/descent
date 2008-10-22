@@ -240,6 +240,8 @@
     }
   } else if ([fence_ isHurtingPlayer]) {
     [fence_ stopHurtingPlayer];
+  } else if ([player_ top] < -descentPosition_ - [glView_ size].height) {
+    [self gameOver];
   }
     
   [fence_ handleTick:ticks];
@@ -262,20 +264,15 @@
 - (void)updateMovementConstraints {
   [player_ resetMovementConstraints];
 
-  // First constrain movement by viewing rect
+  // First constrain movement by viewing rect (just the left and right, since
+  // top and bottom just kill the player)
   CGSize viewSize = [glView_ size];
   [player_ addMovementConstraint:0
                           entity:normalLayer_
                           onSide:kSideLeft];
-  [player_ addMovementConstraint:-descentPosition_
-                          entity:normalLayer_
-                          onSide:kSideBottom];
   [player_ addMovementConstraint:viewSize.width
                           entity:normalLayer_
                           onSide:kSideRight];
-  [player_ addMovementConstraint:-descentPosition_ + viewSize.height
-                          entity:normalLayer_
-                          onSide:kSideTop];
   
   // Then by platforms
   double playerBottom = [player_ bottom];
