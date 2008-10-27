@@ -72,4 +72,14 @@
 - (void)resume {
 }
 
+- (void)dealloc {
+  [glView_ release];
+  
+  [startButton_ release];
+  [root_ release];
+  
+  [super dealloc];  
+}
+
+
 @end

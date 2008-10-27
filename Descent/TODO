@@ -1,8 +1,5 @@
 TODO
 
-M0
-- Check for memory leaks when switching event targets
-
 M1
 - Add falling frames for player
 - Add textures for platforms
@@ -11,8 +8,9 @@ M1
 - Add different platform types
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
-- fix textures (numbers are slightly distorted)
-- add "contral" tracing player's path
+- Fix textures (numbers are slightly distorted)
+- Add "contrail" tracing player's path
+- Clean up allocation/retain pattern (prefer auto-releasing)
 
 M2
 - Better death sequence when dying from fence
@@ -27,6 +25,8 @@ M3
 - Add reporting of high scores to a server
 
 DONE
+
+M0
 - Add FPS display
 - Add textures for player
 - Add walking animation for player
@@ -44,3 +44,4 @@ DONE
 - Make falling off the bottom kill the player
 - No need for top and bottom movement constraints anymore
 - Player can get stuck to bottom of platform when bouncing
+- Check for memory leaks when switching event targets

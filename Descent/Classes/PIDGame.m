@@ -172,6 +172,7 @@
                                             viewSize.height/2)];
   [pauseCover_ disable];
   [fixedLayer_ addChild:pauseCover_];
+  [pauseCoverSprite release];
   [pauseCoverColor release];
   
 #if SHOW_FPS
@@ -396,18 +397,27 @@
   [GetAppInstance() switchToMenu];  
 }
 
-- (void)dealoc {
+- (void)dealloc {
   [glView_ release];
   
-  [player_ release];  
-  [platforms_ makeObjectsPerformSelector:@selector(release)];
+  // Game entities
+  [player_ release];
+  [fence_ release];
   [platforms_ release];
 
+  // Status
+  [pauseCover_ release];
+  [statusBackground_ release];
+  [floorDisplay_ release];
+  [healthDisplay_ release];
+  [pauseButton_ release];
 #if SHOW_FPS
   [fpsDisplay_ release];
 #endif
   
-  [floorDisplay_ release];
+  // Roots
+  [normalLayer_ release];
+  [fixedLayer_ release];
   
   [super dealloc];  
 }

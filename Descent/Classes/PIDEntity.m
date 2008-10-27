@@ -132,7 +132,6 @@
 
 - (void) dealloc{
   [sprite_ release];
-  [children_ makeObjectsPerformSelector:@selector(release)];
   [children_ release];
   
   [super dealloc];

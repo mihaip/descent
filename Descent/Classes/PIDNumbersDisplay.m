@@ -86,5 +86,13 @@ static PIDTextureSprite *kNumbersSprite;
   }
 }
 
+- (void)dealloc {
+  if (currentValue_) {
+    [currentValue_ release];
+  }
+  
+  [super dealloc]; 
+}
+
 
 @end
