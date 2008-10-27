@@ -69,14 +69,13 @@
 - (void)initPlatforms {
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
+  
   for (int i = 0; i < 5; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
     if (i == 0) {
-      CGPoint platformPosition;
-      platformPosition.x = viewSize.width / 2;
-      platformPosition.y = viewSize.height / 2;
-      [self addPlatformWithPosition:platformPosition];
+      [self addPlatformWithPosition:CGPointMake(viewSize.width / 2, 
+                                                viewSize.height / 2)];
     } else {
       // Other platforms start in the bottom half the screen, so that the
       // player can fall on the one that was created above
@@ -242,6 +241,7 @@
     [fence_ stopHurtingPlayer];
   } else if ([player_ top] < -descentPosition_ - [glView_ size].height) {
     [self gameOver];
+    return;
   }
     
   [fence_ handleTick:ticks];

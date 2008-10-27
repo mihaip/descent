@@ -1,8 +1,6 @@
 TODO
 
 M0
-- fix textures (numbers are slightly distorted)
-- Player can get stuck to bottom of platform when bouncing
 - Check for memory leaks when switching event targets
 
 M1
@@ -13,6 +11,8 @@ M1
 - Add different platform types
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
+- fix textures (numbers are slightly distorted)
+- add "contral" tracing player's path
 
 M2
 - Better death sequence when dying from fence
@@ -43,3 +43,4 @@ DONE
 - Health at zero ends the game
 - Make falling off the bottom kill the player
 - No need for top and bottom movement constraints anymore
+- Player can get stuck to bottom of platform when bouncing

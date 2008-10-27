@@ -103,7 +103,7 @@ static PIDTextureSprite *kPlayerSprite;
   // If we've been stopped, then reset our speed back to 0
   landed_ = NO;
   if (position_.y == newPosition.y) {
-    if (previousSpeed != 0) {
+    if (previousSpeed != 0 && previousSpeed > 0) {
       landed_ = YES;
     }
     verticalSpeed_ = 0;
