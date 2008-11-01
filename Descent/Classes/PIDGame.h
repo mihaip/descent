@@ -36,9 +36,12 @@
 #if SHOW_FPS
   PIDNumbersDisplay *fpsDisplay_;
 #endif
-  PIDNumbersDisplay *floorDisplay_;
   PIDEntity *statusBackground_;
   PIDHealthDisplay *healthDisplay_;
+  
+  // Floor display
+  PIDNumbersDisplay *currentFloorDisplay_;
+  PIDNumbersDisplay *nextFloorDisplay_;
   
   // Pausing
   PIDEntity *pauseCover_;

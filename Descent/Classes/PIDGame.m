@@ -21,9 +21,15 @@
 #define kStatusBarHeight 16
 #define kBackgroundTileSize 256 // In pixels
 
+#define kFloorDigitWidth 51
+#define kFloorDigitHeight 86
+
+static PIDTextureSprite *kFloorNumbersSprite;
+
 // Private methods
 @interface PIDGame ()
 - (void)initBackground;
+- (void)initFloorDisplay;
 - (void)initPlayer;
 - (void)initPlatforms;
 - (void)initFence;
@@ -33,10 +39,23 @@
 - (void)updatePlatforms;
 - (void)updateMovementConstraints;
 - (void)updateBackground;
+- (void)updateFloorDisplay;
 - (void)gameOver;
 @end
 
 @implementation PIDGame
+
++ (void)initialize {
+  static BOOL initialized = NO; 
+  if (initialized) return;
+  initialized = YES;
+  
+  kFloorNumbersSprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"floor-numbers.png"
+                                         size:CGSizeMake(kFloorDigitWidth, 
+                                                         kFloorDigitHeight)
+                                       frames:10];
+}
 
 - initWithView:(EAGLView *)glView {
   if (self = [super init]) {
@@ -50,6 +69,7 @@
     fixedLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
     
     [self initBackground];
+    [self initFloorDisplay];
     [self initPlayer];
     [self initPlatforms];
     [self initFence];
@@ -74,6 +94,26 @@
                                                     viewSize.height - [backgroundSprite size].height/2)];
   [backgroundSprite release];
   [normalLayer_ addChild:background_];
+}
+
+- (void)initFloorDisplay {
+  CGSize viewSize = [glView_ size];
+
+  currentFloorDisplay_ = [[PIDNumbersDisplay alloc] 
+                   initWithPosition:CGPointMake(viewSize.width/2 - 20, 
+                                                viewSize.height/2)
+                   sprite:kFloorNumbersSprite];
+  [currentFloorDisplay_ setValue:@"1"];
+  [currentFloorDisplay_ unfixPosition];
+  [normalLayer_ addChild:currentFloorDisplay_];
+
+  nextFloorDisplay_ = [[PIDNumbersDisplay alloc] 
+                       initWithPosition:CGPointMake(viewSize.width/2 + 30, 
+                                                    -viewSize.height/2)
+                          sprite:kFloorNumbersSprite];
+  [nextFloorDisplay_ setValue:@"2"];
+  [nextFloorDisplay_ unfixPosition];
+  [normalLayer_ addChild:nextFloorDisplay_];  
 }
 
 - (void)initPlayer {
@@ -213,11 +253,6 @@
   [fixedLayer_ addChild:statusBackground_];
   [statusBackgroundSprite release];
 
-  // Floor display
-  floorDisplay_ = [[PIDNumbersDisplay alloc] 
-                   initWithPosition:CGPointMake(7, 10)];
-  [fixedLayer_ addChild:floorDisplay_];  
-  
   // Health display
   healthDisplay_ = [[PIDHealthDisplay alloc] 
                     initWithPosition:CGPointMake(viewSize.width - 2, 10)];
@@ -230,7 +265,7 @@
                                          size:CGSizeMake(90, 16) 
                                        frames:1];
   pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseSprite
-                                          position:CGPointMake(80, 10)];
+                                          position:CGPointMake(50, 10)];
   [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
   [pauseSprite release];
@@ -244,14 +279,12 @@
   
   descentPosition_ += kDescentSpeed * ticks;
   
-  int floor = descentPosition_/[glView_ size].height;
-  [floorDisplay_ setValue:[NSString stringWithFormat:@"%3d", floor]];
-  
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   
   [self updatePlatforms];
   [self updateMovementConstraints];
   [self updateBackground];
+  [self updateFloorDisplay];
   
   [player_ handleTick:ticks];
   
@@ -357,6 +390,25 @@
   }
 }
 
+- (void)updateFloorDisplay {
+  CGSize viewSize = [glView_ size];
+  double floorDisplayBottom = [currentFloorDisplay_ bottom];
+  double viewTop = -descentPosition_ + viewSize.height;
+  
+  if (floorDisplayBottom > viewTop) {
+    int floor = descentPosition_/viewSize.height + 3;
+    [currentFloorDisplay_ setValue:[NSString stringWithFormat:@"%d", floor]];
+    [currentFloorDisplay_ 
+         setPosition:CGPointMake(viewSize.width/2 + (random() % 100) - 50,
+                                 -(floor - 1.5) * viewSize.height)];
+    
+    PIDNumbersDisplay *temp;
+    temp = currentFloorDisplay_;
+    currentFloorDisplay_ = nextFloorDisplay_;
+    nextFloorDisplay_ = temp;
+  }
+}
+
 - (void)handleTouchBegin:(CGPoint)touchPoint {
   // Handle buttons
   if ([pauseButton_ isPointInside:touchPoint]) {
@@ -441,12 +493,15 @@
   // Status
   [pauseCover_ release];
   [statusBackground_ release];
-  [floorDisplay_ release];
   [healthDisplay_ release];
   [pauseButton_ release];
 #if SHOW_FPS
   [fpsDisplay_ release];
 #endif
+  
+  // Floor display
+  [currentFloorDisplay_ release];
+  [nextFloorDisplay_ release];
   
   // Roots
   [normalLayer_ release];

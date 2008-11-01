@@ -12,6 +12,7 @@ M1
 - Clean up allocation/retain pattern (prefer auto-releasing)
 
 M2
+- Coffe stains on background
 - Better death sequence when dying from fence
 - Better death sequence when dying from killer platform
 - Add default.png
