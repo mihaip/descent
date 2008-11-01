@@ -30,6 +30,7 @@
 - (void)fixPosition;
 - (void)unfixPosition;
 
+- (CGSize)size;
 - (CGRect)bounds;
 - (double)top;
 - (double)bottom;

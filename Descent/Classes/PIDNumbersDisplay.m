@@ -96,6 +96,12 @@ static PIDTextureSprite *kNumbersSprite;
   }
 }
 
+- (CGSize)size {
+  CGSize spriteSize = [numbersSprite_ size];
+  int digitCount = currentValue_ ? [currentValue_ length] : 1;
+  return CGSizeMake(spriteSize.width *digitCount, spriteSize.height); 
+}
+
 - (void)dealloc {
   if (currentValue_) {
     [currentValue_ release];

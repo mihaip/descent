@@ -68,10 +68,14 @@
   // Subclasses may override this 
 }
 
+- (CGSize)size {
+  return [sprite_ size]; 
+}
+
 - (CGRect)bounds {
   CGRect bounds;
 
-  bounds.size = [sprite_ size];
+  bounds.size = [self size];
 
   bounds.origin.x = position_.x - bounds.size.width/2;
   bounds.origin.y = position_.y - bounds.size.height/2;
