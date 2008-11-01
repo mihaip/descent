@@ -41,7 +41,7 @@ static PIDTextureSprite *kNumbersSprite;
   }
   
   return [super initWithSprite:sprite 
-                      position:CGPointMake(position * kDigitWidth, 0)
+                      position:CGPointMake(position * [sprite size].width, 0)
                          frame:frame];
 }
 
