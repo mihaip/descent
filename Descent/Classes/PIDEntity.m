@@ -52,6 +52,11 @@
   position_ = position;
 }
 
+- (void)moveBy:(CGSize)delta {
+  position_.x += delta.width;
+  position_.y += delta.height;
+}
+
 - (void)handleTick:(double)ticks {
   // Subclasses may override this 
 }

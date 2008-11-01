@@ -24,6 +24,9 @@
   PIDEntity *normalLayer_;
   PIDEntity *fixedLayer_;
   
+  // Background entities
+  PIDEntity *background_;
+  
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;

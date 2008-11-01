@@ -25,6 +25,7 @@
 
 - (CGPoint)position;
 - (void)setPosition:(CGPoint)position;
+- (void)moveBy:(CGSize)delta;
 
 - (CGRect)bounds;
 - (double)top;

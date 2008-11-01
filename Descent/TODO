@@ -3,7 +3,6 @@ TODO
 M1
 - Add falling frames for player
 - Add textures for platforms
-- Add texture for background
 - Add difficulty levels
 - Add different platform types
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
@@ -45,3 +44,4 @@ M0
 - No need for top and bottom movement constraints anymore
 - Player can get stuck to bottom of platform when bouncing
 - Check for memory leaks when switching event targets
+- Add texture for background

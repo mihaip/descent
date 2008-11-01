@@ -19,9 +19,11 @@
 #define kFenceTop kPlayerHeight/2
 #define kFenceHeight 20
 #define kStatusBarHeight 16
+#define kBackgroundTileSize 256 // In pixels
 
 // Private methods
 @interface PIDGame ()
+- (void)initBackground;
 - (void)initPlayer;
 - (void)initPlatforms;
 - (void)initFence;
@@ -30,6 +32,7 @@
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
 - (void)updateMovementConstraints;
+- (void)updateBackground;
 - (void)gameOver;
 @end
 
@@ -46,6 +49,7 @@
     normalLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
     fixedLayer_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
     
+    [self initBackground];
     [self initPlayer];
     [self initPlatforms];
     [self initFence];
@@ -54,6 +58,22 @@
   }
   
   return self;
+}
+
+- (void)initBackground {
+  CGSize viewSize = [glView_ size];
+  // Background texture is 256 x 256, we want to tile it
+  PIDTextureSprite *backgroundSprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"paper.png" 
+                                         size:CGSizeMake(kBackgroundTileSize * 2, 
+                                                         kBackgroundTileSize * 3)
+                                       frames:1];
+  background_ = 
+      [[PIDEntity alloc] initWithSprite:backgroundSprite 
+                               position:CGPointMake(viewSize.width/2, 
+                                                    viewSize.height - [backgroundSprite size].height/2)];
+  [backgroundSprite release];
+  [normalLayer_ addChild:background_];
 }
 
 - (void)initPlayer {
@@ -181,8 +201,8 @@
   [fixedLayer_ addChild:fpsDisplay_];
 #endif
   
-  // Background image is only 32 pixels wide, but we stretch it to the width of 
-  // the whole screen
+  // Background image is only 32 pixels wide, but we tile it to the width of the
+  // whole screen
   PIDTextureSprite *statusBackgroundSprite = 
       [[PIDTextureSprite alloc] initWithImage:@"status.png" 
                                          size:CGSizeMake(viewSize.width, 32) 
@@ -206,9 +226,9 @@
   
   // Pause button
   PIDTextureSprite *pauseSprite = 
-  [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
-                                     size:CGSizeMake(90, 16) 
-                                   frames:1];
+      [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
+                                         size:CGSizeMake(90, 16) 
+                                       frames:1];
   pauseButton_ = [[PIDFixedEntity alloc] initWithSprite:pauseSprite
                                                position:CGPointMake(80, 10)];
   [fixedLayer_ addChild:pauseButton_];
@@ -229,8 +249,8 @@
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   
   [self updatePlatforms];
-  
   [self updateMovementConstraints];
+  [self updateBackground];
   
   [player_ handleTick:ticks];
   
@@ -327,6 +347,15 @@
   }
 }
 
+- (void)updateBackground {
+  double backgroundTop = [background_ top];
+  double viewTop = -descentPosition_ + [glView_ size].height;
+  // Shift background so that it appears infinitely tiled
+  if (backgroundTop - viewTop > kBackgroundTileSize) {
+    [background_ moveBy:CGSizeMake(0, -kBackgroundTileSize)];
+  }
+}
+
 - (void)handleTouchBegin:(CGPoint)touchPoint {
   // Handle buttons
   if ([pauseButton_ isPointInside:touchPoint]) {
@@ -399,6 +428,9 @@
 
 - (void)dealloc {
   [glView_ release];
+  
+  // Background
+  [background_ release];
   
   // Game entities
   [player_ release];
