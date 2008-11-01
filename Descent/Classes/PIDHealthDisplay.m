@@ -26,6 +26,7 @@ static PIDTextureSprite *kStarsSprite;
 
 - initWithPosition:(CGPoint)position {
   if (self = [super initWithSprite:kNullSprite position:position]) {
+    [self fixPosition];
   }
   
   return self;

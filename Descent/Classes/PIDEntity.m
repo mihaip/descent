@@ -56,6 +56,14 @@
   position_.y += delta.height;
 }
 
+- (void)fixPosition {
+  isPositionFixed_ = YES;
+}
+
+- (void)unfixPosition {
+  isPositionFixed_ = NO;
+}
+
 - (void)handleTick:(double)ticks {
   // Subclasses may override this 
 }
@@ -112,6 +120,9 @@
   if (!isEnabled_) return;
   
   glPushMatrix();
+  if (isPositionFixed_) {
+    glLoadIdentity();
+  }
   glTranslatef(position_.x, position_.y, 0);
   
   [sprite_ draw];

@@ -6,10 +6,10 @@
 //  Copyright 2008 persistent.info. All rights reserved.
 //
 
-#import "PIDFixedEntity.h"
+#import "PIDEntity.h"
 #import "PIDTextureSprite.h"
 
-@interface PIDNumbersDisplay : PIDFixedEntity {
+@interface PIDNumbersDisplay : PIDEntity {
  @private
   NSString *currentValue_;
   PIDTextureSprite *numbersSprite_;

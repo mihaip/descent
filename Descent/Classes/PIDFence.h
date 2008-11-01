@@ -6,10 +6,10 @@
 //  Copyright 2008 persistent.info. All rights reserved.
 //
 
-#import "PIDFixedEntity.h"
+#import "PIDEntity.h"
 #import "PIDPlayer.h"
 
-@interface PIDFence : PIDFixedEntity {
+@interface PIDFence : PIDEntity {
  @private
   PIDPlayer *player_;
   BOOL isHurtingPlayer_;

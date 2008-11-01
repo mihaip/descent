@@ -12,6 +12,7 @@
  @protected
   PIDSprite *sprite_;
   CGPoint position_;
+  BOOL isPositionFixed_;
   NSMutableArray *children_;
   BOOL isEnabled_;
 }
@@ -26,6 +27,8 @@
 - (CGPoint)position;
 - (void)setPosition:(CGPoint)position;
 - (void)moveBy:(CGSize)delta;
+- (void)fixPosition;
+- (void)unfixPosition;
 
 - (CGRect)bounds;
 - (double)top;

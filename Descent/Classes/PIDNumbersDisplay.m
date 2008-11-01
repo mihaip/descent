@@ -67,6 +67,7 @@ static PIDTextureSprite *kNumbersSprite;
 - initWithPosition:(CGPoint)position sprite:(PIDTextureSprite *)sprite {
   if (self = [super initWithSprite:kNullSprite position:position]) {
     numbersSprite_ = [sprite retain];
+    [self fixPosition];
   }
   
   return self;

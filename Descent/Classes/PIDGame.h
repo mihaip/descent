@@ -37,12 +37,12 @@
   PIDNumbersDisplay *fpsDisplay_;
 #endif
   PIDNumbersDisplay *floorDisplay_;
-  PIDFixedEntity *statusBackground_;
+  PIDEntity *statusBackground_;
   PIDHealthDisplay *healthDisplay_;
   
   // Pausing
-  PIDFixedEntity *pauseCover_;
-  PIDFixedEntity *pauseButton_;
+  PIDEntity *pauseCover_;
+  PIDEntity *pauseButton_;
   BOOL isPaused_;
 }
 

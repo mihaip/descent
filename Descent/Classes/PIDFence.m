@@ -200,6 +200,8 @@ static GLfloat kLineLightness[] = {0.0, 0.4, 0.9};
 
 - initWithPosition:(CGPoint)position size:(CGSize)size {
   if (self = [super initWithSprite:kNullSprite position:position]) {
+    [self fixPosition];
+    
     PIDEntity *leftCap = [[PIDEntityWithFrame alloc] initWithSprite:kCapsSprite
                                                            position:CGPointMake(-size.width/2 + 10, 0)
                                                               frame:0];

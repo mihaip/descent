@@ -8,13 +8,12 @@
 
 #import "EAGLView.h"
 #import "PIDEntity.h"
-#import "PIDFixedEntity.h"
 
 @interface PIDMenu : NSObject < PIDEventTarget > {
  @private
   EAGLView *glView_;
   PIDEntity *root_;
-  PIDFixedEntity *startButton_;
+  PIDEntity *startButton_;
 }
 
 - initWithView:(EAGLView *)glView;

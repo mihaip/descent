@@ -186,10 +186,10 @@
   PIDRectangleSprite *pauseCoverSprite = [[PIDRectangleSprite alloc] 
                                           initWithSize:viewSize
                                                  color:pauseCoverColor];
-  pauseCover_ = [[PIDFixedEntity alloc] 
-                 initWithSprite:pauseCoverSprite
-                       position:CGPointMake(viewSize.width/2, 
-                                            viewSize.height/2)];
+  pauseCover_ = [[PIDEntity alloc] initWithSprite:pauseCoverSprite
+                                         position:CGPointMake(viewSize.width/2, 
+                                                              viewSize.height/2)];
+  [pauseCover_ fixPosition];
   [pauseCover_ disable];
   [fixedLayer_ addChild:pauseCover_];
   [pauseCoverSprite release];
@@ -207,9 +207,9 @@
       [[PIDTextureSprite alloc] initWithImage:@"status.png" 
                                          size:CGSizeMake(viewSize.width, 32) 
                                        frames:1];
-  statusBackground_ = [[PIDFixedEntity alloc] 
-                       initWithSprite:statusBackgroundSprite
-                             position:CGPointMake(viewSize.width/2, 16)];
+  statusBackground_ = [[PIDEntity alloc] initWithSprite:statusBackgroundSprite
+                                               position:CGPointMake(viewSize.width/2, 16)];
+  [statusBackground_ fixPosition];
   [fixedLayer_ addChild:statusBackground_];
   [statusBackgroundSprite release];
 
@@ -229,8 +229,9 @@
       [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
                                          size:CGSizeMake(90, 16) 
                                        frames:1];
-  pauseButton_ = [[PIDFixedEntity alloc] initWithSprite:pauseSprite
-                                               position:CGPointMake(80, 10)];
+  pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseSprite
+                                          position:CGPointMake(80, 10)];
+  [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
   [pauseSprite release];
 }
