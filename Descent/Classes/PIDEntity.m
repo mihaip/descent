@@ -22,8 +22,7 @@
 }
 
 - initWithSprite:(PIDSprite *)sprite {
-  CGPoint defaultPosition = {0, 0};
-  return [self initWithSprite:sprite position:defaultPosition];
+  return [self initWithSprite:sprite position:CGPointMake(0, 0)];
 }
 
 - (void)addChild:(PIDEntity*) child {
