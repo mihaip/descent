@@ -6,11 +6,11 @@
 //   Copyright 2008 persistent.info. All rights reserved.
 //
 
-#import "PIDEntity.h"
+#import "PIDEntityWithFrame.h"
 #import "PIDPlayer.h"
 
-#define kPlatformWidth 60
-#define kPlatformHeight 10
+#define kPlatformWidth 64
+#define kPlatformHeight 14
 
 typedef enum {
   kPlatformNormal,
@@ -19,12 +19,17 @@ typedef enum {
 } PIDPlatformType;
 
 
-@interface PIDPlatform : PIDEntity {
+@interface PIDPlatform : PIDEntityWithFrame {
  @private
   PIDPlatformType type_;
 }
 
 - initWithPosition:(CGPoint)position;
 - (void)handlePlayerLanding:(PIDPlayer *)player;
+
+- (double)collisionTop;
+- (double)collisionBottom;
+- (double)collisionLeft;
+- (double)collisionRight;
 
 @end

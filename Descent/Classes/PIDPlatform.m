@@ -7,12 +7,10 @@
 //
 
 #import "PIDPlatform.h"
-#import "PIDRectangleSprite.h"
+#import "PIDTextureSprite.h"
 #import "PIDColor.h"
 
-static PIDRectangleSprite *kPlatformNormalSprite;
-static PIDRectangleSprite *kPlatformBouncySprite;
-static PIDRectangleSprite *kPlatformKillerSprite;
+static PIDTextureSprite *kPlatformSprite;
 
 @implementation PIDPlatform
 
@@ -21,51 +19,25 @@ static PIDRectangleSprite *kPlatformKillerSprite;
   if (initialized) return;
   initialized = YES;
 
-  CGSize platformSize = {kPlatformWidth, kPlatformHeight};
-  PIDColor *normalColor = [[PIDColor alloc] initWithRed:0.2 
-                                                  green:0.8 
-                                                   blue:0.2];
-  kPlatformNormalSprite = [[PIDRectangleSprite alloc] initWithSize:platformSize
-                                                             color:normalColor];
-
-  PIDColor *bouncyColor = [[PIDColor alloc] initWithRed:0.8 
-                                                  green:0.8 
-                                                   blue:0.2];
-  kPlatformBouncySprite = [[PIDRectangleSprite alloc] initWithSize:platformSize
-                                                             color:bouncyColor];
-
-  PIDColor *killerColor = [[PIDColor alloc] initWithRed:0.8 
-                                                  green:0.2 
-                                                   blue:0.2];
-  kPlatformKillerSprite = [[PIDRectangleSprite alloc] initWithSize:platformSize
-                                                             color:killerColor];
-  
-  
-  [normalColor release];
-  [bouncyColor release];
+  kPlatformSprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"platform.png"
+                                         size:CGSizeMake(kPlatformWidth, 
+                                                         kPlatformHeight)
+                                       frames:3];
 }
 
 - initWithPosition:(CGPoint)position {
   int typeChooser = random() % 10;
   PIDPlatformType type;
-  PIDSprite *sprite;
   switch (typeChooser) {
-    case 0: 
-    case 1: 
-      type = kPlatformBouncy; 
-      sprite = kPlatformBouncySprite;
-      break;
-    case 2:
-      type = kPlatformKiller;
-      sprite = kPlatformKillerSprite;
-      break;
-    default:
-      type = kPlatformNormal; 
-      sprite = kPlatformNormalSprite;
-      break;
+    case 0: case 1: type = kPlatformBouncy; break;
+    case 2: type = kPlatformKiller; break;
+    default: type = kPlatformNormal; break;
   }
   
-  if (self = [super initWithSprite:sprite position:position]) {
+  if (self = [super initWithSprite:kPlatformSprite 
+                          position:position 
+                             frame:type]) {
     type_ = type;
   }
   
@@ -87,5 +59,20 @@ static PIDRectangleSprite *kPlatformKillerSprite;
   }
 }
 
+- (double)collisionTop {
+  return [self top] - 2;
+}
+
+- (double)collisionBottom {
+  return [self bottom] + 3;
+}
+
+- (double)collisionLeft {
+  return [self left] + 2;
+}
+
+- (double)collisionRight {
+  return [self right] - 4;
+}
 
 @end

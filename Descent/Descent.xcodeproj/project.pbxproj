@@ -27,6 +27,7 @@
 		91543A760E7DCA8500FAF93D /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 91543A750E7DCA8500FAF93D /* player.png */; };
 		9168F1D80EB80C260066482B /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F1D70EB80C260066482B /* paper.png */; };
 		9168F3720EBCFB2C0066482B /* floor-numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F3710EBCFB2C0066482B /* floor-numbers.png */; };
+		9168F5800EBD17670066482B /* platform.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F57F0EBD17670066482B /* platform.png */; };
 		9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */; };
 		9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D6070E8E9AAE000B8787 /* PIDFence.m */; };
 		9175D8030E904F8D000B8787 /* caps.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8020E904F8D000B8787 /* caps.png */; };
@@ -74,6 +75,7 @@
 		91543A750E7DCA8500FAF93D /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		9168F1D70EB80C260066482B /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
 		9168F3710EBCFB2C0066482B /* floor-numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "floor-numbers.png"; sourceTree = "<group>"; };
+		9168F57F0EBD17670066482B /* platform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platform.png; sourceTree = "<group>"; };
 		9175D4D80E8B1973000B8787 /* PIDNumbersDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDNumbersDisplay.h; sourceTree = "<group>"; };
 		9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDNumbersDisplay.m; sourceTree = "<group>"; };
 		9175D6060E8E9AAE000B8787 /* PIDFence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFence.h; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9168F57F0EBD17670066482B /* platform.png */,
 				9168F3710EBCFB2C0066482B /* floor-numbers.png */,
 				9168F1D70EB80C260066482B /* paper.png */,
 				91FA77530EA2A9CE000D813F /* pause.png */,
@@ -278,6 +281,7 @@
 				91FA77540EA2A9CE000D813F /* pause.png in Resources */,
 				9168F1D80EB80C260066482B /* paper.png in Resources */,
 				9168F3720EBCFB2C0066482B /* floor-numbers.png in Resources */,
+				9168F5800EBD17670066482B /* platform.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -337,10 +337,10 @@ static PIDTextureSprite *kFloorNumbersSprite;
   CGPoint playerPosition = [player_ position];
   
   for (PIDPlatform *platform in platforms_) {
-    double platformBottom = [platform bottom];
-    double platformTop = [platform top];
-    double platformLeft = [platform left];
-    double platformRight = [platform right];
+    double platformBottom = [platform collisionBottom];
+    double platformTop = [platform collisionTop];
+    double platformLeft = [platform collisionLeft];
+    double platformRight = [platform collisionRight];
     CGPoint platformPosition = [platform position];
     
     // Platforms that are in the same vertical "column" as the player constraint
