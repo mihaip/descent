@@ -18,12 +18,16 @@ static PIDTextureSprite *kNumbersSprite;
 
 @interface PIDDigit : PIDEntityWithFrame {}
 
-- initWithValue:(unichar)value position:(int)position;
-@end
+- initWithValue:(unichar)value 
+       position:(int)position 
+         sprite:(PIDTextureSprite *)sprite;
+  @end
 
 @implementation PIDDigit
 
-- initWithValue:(unichar)value position:(int)position {
+- initWithValue:(unichar)value 
+       position:(int)position 
+         sprite:(PIDTextureSprite *)sprite {
   int frame;
   if (value >= '0' && value <= '9') {
     frame = value - '0';
@@ -36,7 +40,7 @@ static PIDTextureSprite *kNumbersSprite;
     frame = 0;
   }
   
-  return [super initWithSprite:kNumbersSprite 
+  return [super initWithSprite:sprite 
                       position:CGPointMake(position * kDigitWidth, 0)
                          frame:frame];
 }
@@ -57,8 +61,12 @@ static PIDTextureSprite *kNumbersSprite;
 }
 
 - initWithPosition:(CGPoint)position {
+  return [self initWithPosition:position sprite:kNumbersSprite];
+}
+
+- initWithPosition:(CGPoint)position sprite:(PIDTextureSprite *)sprite {
   if (self = [super initWithSprite:kNullSprite position:position]) {
-    // Nothing else to do for now
+    numbersSprite_ = [sprite retain];
   }
   
   return self;
@@ -79,8 +87,9 @@ static PIDTextureSprite *kNumbersSprite;
   [self removeAllChildren];
   
   for (int i = 0; i < [value length]; i++) {
-    PIDDigit *digit = 
-        [[PIDDigit alloc] initWithValue:[value characterAtIndex:i] position:i];
+    PIDDigit *digit = [[PIDDigit alloc] initWithValue:[value characterAtIndex:i] 
+                                             position:i
+                                               sprite:numbersSprite_];
     [self addChild:digit];
     [digit release];
   }
@@ -90,6 +99,8 @@ static PIDTextureSprite *kNumbersSprite;
   if (currentValue_) {
     [currentValue_ release];
   }
+  
+  [numbersSprite_ release];
   
   [super dealloc]; 
 }
