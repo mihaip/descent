@@ -11,6 +11,7 @@
 #import "PIDFence.h"
 #import "PIDNumbersDisplay.h"
 #import "PIDHealthDisplay.h"
+#import "PIDTrail.h"
 
 #define SHOW_FPS 0
 
@@ -31,6 +32,7 @@
   PIDPlayer *player_;
   NSMutableArray *platforms_;
   PIDFence *fence_;
+  PIDTrail *trail_;
   
   // Status
 #if SHOW_FPS

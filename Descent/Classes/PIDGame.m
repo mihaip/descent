@@ -94,6 +94,9 @@ static PIDTextureSprite *kFloorNumbersSprite;
                                                     viewSize.height - [backgroundSprite size].height/2)];
   [backgroundSprite release];
   [normalLayer_ addChild:background_];
+  
+  trail_ = [[PIDTrail alloc] init];
+  [normalLayer_ addChild:trail_];
 }
 
 - (void)initFloorDisplay {
@@ -388,6 +391,8 @@ static PIDTextureSprite *kFloorNumbersSprite;
   if (backgroundTop - viewTop > kBackgroundTileSize) {
     [background_ moveBy:CGSizeMake(0, -kBackgroundTileSize)];
   }
+  
+  [trail_ update:player_];
 }
 
 - (void)updateFloorDisplay {
@@ -484,6 +489,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   
   // Background
   [background_ release];
+  [trail_ release];
   
   // Game entities
   [player_ release];

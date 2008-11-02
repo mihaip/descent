@@ -28,6 +28,7 @@
 		9168F1D80EB80C260066482B /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F1D70EB80C260066482B /* paper.png */; };
 		9168F3720EBCFB2C0066482B /* floor-numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F3710EBCFB2C0066482B /* floor-numbers.png */; };
 		9168F5800EBD17670066482B /* platform.png in Resources */ = {isa = PBXBuildFile; fileRef = 9168F57F0EBD17670066482B /* platform.png */; };
+		9168F6260EBD43320066482B /* PIDTrail.m in Sources */ = {isa = PBXBuildFile; fileRef = 9168F6250EBD43320066482B /* PIDTrail.m */; };
 		9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */; };
 		9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D6070E8E9AAE000B8787 /* PIDFence.m */; };
 		9175D8030E904F8D000B8787 /* caps.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8020E904F8D000B8787 /* caps.png */; };
@@ -76,6 +77,8 @@
 		9168F1D70EB80C260066482B /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
 		9168F3710EBCFB2C0066482B /* floor-numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "floor-numbers.png"; sourceTree = "<group>"; };
 		9168F57F0EBD17670066482B /* platform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platform.png; sourceTree = "<group>"; };
+		9168F6240EBD43320066482B /* PIDTrail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDTrail.h; sourceTree = "<group>"; };
+		9168F6250EBD43320066482B /* PIDTrail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDTrail.m; sourceTree = "<group>"; };
 		9175D4D80E8B1973000B8787 /* PIDNumbersDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDNumbersDisplay.h; sourceTree = "<group>"; };
 		9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDNumbersDisplay.m; sourceTree = "<group>"; };
 		9175D6060E8E9AAE000B8787 /* PIDFence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFence.h; sourceTree = "<group>"; };
@@ -207,6 +210,8 @@
 		915436750E7C4EEA00FAF93D /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				9168F6240EBD43320066482B /* PIDTrail.h */,
+				9168F6250EBD43320066482B /* PIDTrail.m */,
 				915436190E7C4B5B00FAF93D /* PIDPlayer.h */,
 				9154361A0E7C4B5B00FAF93D /* PIDPlayer.m */,
 				915433CD0E78A81D00FAF93D /* PIDGame.h */,
@@ -308,6 +313,7 @@
 				9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */,
 				9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */,
 				91FA78D50EA431F2000D813F /* PIDMenu.m in Sources */,
+				9168F6260EBD43320066482B /* PIDTrail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

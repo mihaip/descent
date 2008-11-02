@@ -149,7 +149,7 @@
 }
 
 
-- (void) dealloc{
+- (void)dealloc{
   [sprite_ release];
   [children_ release];
   

@@ -1,6 +1,8 @@
 TODO
 
 M1
+- New player sprite
+- Update fence style to be sketch style
 - Add falling frames for player
 - Add textures for platforms
 - Add difficulty levels
@@ -8,7 +10,6 @@ M1
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
 - Fix textures (numbers are slightly distorted)
-- Add "contrail" tracing player's path
 - Clean up allocation/retain pattern (prefer auto-releasing)
 
 M2
@@ -46,3 +47,4 @@ M0
 - Player can get stuck to bottom of platform when bouncing
 - Check for memory leaks when switching event targets
 - Add texture for background
+- Add "contrail" tracing player's path
