@@ -29,6 +29,7 @@
 
 - (void)update:(PIDPlayer *)player {
   CGPoint playerPosition = [player position];
+  playerPosition.y = [player bottom];
   
   // No point in adding another point if it's within 2 pixels of the last one
   if (currentPoint_ > 0) {
