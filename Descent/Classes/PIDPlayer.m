@@ -14,6 +14,12 @@
 #define kPlayerVerticalMaxSpeed 1200.0 // In pixels/s
 #define kPlayerBounce 300.0 // In pixels/s
 
+#define kPlayerWalkingFrameCount 3
+#define kPlayerWalkingFrameLeftStart 0
+#define kPlayerWalkingFrameRightStart 4
+#define kPlayerNormalFrame 3
+#define kPlayerTotalFrameCount 8
+
 static PIDTextureSprite *kPlayerSprite;
 
 // Private methods
@@ -30,8 +36,8 @@ static PIDTextureSprite *kPlayerSprite;
   
   kPlayerSprite = [[PIDTextureSprite alloc] initWithImage:@"player.png"
                                                      size:CGSizeMake(32, 32)
-                                                   frames:8];
-  [kPlayerSprite setFrame:3];
+                                                   frames:kPlayerTotalFrameCount];
+  [kPlayerSprite setFrame:kPlayerNormalFrame];
 }
 
 - initWithPosition:(CGPoint)position {
@@ -56,7 +62,7 @@ static PIDTextureSprite *kPlayerSprite;
 
 - (void)updateWalkingFrame {
   walkingFrameCounter_++;
-  if (walkingFrameCounter_ == 3) {
+  if (walkingFrameCounter_ == kPlayerWalkingFrameCount) {
     walkingFrameCounter_ = 0;
   }
 }
@@ -73,12 +79,12 @@ static PIDTextureSprite *kPlayerSprite;
     newPosition.x += horizontalDirection_ * kPlayerHorizontalSpeed * ticks;
     
     if (horizontalDirection_ == kLeft) {
-      [kPlayerSprite setFrame:walkingFrameCounter_];
+      [kPlayerSprite setFrame:kPlayerWalkingFrameLeftStart + walkingFrameCounter_];
     } else {
-      [kPlayerSprite setFrame:4 + walkingFrameCounter_];
+      [kPlayerSprite setFrame:kPlayerWalkingFrameRightStart + walkingFrameCounter_];
     }
   } else {
-    [kPlayerSprite setFrame:3];
+    [kPlayerSprite setFrame:kPlayerNormalFrame];
   }
   
   // Move player vertically
