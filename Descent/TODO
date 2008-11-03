@@ -1,6 +1,7 @@
 TODO
 
 M1
+- Handle touch begin on left -> touch begin on right -> touch relase on left case (should start moving right)
 - New player sprite
 - Update fence style to be sketch style
 - Add falling frames for player

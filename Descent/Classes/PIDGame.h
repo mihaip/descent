@@ -12,6 +12,7 @@
 #import "PIDNumbersDisplay.h"
 #import "PIDHealthDisplay.h"
 #import "PIDTrail.h"
+#import "PIDTextureSprite.h"
 
 #define SHOW_FPS 0
 
@@ -38,7 +39,6 @@
 #if SHOW_FPS
   PIDNumbersDisplay *fpsDisplay_;
 #endif
-  PIDEntity *statusBackground_;
   PIDHealthDisplay *healthDisplay_;
   
   // Floor display
@@ -47,6 +47,7 @@
   
   // Pausing
   PIDEntity *pauseCover_;
+  PIDTextureSprite *pauseButtonSprite_;
   PIDEntity *pauseButton_;
   BOOL isPaused_;
 }

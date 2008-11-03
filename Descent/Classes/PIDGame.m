@@ -13,7 +13,7 @@
 #import "PIDPlatform.h"
 #import "DescentAppDelegate.h"
 
-#define kDescentSpeed 50 // In pixels/s
+#define kDescentSpeed 75 // In pixels/s
 #define kPlayerHeight 32
 // Enough room for the player to fit along the top
 #define kFenceTop kPlayerHeight/2
@@ -222,10 +222,10 @@ static PIDTextureSprite *kFloorNumbersSprite;
 - (void)initStatus {
   CGSize viewSize = [glView_ size];
   
-  PIDColor *pauseCoverColor = [[PIDColor alloc] initWithRed:0.0
-                                                      green:0.0
-                                                       blue:0.0
-                                                      alpha:0.9];
+  PIDColor *pauseCoverColor = [[PIDColor alloc] initWithRed:0.2
+                                                      green:0.2
+                                                       blue:0.2
+                                                      alpha:0.6];
   PIDRectangleSprite *pauseCoverSprite = [[PIDRectangleSprite alloc] 
                                           initWithSize:viewSize
                                                  color:pauseCoverColor];
@@ -244,18 +244,6 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [fixedLayer_ addChild:fpsDisplay_];
 #endif
   
-  // Background image is only 32 pixels wide, but we tile it to the width of the
-  // whole screen
-  PIDTextureSprite *statusBackgroundSprite = 
-      [[PIDTextureSprite alloc] initWithImage:@"status.png" 
-                                         size:CGSizeMake(viewSize.width, 32) 
-                                       frames:1];
-  statusBackground_ = [[PIDEntity alloc] initWithSprite:statusBackgroundSprite
-                                               position:CGPointMake(viewSize.width/2, 16)];
-  [statusBackground_ fixPosition];
-  [fixedLayer_ addChild:statusBackground_];
-  [statusBackgroundSprite release];
-
   // Health display
   healthDisplay_ = [[PIDHealthDisplay alloc] 
                     initWithPosition:CGPointMake(viewSize.width - 2, 10)];
@@ -263,15 +251,13 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [healthDisplay_ update:player_];
   
   // Pause button
-  PIDTextureSprite *pauseSprite = 
-      [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
-                                         size:CGSizeMake(90, 16) 
-                                       frames:1];
-  pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseSprite
-                                          position:CGPointMake(50, 10)];
+  pauseButtonSprite_ = [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
+                                                          size:CGSizeMake(71, 16)
+                                                        frames:2];
+  pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseButtonSprite_
+                                          position:CGPointMake(38, 10)];
   [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
-  [pauseSprite release];
 }
 
 - (void)handleTick:(double)ticks {
@@ -458,6 +444,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [glView_ stopAnimation];
   
   [pauseCover_ enable];
+  [pauseButtonSprite_ setFrame:1];
   [glView_ draw];
   
   isPaused_ = true;
@@ -467,6 +454,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [glView_ startAnimation];
   
   [pauseCover_ disable];
+  [pauseButtonSprite_ setFrame:0];
   [glView_ draw];
 
   isPaused_ = false;
@@ -498,9 +486,9 @@ static PIDTextureSprite *kFloorNumbersSprite;
 
   // Status
   [pauseCover_ release];
-  [statusBackground_ release];
   [healthDisplay_ release];
   [pauseButton_ release];
+  [pauseButtonSprite_ release];
 #if SHOW_FPS
   [fpsDisplay_ release];
 #endif
