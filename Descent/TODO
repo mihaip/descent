@@ -24,6 +24,7 @@ M2
 
 M3
 - Cycle coordinates after a while, to avoid overflow issues
+- Angled platforms that player slides down on
 - Add reporting of high scores to a server
 
 DONE
@@ -49,3 +50,4 @@ M0
 - Check for memory leaks when switching event targets
 - Add texture for background
 - Add "contrail" tracing player's path
+- Move status area to the top

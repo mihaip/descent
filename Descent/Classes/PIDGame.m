@@ -16,7 +16,7 @@
 #define kDescentSpeed 75 // In pixels/s
 #define kPlayerHeight 32
 // Enough room for the player to fit along the top
-#define kFenceTop kPlayerHeight/2
+#define kFenceTop (kStatusBarHeight + kPlayerHeight/2)
 #define kFenceHeight 20
 #define kStatusBarHeight 16
 #define kBackgroundTileSize 256 // In pixels
@@ -246,7 +246,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   
   // Health display
   healthDisplay_ = [[PIDHealthDisplay alloc] 
-                    initWithPosition:CGPointMake(viewSize.width - 2, 10)];
+                    initWithPosition:CGPointMake(viewSize.width - 2, viewSize.height - 10)];
   [fixedLayer_ addChild:healthDisplay_];
   [healthDisplay_ update:player_];
   
@@ -255,7 +255,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
                                                           size:CGSizeMake(71, 16)
                                                         frames:2];
   pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseButtonSprite_
-                                          position:CGPointMake(38, 10)];
+                                          position:CGPointMake(38, viewSize.height - 10)];
   [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
 }
