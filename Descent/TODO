@@ -5,13 +5,15 @@ M1
 - New player sprite
 - Update fence style to be sketch style
 - Add falling frames for player
-- Add textures for platforms
 - Add difficulty levels
-- Add different platform types
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
 - Fix textures (numbers are slightly distorted)
 - Clean up allocation/retain pattern (prefer auto-releasing)
+- Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
+- Add slide left/right platform
+- Add fall through platform
+- Make sure that initial platform is normal
 
 M2
 - Coffe stains on background
@@ -28,8 +30,6 @@ M3
 - Add reporting of high scores to a server
 
 DONE
-
-M0
 - Add FPS display
 - Add textures for player
 - Add walking animation for player
@@ -51,3 +51,5 @@ M0
 - Add texture for background
 - Add "contrail" tracing player's path
 - Move status area to the top
+- Add textures for platforms
+- Add different platform types
