@@ -24,7 +24,7 @@ typedef enum {
   PIDPlatformType type_;
 }
 
-- initWithPosition:(CGPoint)position;
+- initWithPosition:(CGPoint)position type:(PIDPlatformType)type;
 - (void)handlePlayerLanding:(PIDPlayer *)player;
 
 - (double)collisionTop;

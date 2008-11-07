@@ -34,7 +34,8 @@ static PIDTextureSprite *kFloorNumbersSprite;
 - (void)initPlatforms;
 - (void)initFence;
 - (void)initStatus;
-- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition;
+- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition
+                           type:(PIDPlatformType) type;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
 - (void)updateMovementConstraints;
@@ -138,7 +139,8 @@ static PIDTextureSprite *kFloorNumbersSprite;
     // center)
     if (i == 0) {
       [self addPlatformWithPosition:CGPointMake(viewSize.width / 2, 
-                                                viewSize.height / 2)];
+                                                viewSize.height / 2)
+                               type:kPlatformNormal];
     } else {
       // Other platforms start in the bottom half the screen, so that the
       // player can fall on the one that was created above
@@ -147,9 +149,11 @@ static PIDTextureSprite *kFloorNumbersSprite;
   }
 }
 
-- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition {
-  PIDPlatform *newPlatform = [[PIDPlatform alloc] 
-                           initWithPosition:platformPosition];
+- (BOOL)addPlatformWithPosition:(CGPoint)platformPosition
+                           type:(PIDPlatformType) type {
+  PIDPlatform *newPlatform = 
+      [[PIDPlatform alloc] initWithPosition:platformPosition
+                                       type:type];
 
   // Make sure we don't hit any of the existing platforms
   // TODO(mihaip): handle cases where user can be trapped (sunken platform
@@ -172,13 +176,21 @@ static PIDTextureSprite *kFloorNumbersSprite;
   CGSize viewSize = [glView_ size];
   CGPoint platformPosition;
   BOOL addedPlatform;
+
+  int typeChooser = random() % 10;
+  PIDPlatformType type;
+  switch (typeChooser) {
+    case 0: case 1: type = kPlatformBouncy; break;
+    case 2: type = kPlatformKiller; break;
+    default: type = kPlatformNormal; break;
+  }
   
   do {
     platformPosition.x = 
         (random() % ((int) viewSize.width - kPlatformWidth)) + kPlatformWidth/2;
     platformPosition.y = minY +(random() % (maxY - minY));
     
-    addedPlatform = [self addPlatformWithPosition:platformPosition];
+    addedPlatform = [self addPlatformWithPosition:platformPosition type:type];
   } while (!addedPlatform);
 }
 

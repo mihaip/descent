@@ -26,15 +26,7 @@ static PIDTextureSprite *kPlatformSprite;
                                        frames:3];
 }
 
-- initWithPosition:(CGPoint)position {
-  int typeChooser = random() % 10;
-  PIDPlatformType type;
-  switch (typeChooser) {
-    case 0: case 1: type = kPlatformBouncy; break;
-    case 2: type = kPlatformKiller; break;
-    default: type = kPlatformNormal; break;
-  }
-  
+- initWithPosition:(CGPoint)position type:(PIDPlatformType)type {
   if (self = [super initWithSprite:kPlatformSprite 
                           position:position 
                              frame:type]) {

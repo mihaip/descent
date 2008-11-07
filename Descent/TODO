@@ -13,7 +13,6 @@ M1
 - Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
 - Add slide left/right platform
 - Add fall through platform
-- Make sure that initial platform is normal
 
 M2
 - Coffe stains on background
@@ -53,3 +52,4 @@ DONE
 - Move status area to the top
 - Add textures for platforms
 - Add different platform types
+- Make sure that initial platform is normal
