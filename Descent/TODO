@@ -2,15 +2,16 @@ TODO
 
 M1
 - Handle touch begin on left -> touch begin on right -> touch relase on left case (should start moving right)
-- New player sprite
 - Update fence style to be sketch style
 - Add falling frames for player
+- Add hurting frames for player
 - Add difficulty levels
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
 - Fix textures (numbers are slightly distorted)
 - Clean up allocation/retain pattern (prefer auto-releasing)
 - Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
+- Occasional line flash in trail (when wraparound is only of one segment?)
 - Add slide left/right platform
 - Add fall through platform
 
@@ -53,3 +54,4 @@ DONE
 - Add textures for platforms
 - Add different platform types
 - Make sure that initial platform is normal
+- New player sprite
