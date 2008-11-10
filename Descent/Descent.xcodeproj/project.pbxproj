@@ -15,6 +15,8 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.m */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		8FCED6EA0EC7E6F300787C81 /* difficulty-buttons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FCED6E90EC7E6F300787C81 /* difficulty-buttons.png */; };
+		8FCED7100EC7EEB000787C81 /* difficulty-display.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FCED70F0EC7EEB000787C81 /* difficulty-display.png */; };
 		915432480E77646400FAF93D /* PIDSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 915432470E77646400FAF93D /* PIDSprite.m */; };
 		9154328D0E776A8700FAF93D /* PIDRectangleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154328C0E776A8700FAF93D /* PIDRectangleSprite.m */; };
 		915432920E776E8A00FAF93D /* PIDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 915432910E776E8A00FAF93D /* PIDColor.m */; };
@@ -54,6 +56,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Descent_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Descent_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FCED6E90EC7E6F300787C81 /* difficulty-buttons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "difficulty-buttons.png"; sourceTree = "<group>"; };
+		8FCED70F0EC7EEB000787C81 /* difficulty-display.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "difficulty-display.png"; sourceTree = "<group>"; };
 		915432460E77646400FAF93D /* PIDSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDSprite.h; sourceTree = "<group>"; };
 		915432470E77646400FAF93D /* PIDSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDSprite.m; sourceTree = "<group>"; };
 		9154328B0E776A8700FAF93D /* PIDRectangleSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDRectangleSprite.h; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8FCED70F0EC7EEB000787C81 /* difficulty-display.png */,
+				8FCED6E90EC7E6F300787C81 /* difficulty-buttons.png */,
 				9168F57F0EBD17670066482B /* platform.png */,
 				9168F3710EBCFB2C0066482B /* floor-numbers.png */,
 				9168F1D70EB80C260066482B /* paper.png */,
@@ -284,6 +290,8 @@
 				9168F1D80EB80C260066482B /* paper.png in Resources */,
 				9168F3720EBCFB2C0066482B /* floor-numbers.png in Resources */,
 				9168F5800EBD17670066482B /* platform.png in Resources */,
+				8FCED6EA0EC7E6F300787C81 /* difficulty-buttons.png in Resources */,
+				8FCED7100EC7EEB000787C81 /* difficulty-display.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

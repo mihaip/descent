@@ -14,6 +14,9 @@
   EAGLView *glView_;
   PIDEntity *root_;
   PIDEntity *startButton_;
+  PIDEntity *difficultyDisplay_;
+  PIDEntity *lowerDifficultyButton_;
+  PIDEntity *raiseDifficultyButton_;
 }
 
 - initWithView:(EAGLView *)glView;

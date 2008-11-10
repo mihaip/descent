@@ -4,7 +4,6 @@ M1
 - Handle touch begin on left -> touch begin on right -> touch relase on left case (should start moving right)
 - Add falling frames for player
 - Add hurting frames for player
-- Add difficulty levels
 - Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
 - Fix textures (numbers are slightly distorted)
@@ -15,13 +14,13 @@ M1
 - Add fall through platform
 
 M2
-- Coffe stains on background
 - Better death sequence when dying from fence
 - Better death sequence when dying from killer platform
 - Add default.png
 - Add application icon
 - Add local high scores
 - Sounds
+- Practice mode
 
 M3
 - Cycle coordinates after a while, to avoid overflow issues
@@ -55,3 +54,4 @@ DONE
 - Make sure that initial platform is normal
 - New player sprite
 - Update fence style to be sketch style
+- Add difficulty levels

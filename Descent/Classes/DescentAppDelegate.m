@@ -17,6 +17,7 @@
   // For now use a fixed seed so that repeated runs are reproducible
   srandom(27);
   
+  difficulty_ = kMedium;
   [self switchToMenu];
   [glView startAnimation];  
 }
@@ -39,7 +40,7 @@
     [((NSObject*) eventTarget_) release];
   }
   
-  eventTarget_ = [[PIDGame alloc] initWithView:glView]; 
+  eventTarget_ = [[PIDGame alloc] initWithView:glView difficulty:difficulty_]; 
 }
 
 - (void)switchToMenu {
@@ -48,6 +49,22 @@
     [((NSObject*) eventTarget_) release];
   }
   eventTarget_ = [[PIDMenu alloc] initWithView:glView]; 
+}
+
+- (void)lowerDifficulty {
+  if (difficulty_ > kEasy) {
+    difficulty_--;
+  }
+}
+
+- (void)raiseDifficulty {
+  if (difficulty_ < kHard) {
+    difficulty_++;
+  }  
+}
+
+- (PIDGameDifficulty) difficulty {
+  return difficulty_;
 }
 
 - (void)dealloc {

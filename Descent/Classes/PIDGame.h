@@ -17,10 +17,17 @@
 
 #define SHOW_FPS 0
 
+typedef enum {
+  kEasy,
+  kMedium,
+  kHard
+} PIDGameDifficulty;
+
 @interface PIDGame : NSObject < PIDEventTarget > {
  @private
   EAGLView *glView_;
   
+  PIDGameDifficulty difficulty_;
   double descentPosition_;
   double platformGenerationTriggerPosition_;
   
@@ -54,7 +61,7 @@
   BOOL isPaused_;
 }
 
-- initWithView:(EAGLView *)glView;
+- initWithView:(EAGLView *)glView difficulty:(PIDGameDifficulty)difficulty;
 
 // PIDEeventTarget protocol implementation
 - (void)handleTick:(double)ticks;

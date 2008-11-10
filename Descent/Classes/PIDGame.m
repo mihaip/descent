@@ -13,7 +13,12 @@
 #import "PIDPlatform.h"
 #import "DescentAppDelegate.h"
 
-#define kDescentSpeed 75 // In pixels/s
+static double kDescentSpeeds[] = {
+  50, // easy
+  75, // medium
+  100 // hard
+};
+
 #define kPlayerHeight 32
 // Enough room for the player to fit along the top
 #define kFenceTop (kStatusBarHeight + kPlayerHeight/2)
@@ -58,10 +63,11 @@ static PIDTextureSprite *kFloorNumbersSprite;
                                        frames:10];
 }
 
-- initWithView:(EAGLView *)glView {
+- initWithView:(EAGLView *)glView difficulty:(PIDGameDifficulty)difficulty {
   if (self = [super init]) {
     glView_ = [glView retain];
     
+    difficulty_ = difficulty;
     descentPosition_ = 0;
     platformGenerationTriggerPosition_ = 0;
     
@@ -281,7 +287,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [fpsDisplay_ setValue:[NSString stringWithFormat:@"%4.1f", fps]];
 #endif
   
-  descentPosition_ += kDescentSpeed * ticks;
+  descentPosition_ += kDescentSpeeds[difficulty_] * ticks;
   
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
   

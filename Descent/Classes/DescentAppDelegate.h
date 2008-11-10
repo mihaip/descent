@@ -15,6 +15,7 @@
 @interface DescentAppDelegate : NSObject <UIApplicationDelegate> {
   IBOutlet UIWindow *window;
   IBOutlet EAGLView *glView;
+  PIDGameDifficulty difficulty_;
  @private
   id <PIDEventTarget> eventTarget_;
 }
@@ -24,6 +25,9 @@
 - (id <PIDEventTarget>)eventTarget;
 - (void)switchToGame;
 - (void)switchToMenu;
+- (void)lowerDifficulty;
+- (void)raiseDifficulty;
+- (PIDGameDifficulty) difficulty;
 
 @end
 

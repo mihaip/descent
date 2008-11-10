@@ -8,7 +8,9 @@
 
 #import "PIDMenu.h"
 #import "PIDRectangleSprite.h"
+#import "PIDTextureSprite.h"
 #import "PIDColor.h"
+#import "PIDEntityWithFrame.h"
 #import "DescentAppDelegate.h"
 
 // Private methods
@@ -17,6 +19,24 @@
 @end
 
 @implementation PIDMenu
+
+static PIDTextureSprite *kDifficultyButtonsSprite;
+static PIDTextureSprite *kDifficultyDisplaySprite;
+
++ (void)initialize {
+  static BOOL initialized = NO; 
+  if (initialized) return;
+  initialized = YES;
+  
+  kDifficultyButtonsSprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"difficulty-buttons.png"
+                                         size:CGSizeMake(25, 39)
+                                       frames:2];
+  kDifficultyDisplaySprite = 
+      [[PIDTextureSprite alloc] initWithImage:@"difficulty-display.png"
+                                         size:CGSizeMake(64, 17)
+                                       frames:3];  
+}
 
 - initWithView:(EAGLView *)glView {
   if (self = [super init]) {
@@ -40,8 +60,28 @@
   
   startButton_ = [[PIDEntity alloc] initWithSprite:startSprite 
                                           position:CGPointMake(viewSize_.width/2,
-                                                               viewSize_.height/2)];
+                                                               viewSize_.height/2 - 60)];
   [root_ addChild:startButton_];
+
+  difficultyDisplay_ = [[PIDEntity alloc] 
+                            initWithSprite:kDifficultyDisplaySprite
+                            position:CGPointMake(viewSize_.width/2, 
+                                                 viewSize_.height/2)];
+  [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+  
+  lowerDifficultyButton_ = [[PIDEntityWithFrame alloc] 
+                            initWithSprite:kDifficultyButtonsSprite
+                            position:CGPointMake(viewSize_.width/2 - 60 - 20, 
+                                                 viewSize_.height/2)
+                            frame:0];
+  raiseDifficultyButton_ = [[PIDEntityWithFrame alloc] 
+                            initWithSprite:kDifficultyButtonsSprite
+                            position:CGPointMake(viewSize_.width/2 + 60 + 20, 
+                                                 viewSize_.height/2)
+                            frame:1];
+  [root_ addChild:difficultyDisplay_];  
+  [root_ addChild:lowerDifficultyButton_];
+  [root_ addChild:raiseDifficultyButton_];
   
   [startColor release];
   [startSprite release];
@@ -53,6 +93,12 @@
 - (void)handleTouchBegin:(CGPoint)touchPoint {
   if ([startButton_ isPointInside:touchPoint]) {
     [GetAppInstance() switchToGame];
+  } else if ([lowerDifficultyButton_ isPointInside:touchPoint]) {
+    [GetAppInstance() lowerDifficulty];
+    [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+  } else if ([raiseDifficultyButton_ isPointInside:touchPoint]) {
+    [GetAppInstance() raiseDifficulty];
+    [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
   }
 }
 
@@ -76,6 +122,9 @@
   [glView_ release];
   
   [startButton_ release];
+  [difficultyDisplay_ release];
+  [lowerDifficultyButton_ release];
+  [raiseDifficultyButton_ release];
   [root_ release];
   
   [super dealloc];  
