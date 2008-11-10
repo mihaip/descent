@@ -49,4 +49,8 @@ static PIDTextureSprite *kStarsSprite;
   }
 }
 
+- (int)currentValue {
+  return currentValue_; 
+}
+
 @end

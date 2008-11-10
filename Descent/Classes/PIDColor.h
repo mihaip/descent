@@ -17,4 +17,6 @@
 - initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha;
 - (void)apply;
 
+- (void)setAlpha:(float)alpha;
+
 @end

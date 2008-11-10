@@ -13,6 +13,7 @@
 #import "PIDHealthDisplay.h"
 #import "PIDTrail.h"
 #import "PIDTextureSprite.h"
+#import "PIDFlash.h"
 
 #define SHOW_FPS 0
 
@@ -40,6 +41,7 @@
   PIDNumbersDisplay *fpsDisplay_;
 #endif
   PIDHealthDisplay *healthDisplay_;
+  PIDFlash *flash_;
   
   // Floor display
   PIDNumbersDisplay *currentFloorDisplay_;

@@ -30,4 +30,8 @@
   glColor4f(red_, green_, blue_, alpha_);
 }
 
+- (void)setAlpha:(float)alpha {
+  alpha_ = alpha; 
+}
+
 @end

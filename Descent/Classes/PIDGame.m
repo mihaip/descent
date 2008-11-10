@@ -270,6 +270,9 @@ static PIDTextureSprite *kFloorNumbersSprite;
                                           position:CGPointMake(38, viewSize.height - 10)];
   [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
+  
+  flash_ = [[PIDFlash alloc] initWithSize:viewSize];
+  [fixedLayer_ addChild:flash_];
 }
 
 - (void)handleTick:(double)ticks {
@@ -313,7 +316,10 @@ static PIDTextureSprite *kFloorNumbersSprite;
   if ([player_ isDead]) {
     [self gameOver];
   } else {
-    [healthDisplay_ update:player_];
+    if ([player_ health] < [healthDisplay_ currentValue]) {
+      [flash_ trigger];
+    }
+    [healthDisplay_ update:player_];    
   }
 }
 

@@ -15,5 +15,6 @@
 }
 
 - (void)update:(PIDPlayer *)player;
+- (int)currentValue;
 
 @end

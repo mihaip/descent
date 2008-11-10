@@ -35,6 +35,7 @@
 		9175D8F90E907276000B8787 /* health-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8F80E907276000B8787 /* health-stars.png */; };
 		9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */; };
 		9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */; };
+		91B20D8B0EC7A26B00985291 /* PIDFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B20D8A0EC7A26B00985291 /* PIDFlash.m */; };
 		91FA77540EA2A9CE000D813F /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FA77530EA2A9CE000D813F /* pause.png */; };
 		91FA78D50EA431F2000D813F /* PIDMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FA78D40EA431F2000D813F /* PIDMenu.m */; };
 		91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FCCCC90E81F92C004A2033 /* numbers.png */; };
@@ -88,6 +89,8 @@
 		9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDHealthDisplay.m; sourceTree = "<group>"; };
 		9175D94E0E907578000B8787 /* PIDEntityWithFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDEntityWithFrame.h; sourceTree = "<group>"; };
 		9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDEntityWithFrame.m; sourceTree = "<group>"; };
+		91B20D890EC7A26B00985291 /* PIDFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIDFlash.h; path = ../PIDFlash.h; sourceTree = "<group>"; };
+		91B20D8A0EC7A26B00985291 /* PIDFlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIDFlash.m; path = ../PIDFlash.m; sourceTree = "<group>"; };
 		91FA77530EA2A9CE000D813F /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		91FA78D30EA431F2000D813F /* PIDMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDMenu.h; sourceTree = "<group>"; };
 		91FA78D40EA431F2000D813F /* PIDMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDMenu.m; sourceTree = "<group>"; };
@@ -207,6 +210,8 @@
 		915436750E7C4EEA00FAF93D /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				91B20D890EC7A26B00985291 /* PIDFlash.h */,
+				91B20D8A0EC7A26B00985291 /* PIDFlash.m */,
 				9168F6240EBD43320066482B /* PIDTrail.h */,
 				9168F6250EBD43320066482B /* PIDTrail.m */,
 				915436190E7C4B5B00FAF93D /* PIDPlayer.h */,
@@ -310,6 +315,7 @@
 				9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */,
 				91FA78D50EA431F2000D813F /* PIDMenu.m in Sources */,
 				9168F6260EBD43320066482B /* PIDTrail.m in Sources */,
+				91B20D8B0EC7A26B00985291 /* PIDFlash.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
