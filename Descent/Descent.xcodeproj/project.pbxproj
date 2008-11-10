@@ -31,7 +31,6 @@
 		9168F6260EBD43320066482B /* PIDTrail.m in Sources */ = {isa = PBXBuildFile; fileRef = 9168F6250EBD43320066482B /* PIDTrail.m */; };
 		9175D4DA0E8B1973000B8787 /* PIDNumbersDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */; };
 		9175D6080E8E9AAE000B8787 /* PIDFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D6070E8E9AAE000B8787 /* PIDFence.m */; };
-		9175D8030E904F8D000B8787 /* caps.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8020E904F8D000B8787 /* caps.png */; };
 		9175D8F90E907276000B8787 /* health-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 9175D8F80E907276000B8787 /* health-stars.png */; };
 		9175D8FE0E90728A000B8787 /* PIDHealthDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */; };
 		9175D9500E907578000B8787 /* PIDEntityWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9175D94F0E907578000B8787 /* PIDEntityWithFrame.m */; };
@@ -83,7 +82,6 @@
 		9175D4D90E8B1973000B8787 /* PIDNumbersDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDNumbersDisplay.m; sourceTree = "<group>"; };
 		9175D6060E8E9AAE000B8787 /* PIDFence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDFence.h; sourceTree = "<group>"; };
 		9175D6070E8E9AAE000B8787 /* PIDFence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDFence.m; sourceTree = "<group>"; };
-		9175D8020E904F8D000B8787 /* caps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caps.png; sourceTree = "<group>"; };
 		9175D8F80E907276000B8787 /* health-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "health-stars.png"; sourceTree = "<group>"; };
 		9175D8FC0E90728A000B8787 /* PIDHealthDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIDHealthDisplay.h; sourceTree = "<group>"; };
 		9175D8FD0E90728A000B8787 /* PIDHealthDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIDHealthDisplay.m; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				9168F1D70EB80C260066482B /* paper.png */,
 				91FA77530EA2A9CE000D813F /* pause.png */,
 				9175D8F80E907276000B8787 /* health-stars.png */,
-				9175D8020E904F8D000B8787 /* caps.png */,
 				91FCCCC90E81F92C004A2033 /* numbers.png */,
 				91543A750E7DCA8500FAF93D /* player.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -282,7 +279,6 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				91543A760E7DCA8500FAF93D /* player.png in Resources */,
 				91FCCCCA0E81F92C004A2033 /* numbers.png in Resources */,
-				9175D8030E904F8D000B8787 /* caps.png in Resources */,
 				9175D8F90E907276000B8787 /* health-stars.png in Resources */,
 				91FA77540EA2A9CE000D813F /* pause.png in Resources */,
 				9168F1D80EB80C260066482B /* paper.png in Resources */,

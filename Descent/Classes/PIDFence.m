@@ -12,9 +12,7 @@
 
 // While we're touching the player, for every period of this lenth (in seconds), 
 // one unit of health is removed
-#define kFencePlayerHurtTime 0.06
-
-static PIDTextureSprite *kCapsSprite;
+#define kFencePlayerHurtTime 0.08
 
 @interface PIDLightiningSprite : PIDSprite {
  @private
@@ -49,7 +47,7 @@ static int compareInts(const void * a, const void * b) {
 
 - initWithSize:(CGSize)size {
   if (self = [super initWithSize:size]) {
-    vertexCount_ = 100 + (random() % 20) - 10;
+    vertexCount_ = 60;
     baseVertices_ = malloc(sizeof(GLfloat) * vertexCount_ * 2);
     
     // Endpoints are fixed
@@ -66,7 +64,16 @@ static int compareInts(const void * a, const void * b) {
     }
     
     qsort(intervalPositions, vertexCount_ - 2, sizeof(int), compareInts);
-    
+
+    // Make sure vertices aren't too close
+    for (int i = 1; i < vertexCount_ - 2; i++) {
+      if (intervalPositions[i] < intervalPositions[i - 1]) {
+        intervalPositions[i] = intervalPositions[i - 1] + 6 + (random() % 4);
+      } else if (intervalPositions[i] - intervalPositions[i - 1] < 10) {
+        intervalPositions[i] += 10;
+      }
+    }
+
     for (int i = 0; i < vertexCount_ - 2; i++) {
       baseVertices_[2 * (i + 1)] = intervalPositions[i] - size_.width/2;
       baseVertices_[2 * (i + 1) + 1] = 0;
@@ -106,7 +113,7 @@ static int compareInts(const void * a, const void * b) {
                                          target:self 
                                        selector:@selector(updateMultipliers) 
                                        userInfo:nil 
-                                        repeats:YES];    
+                                        repeats:YES];
   }
   
   return self;
@@ -169,18 +176,26 @@ static int compareInts(const void * a, const void * b) {
   [super dealloc];
 }
 
-static int kLineThicknesses[] = {5, 3, 1};
-static GLfloat kLineLightness[] = {0.0, 0.4, 0.9};
+static int kLineThicknesses[] = {3, 1, 1};
+static int kLineOffsets[] = {0, -2, 2};
+static GLfloat kLineColors[][3] = {
+  {1.0, 1.0, 0.0},
+  {0.8, 0.8, 0.0},
+  {0.8, 0.8, 0.0},
+};
 
 - (void)draw {
   glVertexPointer(2, GL_FLOAT, 0, currentVertices_);
   glEnableClientState(GL_VERTEX_ARRAY);
 
   for (int i = 0; i < 3; i++) {
-    glColor4f(kLineLightness[i], kLineLightness[i], 1.0, 1.0);
+    glPushMatrix();
+    glTranslatef(0, kLineOffsets[i], 0);
+    glColor4f(kLineColors[i][0], kLineColors[i][1], kLineColors[i][2], 1.0);
     glLineWidth(kLineThicknesses[i]);
     
     glDrawArrays(GL_LINE_STRIP, 0, vertexCount_);
+    glPopMatrix();
   }
 }
 
@@ -188,41 +203,17 @@ static GLfloat kLineLightness[] = {0.0, 0.4, 0.9};
 
 @implementation PIDFence
 
-+ (void)initialize {
-  static BOOL initialized = NO; 
-  if (initialized) return;
-  initialized = YES;
-  
-  kCapsSprite = [[PIDTextureSprite alloc] initWithImage:@"caps.png"
-                                                   size:CGSizeMake(20, 12)
-                                                 frames:2];
-}
-
 - initWithPosition:(CGPoint)position size:(CGSize)size {
-  if (self = [super initWithSprite:kNullSprite position:position]) {
-    [self fixPosition];
-    
-    PIDEntity *leftCap = [[PIDEntityWithFrame alloc] initWithSprite:kCapsSprite
-                                                           position:CGPointMake(-size.width/2 + 10, 0)
-                                                              frame:0];
-    PIDEntity *rightCap = [[PIDEntityWithFrame alloc] initWithSprite:kCapsSprite
-                                                           position:CGPointMake(size.width/2 - 10, 0)
-                                                              frame:1];
-    PIDSprite *lightningSprite = [[PIDLightiningSprite alloc] 
-        initWithSize:CGSizeMake(size.width - 40, size.height)];
-    PIDEntity *lightning = [[PIDEntity alloc] initWithSprite:lightningSprite
-                                                    position:CGPointMake(0, 0)];
-    
-    [self addChild:lightning];
-    [self addChild:leftCap];
-    [self addChild:rightCap];
+  PIDSprite *lightningSprite =
+      [[PIDLightiningSprite alloc] 
+           initWithSize:CGSizeMake(size.width, size.height)];
 
-    [lightning release];
-    [lightningSprite release];
-    [leftCap release];
-    [rightCap release];
+  if (self = [super initWithSprite:lightningSprite position:position]) {
+    [self fixPosition];
   }
-  
+
+  [lightningSprite release];
+
   return self;
 }
 

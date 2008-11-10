@@ -2,7 +2,6 @@ TODO
 
 M1
 - Handle touch begin on left -> touch begin on right -> touch relase on left case (should start moving right)
-- Update fence style to be sketch style
 - Add falling frames for player
 - Add hurting frames for player
 - Add difficulty levels
@@ -55,3 +54,4 @@ DONE
 - Add different platform types
 - Make sure that initial platform is normal
 - New player sprite
+- Update fence style to be sketch style
