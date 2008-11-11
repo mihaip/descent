@@ -67,4 +67,11 @@ static PIDTextureSprite *kPlatformSprite;
   return [self right] - 4;
 }
 
+- (CGRect)collisionBounds {
+  return CGRectMake([self collisionLeft], 
+                    [self collisionBottom],
+                    [self collisionRight] - [self collisionLeft],
+                    [self collisionTop] - [self collisionBottom]);
+}
+
 @end

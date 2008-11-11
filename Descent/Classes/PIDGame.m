@@ -43,7 +43,6 @@ static PIDTextureSprite *kFloorNumbersSprite;
                            type:(PIDPlatformType) type;
 - (void)addPlatformWithRandomPositionBetween:(int)minY and:(int)maxY;
 - (void)updatePlatforms;
-- (void)updateMovementConstraints;
 - (void)updateBackground;
 - (void)updateFloorDisplay;
 - (void)gameOver;
@@ -132,14 +131,15 @@ static PIDTextureSprite *kFloorNumbersSprite;
   player_ = [[PIDPlayer alloc] 
              initWithPosition:CGPointMake(viewSize.width / 2, 
                                           viewSize.height - kFenceTop - 
-                                              kFenceHeight/2 - kPlayerHeight)];
+                                              kFenceHeight/2 - kPlayerHeight)
+                         game:self];
   [normalLayer_ addChild:player_];
 }
 
 - (void)initPlatforms {
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
-  
+
   for (int i = 0; i < 5; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
@@ -290,9 +290,8 @@ static PIDTextureSprite *kFloorNumbersSprite;
   descentPosition_ += kDescentSpeeds[difficulty_] * ticks;
   
   [glView_ setViewportOffsetX:0 andY:descentPosition_];
-  
+
   [self updatePlatforms];
-  [self updateMovementConstraints];
   [self updateBackground];
   [self updateFloorDisplay];
   
@@ -343,43 +342,33 @@ static PIDTextureSprite *kFloorNumbersSprite;
                           onSide:kSideRight];
   
   // Then by platforms
-  double playerBottom = [player_ bottom];
-  double playerTop = [player_ top];
-  double playerLeft = [player_ left];
-  double playerRight = [player_ right];
   CGPoint playerPosition = [player_ position];
-  
   for (PIDPlatform *platform in platforms_) {
     double platformBottom = [platform collisionBottom];
     double platformTop = [platform collisionTop];
+    
     double platformLeft = [platform collisionLeft];
     double platformRight = [platform collisionRight];
     CGPoint platformPosition = [platform position];
     
-    // Platforms that are in the same vertical "column" as the player constraint
-    // their vertical movement (player is assumed to be narrower than platforms)
-    if (platformLeft < playerLeft && platformRight > playerLeft ||
-        platformLeft < playerRight && platformRight > playerRight) {
+    CGRect intersection = [player_ intersection:platform];
+    CGSize overlap = intersection.size;
+    if (overlap.width == 0 && overlap.height == 0) continue;
 
-      // Player is above platform
+    // Constrain on vertical axis
+    if (overlap.width > overlap.height) {
       if (playerPosition.y > platformPosition.y) {
         [player_ addMovementConstraint:platformTop 
                                 entity:platform 
                                 onSide:kSideBottom];
       } else { // Player is below platform
         [player_ addMovementConstraint:platformBottom 
-                                 entity:platform
+                                entity:platform
                                 onSide:kSideTop];
-      }
+      }        
     }
-
-    // Platforms that are in the same horizontal "column" as the player 
-    // constraint their horizontal movement (player is assumed to be taller
-    // than platforms)
-    if (platformTop > playerTop && platformBottom < playerTop ||
-        platformTop < playerTop && platformBottom > playerBottom ||
-        platformTop > playerBottom && platformBottom < playerBottom) {
-      
+    // Constrain on horizontal axis
+    else {
       // Player is to the left of the platform
       if (playerPosition.x < platformPosition.x) {
         [player_ addMovementConstraint:platformLeft 
@@ -387,9 +376,9 @@ static PIDTextureSprite *kFloorNumbersSprite;
                                 onSide:kSideRight];
       } else { // Player is to the right of the platform
         [player_ addMovementConstraint:platformRight
-                                 entity:platform
+                                entity:platform
                                 onSide:kSideLeft];
-      }
+      }        
     }
   }
 }

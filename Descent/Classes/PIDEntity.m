@@ -99,6 +99,14 @@
   return CGRectGetMaxX([self bounds]);
 }
 
+- (CGRect)collisionBounds {
+  return [self bounds]; 
+}
+
+- (CGRect)intersection:(PIDEntity *)other {
+  return CGRectIntersection([self collisionBounds], [other collisionBounds]);
+}
+
 // Simple bounding rectangle collision, subclasses may choose to implement more
 // accurate collision detection
 - (BOOL)intersectsWith:(PIDEntity *)other {

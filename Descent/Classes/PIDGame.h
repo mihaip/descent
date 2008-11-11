@@ -72,6 +72,8 @@ typedef enum {
 - (void)suspend;
 - (void)resume;
 
+- (void)updateMovementConstraints;
+
 - (void)pause;
 - (void)unpause;
 - (BOOL)isPaused;

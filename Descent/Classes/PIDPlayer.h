@@ -17,11 +17,13 @@ typedef enum {
 } PIDPlayerHorizontalDirection;
 
 typedef enum  {
-  kSideTop,
-  kSideRight,
-  kSideBottom,
-  kSideLeft,
+  kSideTop = 1 << 0,
+  kSideRight = 1 << 1,
+  kSideBottom = 1 << 2,
+  kSideLeft = 1 << 3,
 } PIDSide;
+
+@class PIDGame;
 
 @interface PIDPlayer : PIDEntity {
  @private
@@ -39,9 +41,11 @@ typedef enum  {
   // Animation
   NSTimer* walkingFrameTimer_;
   int walkingFrameCounter_;
+  
+  PIDGame *game_;
 }
 
-- initWithPosition:(CGPoint)position;
+- initWithPosition:(CGPoint)position game:(PIDGame *)game;
 - (void)setHorizontalDirection:(PIDPlayerHorizontalDirection)direction;
 
 - (void)addMovementConstraint:(double)value 

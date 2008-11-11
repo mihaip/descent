@@ -8,6 +8,7 @@
 
 #import "PIDPlayer.h"
 #import "PIDTextureSprite.h"
+#import "PIDGame.h"
 
 #define kPlayerHorizontalSpeed 150.0 // In pixels/s
 #define kPlayerVerticalAcceleration 800.0 // In pixels/s/s
@@ -25,6 +26,7 @@ static PIDTextureSprite *kPlayerSprite;
 // Private methods
 @interface PIDPlayer ()
 - (void)updateWalkingFrame;
+- (int)constrainNewPosition;
 @end
 
 @implementation PIDPlayer
@@ -40,7 +42,7 @@ static PIDTextureSprite *kPlayerSprite;
   [kPlayerSprite setFrame:kPlayerNormalFrame];
 }
 
-- initWithPosition:(CGPoint)position {
+- initWithPosition:(CGPoint)position game:(PIDGame *)game {
   if (self = [super initWithSprite:kPlayerSprite position:position]) {
     health_ = kMaxHealth;
     
@@ -54,7 +56,7 @@ static PIDTextureSprite *kPlayerSprite;
                                                         selector:@selector(updateWalkingFrame) 
                                                         userInfo:nil 
                                                          repeats:YES];
-    
+    game_ = [game retain];
   }
   
   return self;
@@ -72,11 +74,9 @@ static PIDTextureSprite *kPlayerSprite;
 }
 
 - (void)handleTick:(double)ticks {
-  CGPoint newPosition = position_;
-
   // Move player horizontally, and update walking animation
   if (horizontalDirection_ != kNone) {
-    newPosition.x += horizontalDirection_ * kPlayerHorizontalSpeed * ticks;
+    position_.x += horizontalDirection_ * kPlayerHorizontalSpeed * ticks;
     
     if (horizontalDirection_ == kLeft) {
       [kPlayerSprite setFrame:kPlayerWalkingFrameLeftStart + walkingFrameCounter_];
@@ -93,29 +93,64 @@ static PIDTextureSprite *kPlayerSprite;
   if (verticalSpeed_ > kPlayerVerticalMaxSpeed) {
     verticalSpeed_ = kPlayerVerticalMaxSpeed;
   }
-  newPosition.y -= verticalSpeed_ * ticks;
-  
-  // Constraint movement
-  CGSize size = [sprite_ size];
-  double left = newPosition.x - size.width/2;
-  double right = left + size.width;
-  double top = newPosition.y + size.height/2;
-  double bottom = top - size.height;
-  if (left < minX_) {newPosition.x = minX_ + size.width/2;}
-  if (right > maxX_) {newPosition.x = maxX_ - size.width/2;}
-  if (bottom < minY_) {newPosition.y = minY_ + size.height/2;}
-  if (top > maxY_) {newPosition.y = maxY_ - size.height/2;}
+  position_.y -= verticalSpeed_ * ticks;
 
-  // If we've been stopped, then reset our speed back to 0
+  int constrainedSides = [self constrainNewPosition];
+
+  // If we've been stopped, then reset our speed back to 0. "Landing" is 
+  // triggered the first time we stop on the way down.
   landed_ = NO;
-  if (position_.y == newPosition.y) {
-    if (previousSpeed != 0 && previousSpeed > 0) {
+  if (constrainedSides & kSideBottom) {
+    if (previousSpeed > 0) {
       landed_ = YES;
     }
     verticalSpeed_ = 0;
   }
+  if (constrainedSides & kSideTop && previousSpeed < 0) {
+    verticalSpeed_ = 0;
+  }
+}
+
+- (int)constrainNewPosition {
+  CGSize size = [sprite_ size];
+  BOOL moved;
+  // Keep track of which sides we've been constrained on, so that we don't 
+  // bounce back and forth between the two opposing side when the player tries
+  // to squeeze into a shorter area than their height
+  int constrainedSides = 0;
+
+  do {
+    moved = NO;
     
-  position_ = newPosition;
+    [game_ updateMovementConstraints];
+    
+    if (!(constrainedSides & kSideLeft) && [self left] < minX_) {
+      position_.x = minX_ + size.width/2;
+      moved = YES;
+      constrainedSides |= kSideLeft;
+      continue;
+    }
+    if (!(constrainedSides & kSideRight) && [self right] > maxX_) {
+      position_.x = maxX_ - size.width/2;
+      moved = YES;
+      constrainedSides |= kSideRight;
+      continue;
+    }
+    if (!(constrainedSides & kSideBottom) && [self bottom] < minY_) {
+      position_.y = minY_ + size.height/2;
+      moved = YES;
+      constrainedSides |= kSideBottom;
+      continue;
+    }
+    if (!(constrainedSides & kSideTop) && [self top] > maxY_) {
+      position_.y = maxY_ - size.height/2;
+      moved = YES;
+      constrainedSides |= kSideTop;
+      continue;
+    }
+  } while (moved == YES);
+  
+  return constrainedSides;
 }
 
 - (void)addMovementConstraint:(double)value 
@@ -214,6 +249,7 @@ static PIDTextureSprite *kPlayerSprite;
 - (void)dealloc {
   [walkingFrameTimer_ invalidate];
   [self resetMovementConstraints];
+  [game_ release];
   [super dealloc];
 }
 

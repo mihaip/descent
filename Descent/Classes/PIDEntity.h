@@ -37,6 +37,8 @@
 - (double)left;
 - (double)right;
 
+- (CGRect)collisionBounds;
+- (CGRect)intersection:(PIDEntity *)other;
 - (BOOL)intersectsWith:(PIDEntity *)other;
 - (BOOL)intersectsWith:(PIDEntity *)other withMargin:(int)margin;
 - (BOOL)isPointInside:(CGPoint)point;
