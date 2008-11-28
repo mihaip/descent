@@ -140,17 +140,17 @@ static PIDTextureSprite *kFloorNumbersSprite;
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
   
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 3; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
     if (i == 0) {
       [self addPlatformWithPosition:CGPointMake(viewSize.width / 2, 
-                                                viewSize.height / 2)
+                                                viewSize.height / 4)
                                type:kPlatformNormal];
     } else {
-      // Other platforms start in the bottom half the screen, so that the
+      // Other platforms start in the bottom quarter the screen, so that the
       // player can fall on the one that was created above
-      [self addPlatformWithRandomPositionBetween:0 and:viewSize.height/2];
+      [self addPlatformWithRandomPositionBetween:0 and:viewSize.height/4];
     }    
   }
 }
