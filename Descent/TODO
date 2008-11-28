@@ -10,7 +10,6 @@ M1
 - Clean up allocation/retain pattern (prefer auto-releasing)
 - Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
 - Occasional line flash in trail (when wraparound is only of one segment?)
-- Add slide left/right platform
 - Add fall through platform
 
 M2
@@ -55,3 +54,4 @@ DONE
 - New player sprite
 - Update fence style to be sketch style
 - Add difficulty levels
+- Add slide left/right platform

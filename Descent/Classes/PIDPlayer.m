@@ -11,6 +11,7 @@
 #import "PIDGame.h"
 
 #define kPlayerHorizontalSpeed 150.0 // In pixels/s
+#define kPlayerPushSpeed 100.0 // in pixels/s
 #define kPlayerVerticalAcceleration 800.0 // In pixels/s/s
 #define kPlayerVerticalMaxSpeed 1200.0 // In pixels/s
 #define kPlayerBounce 300.0 // In pixels/s
@@ -74,9 +75,10 @@ static PIDTextureSprite *kPlayerSprite;
 }
 
 - (void)handleTick:(double)ticks {
+  double horizontalSpeed = baseHorizontalSpeed_;
   // Move player horizontally, and update walking animation
   if (horizontalDirection_ != kNone) {
-    position_.x += horizontalDirection_ * kPlayerHorizontalSpeed * ticks;
+    horizontalSpeed += horizontalDirection_ * kPlayerHorizontalSpeed;
     
     if (horizontalDirection_ == kLeft) {
       [kPlayerSprite setFrame:kPlayerWalkingFrameLeftStart + walkingFrameCounter_];
@@ -86,6 +88,7 @@ static PIDTextureSprite *kPlayerSprite;
   } else {
     [kPlayerSprite setFrame:kPlayerNormalFrame];
   }
+  position_.x += horizontalSpeed * ticks;
   
   // Move player vertically
   double previousSpeed = verticalSpeed_;
@@ -244,6 +247,18 @@ static PIDTextureSprite *kPlayerSprite;
 
 - (void)bounce {
   verticalSpeed_ -= kPlayerBounce;
+}
+
+- (void)beginPushLeft {
+  baseHorizontalSpeed_ = -kPlayerPushSpeed;
+}
+
+- (void)beginPushRight {
+  baseHorizontalSpeed_ = kPlayerPushSpeed;
+}
+
+- (void)resetPush {
+  baseHorizontalSpeed_ = 0; 
 }
 
 - (void)dealloc {

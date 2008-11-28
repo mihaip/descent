@@ -14,6 +14,7 @@
 #import "PIDTrail.h"
 #import "PIDTextureSprite.h"
 #import "PIDFlash.h"
+#import "PIDPlatform.h"
 
 #define SHOW_FPS 0
 
@@ -40,6 +41,7 @@ typedef enum {
   // Game entities
   PIDPlayer *player_;
   NSMutableArray *platforms_;
+  PIDPlatform *lastLandedPlatform_;
   PIDFence *fence_;
   PIDTrail *trail_;
   

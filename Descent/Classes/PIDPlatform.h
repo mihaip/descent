@@ -16,6 +16,8 @@ typedef enum {
   kPlatformNormal,
   kPlatformBouncy,
   kPlatformKiller,
+  kPlatformMoverLeft,
+  kPlatformMoverRight,
 } PIDPlatformType;
 
 
@@ -25,7 +27,9 @@ typedef enum {
 }
 
 - initWithPosition:(CGPoint)position type:(PIDPlatformType)type;
+
 - (void)handlePlayerLanding:(PIDPlayer *)player;
+- (void)handlePlayerLeaving:(PIDPlayer *)player;
 
 - (double)collisionTop;
 - (double)collisionBottom;

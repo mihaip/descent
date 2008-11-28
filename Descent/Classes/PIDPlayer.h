@@ -33,6 +33,7 @@ typedef enum  {
   // Movement
   PIDPlayerHorizontalDirection horizontalDirection_;
   double verticalSpeed_;
+  double baseHorizontalSpeed_;
   
   // Constraints
   double minX_, maxX_, minY_, maxY_;
@@ -60,6 +61,9 @@ typedef enum  {
 - (void)decreaseHealth;
 
 - (void)bounce;
+- (void)beginPushLeft;
+- (void)beginPushRight;
+- (void)resetPush;
 
 - (BOOL)landed;
 

@@ -23,7 +23,7 @@ static PIDTextureSprite *kPlatformSprite;
       [[PIDTextureSprite alloc] initWithImage:@"platform.png"
                                          size:CGSizeMake(kPlatformWidth, 
                                                          kPlatformHeight)
-                                       frames:3];
+                                       frames:5];
 }
 
 - initWithPosition:(CGPoint)position type:(PIDPlatformType)type {
@@ -45,8 +45,25 @@ static PIDTextureSprite *kPlatformSprite;
       [player increaseHealth];
       [player bounce];
       break;
+    case kPlatformMoverLeft:
+      [player increaseHealth];
+      [player beginPushLeft];
+      break;
+    case kPlatformMoverRight:
+      [player increaseHealth];
+      [player beginPushRight];
+      break;      
     case kPlatformNormal:
       [player increaseHealth];
+      break;
+  }
+}
+
+- (void)handlePlayerLeaving:(PIDPlayer *)player {
+  switch (type_) {
+    case kPlatformMoverLeft:
+    case kPlatformMoverRight:
+      [player resetPush];
       break;
   }
 }

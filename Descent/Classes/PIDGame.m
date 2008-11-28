@@ -139,7 +139,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
 - (void)initPlatforms {
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
-
+  
   for (int i = 0; i < 5; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
@@ -183,11 +183,13 @@ static PIDTextureSprite *kFloorNumbersSprite;
   CGPoint platformPosition;
   BOOL addedPlatform;
 
-  int typeChooser = random() % 10;
+  int typeChooser = random() % 20;
   PIDPlatformType type;
   switch (typeChooser) {
     case 0: case 1: type = kPlatformBouncy; break;
-    case 2: type = kPlatformKiller; break;
+    case 2: case 3: type = kPlatformKiller; break;
+    case 4: type = kPlatformMoverLeft; break;
+    case 5: type = kPlatformMoverRight; break;
     default: type = kPlatformNormal; break;
   }
   
@@ -310,11 +312,21 @@ static PIDTextureSprite *kFloorNumbersSprite;
     
   [fence_ handleTick:ticks];
   
+  if (lastLandedPlatform_) {
+    PIDEntity *landedEntity = [player_ hitEntityOnSide:kSideBottom];
+    
+    if (landedEntity != lastLandedPlatform_) {
+      [lastLandedPlatform_ handlePlayerLeaving:player_];
+      lastLandedPlatform_ = NULL;
+    }
+  }
+  
   if ([player_ landed]) {
     PIDEntity *landedEntity = [player_ hitEntityOnSide:kSideBottom];
     if ([landedEntity isKindOfClass:[PIDPlatform class]]) {
       PIDPlatform *landedPlatform = (PIDPlatform*) landedEntity;
       [landedPlatform handlePlayerLanding:player_];
+      lastLandedPlatform_ = landedPlatform;
     }
   }
 
