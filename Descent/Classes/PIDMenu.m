@@ -16,6 +16,7 @@
 // Private methods
 @interface PIDMenu ()
 - (void)initButtons;
+- (void)refreshHighScores;
 @end
 
 @implementation PIDMenu
@@ -45,6 +46,7 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
     root_ = [[PIDEntity alloc] initWithSprite:kNullSprite];
     
     [self initButtons];
+    [self refreshHighScores];
    
     [glView_ setViewportOffsetX:0 andY:0];
   }
@@ -53,38 +55,64 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
 }
 
 - (void)initButtons {
-  CGSize viewSize_ = [glView_ size];
+  CGSize viewSize = [glView_ size];
   PIDColor *startColor = [[PIDColor alloc] initWithRed:0.6 green:0.6 blue:0.6];
   PIDRectangleSprite *startSprite = [[PIDRectangleSprite alloc] initWithSize:CGSizeMake(120, 40)
                                                                        color:startColor];
   
   startButton_ = [[PIDEntity alloc] initWithSprite:startSprite 
-                                          position:CGPointMake(viewSize_.width/2,
-                                                               viewSize_.height/2 - 60)];
+                                          position:CGPointMake(viewSize.width/2,
+                                                               viewSize.height/2 + 60)];
   [root_ addChild:startButton_];
 
   difficultyDisplay_ = [[PIDEntity alloc] 
                             initWithSprite:kDifficultyDisplaySprite
-                            position:CGPointMake(viewSize_.width/2, 
-                                                 viewSize_.height/2)];
+                            position:CGPointMake(viewSize.width/2, 
+                                                 viewSize.height/2)];
   [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
   
   lowerDifficultyButton_ = [[PIDEntityWithFrame alloc] 
                             initWithSprite:kDifficultyButtonsSprite
-                            position:CGPointMake(viewSize_.width/2 - 60 - 20, 
-                                                 viewSize_.height/2)
+                            position:CGPointMake(viewSize.width/2 - 60 - 20, 
+                                                 viewSize.height/2)
                             frame:0];
   raiseDifficultyButton_ = [[PIDEntityWithFrame alloc] 
                             initWithSprite:kDifficultyButtonsSprite
-                            position:CGPointMake(viewSize_.width/2 + 60 + 20, 
-                                                 viewSize_.height/2)
+                            position:CGPointMake(viewSize.width/2 + 60 + 20, 
+                                                 viewSize.height/2)
                             frame:1];
   [root_ addChild:difficultyDisplay_];  
   [root_ addChild:lowerDifficultyButton_];
   [root_ addChild:raiseDifficultyButton_];
   
+  highScoreRoot_ = [[PIDEntity alloc] initWithSprite:kNullSprite 
+                                            position:CGPointMake(0, viewSize.height/2 - 60)];
+  [root_ addChild:highScoreRoot_];
+  
   [startColor release];
   [startSprite release];
+}
+
+- (void)refreshHighScores {
+  CGSize viewSize = [glView_ size];
+
+  [highScoreRoot_ removeAllChildren];
+  
+  NSArray *highScores = [GetAppInstance() highScores];
+
+  int i = 0;
+  
+  int scoreX = viewSize.width/2 - 11 * kDigitWidth/2;
+  int scoreHeight = kDigitHeight + 5;
+  
+  for (NSNumber *score in highScores) {
+    PIDNumbersDisplay *scoreDisplay = 
+        [[PIDNumbersDisplay alloc] initWithPosition:
+             CGPointMake(scoreX, 200 - i * scoreHeight)];
+    [scoreDisplay setValue:
+        [NSString stringWithFormat:@"%d. %8d", ++i, [score intValue]]];
+    [highScoreRoot_ addChild:scoreDisplay];
+  }
 }
 
 - (void)handleTick:(double)ticks {
@@ -96,9 +124,11 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
   } else if ([lowerDifficultyButton_ isPointInside:touchPoint]) {
     [GetAppInstance() lowerDifficulty];
     [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+    [self refreshHighScores];
   } else if ([raiseDifficultyButton_ isPointInside:touchPoint]) {
     [GetAppInstance() raiseDifficulty];
     [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+    [self refreshHighScores];
   }
 }
 

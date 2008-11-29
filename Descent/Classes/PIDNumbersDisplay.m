@@ -11,9 +11,6 @@
 #import "PIDSprite.h"
 #import "PIDEntityWithFrame.h"
 
-#define kDigitWidth 9
-#define kDigitHeight 16
-
 static PIDTextureSprite *kNumbersSprite;
 
 @interface PIDDigit : PIDEntityWithFrame {}

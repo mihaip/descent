@@ -494,6 +494,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
 }
 
 - (void)gameOver {
+  [GetAppInstance() reportScore:ceil(descentPosition_/[glView_ size].height + 0.5)];
   [GetAppInstance() switchToMenu];  
 }
 

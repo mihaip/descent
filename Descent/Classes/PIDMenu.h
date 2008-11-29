@@ -17,6 +17,7 @@
   PIDEntity *difficultyDisplay_;
   PIDEntity *lowerDifficultyButton_;
   PIDEntity *raiseDifficultyButton_;
+  PIDEntity *highScoreRoot_;
 }
 
 - initWithView:(EAGLView *)glView;

@@ -9,6 +9,9 @@
 #import "PIDEntity.h"
 #import "PIDTextureSprite.h"
 
+#define kDigitWidth 9
+#define kDigitHeight 16
+
 @interface PIDNumbersDisplay : PIDEntity {
  @private
   NSString *currentValue_;

@@ -11,13 +11,15 @@ M1
 - Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
 - Occasional line flash in trail (when wraparound is only of one segment?)
 - Add fall through platform
+- Use new number style
+- Use new menu style
+- Highlight most recent high score
 
 M2
 - Better death sequence when dying from fence
 - Better death sequence when dying from killer platform
 - Add default.png
 - Add application icon
-- Add local high scores
 - Sounds
 - Practice mode
 
@@ -55,3 +57,4 @@ DONE
 - Update fence style to be sketch style
 - Add difficulty levels
 - Add slide left/right platform
+- Add local high scores

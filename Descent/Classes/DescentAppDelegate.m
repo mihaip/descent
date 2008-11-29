@@ -9,6 +9,12 @@
 #import "DescentAppDelegate.h"
 #import "EAGLView.h"
 
+@interface DescentAppDelegate () 
+- (NSString *)highScoresPath;
+- (void)loadHighScores;
+- (void)saveHighScores;
+@end
+
 @implementation DescentAppDelegate
 
 @synthesize window;
@@ -18,6 +24,9 @@
   srandom(27);
   
   difficulty_ = kMedium;
+
+  [self loadHighScores];
+  
   [self switchToMenu];
   [glView startAnimation];  
 }
@@ -67,7 +76,73 @@
   return difficulty_;
 }
 
+- (NSString *)highScoresPath {
+  return [[NSBundle mainBundle] pathForResource:@"Scores" ofType:@"plist"];
+}
+
+- (void)loadHighScores {
+  highScores_ = [[NSMutableArray alloc] initWithCapacity:3];
+
+  NSString *errorDesc = nil;
+  NSData *plistXML = 
+      [[NSFileManager defaultManager] contentsAtPath:[self highScoresPath]];
+  NSDictionary *scoresDict = 
+      (NSDictionary *)[NSPropertyListSerialization propertyListFromData:plistXML
+                                                       mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                                                                 format:NULL 
+                                                       errorDescription:&errorDesc];
+  if (errorDesc) {
+    NSLog(@"Couldn't load high scores: %@", errorDesc);
+    [errorDesc release];
+    return;
+  }
+  
+  [highScores_ addObject:
+      [NSMutableArray arrayWithArray:[scoresDict objectForKey:@"Easy"]]];
+  [highScores_ addObject:
+      [NSMutableArray arrayWithArray:[scoresDict objectForKey:@"Medium"]]];
+  [highScores_ addObject:
+      [NSMutableArray arrayWithArray:[scoresDict objectForKey:@"Hard"]]];
+}
+
+- (void)saveHighScores {
+  NSDictionary *scoresDict = 
+      [NSDictionary dictionaryWithObjects:highScores_
+                                  forKeys:[NSArray arrayWithObjects: @"Easy", @"Medium", @"Hard", nil]];
+  
+  NSString *errorDesc;
+  NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:scoresDict
+                                                                 format:NSPropertyListXMLFormat_v1_0
+                                                       errorDescription:&errorDesc];
+  
+  if (plistData) {
+    [plistData writeToFile:[self highScoresPath] atomically:YES];
+  } else {
+    NSLog(errorDesc);
+    [errorDesc release];
+  }
+}
+
+- (void)reportScore:(int)newScore {
+  NSMutableArray *highScores = [self highScores];
+  for (int i = 0; i < [highScores count]; i++) {
+    NSNumber *score = [highScores objectAtIndex:i];
+    if (newScore > [score intValue]) {
+      [highScores replaceObjectAtIndex:i 
+                            withObject:[NSNumber numberWithInt:newScore]];
+      [self saveHighScores];
+      break;
+    }
+  }
+}
+
+- (NSMutableArray *)highScores {
+  return [highScores_ objectAtIndex:difficulty_];
+}
+
 - (void)dealloc {
+  [highScores_ release];
+  
   [super dealloc];
 }
 
