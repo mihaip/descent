@@ -14,6 +14,8 @@ M1
 - Use new number style
 - Use new menu style
 - Highlight most recent high score
+- Can fall through platforms when going quickly enough (at low FPS)
+- Use separate timers for physics and rendering
 
 M2
 - Better death sequence when dying from fence
