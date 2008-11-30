@@ -77,7 +77,9 @@
 }
 
 - (NSString *)highScoresPath {
-  return [[NSBundle mainBundle] pathForResource:@"Scores" ofType:@"plist"];
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+  return [documentsDirectory stringByAppendingPathComponent:@"Scores.plist"];
 }
 
 - (void)loadHighScores {
@@ -94,6 +96,29 @@
   if (errorDesc) {
     NSLog(@"Couldn't load high scores: %@", errorDesc);
     [errorDesc release];
+    
+    // Default high scores
+    [highScores_ addObject:[NSMutableArray arrayWithObjects:
+                            [NSNumber numberWithInt:0],
+                            [NSNumber numberWithInt:0],
+                            [NSNumber numberWithInt:0],
+                            [NSNumber numberWithInt:0],
+                            [NSNumber numberWithInt:0],
+                            nil]];
+     [highScores_ addObject:[NSMutableArray arrayWithObjects:
+                             [NSNumber numberWithInt:0],
+                             [NSNumber numberWithInt:0],
+                             [NSNumber numberWithInt:0],
+                             [NSNumber numberWithInt:0],
+                             [NSNumber numberWithInt:0],
+                             nil]];
+      [highScores_ addObject:[NSMutableArray arrayWithObjects:
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithInt:0],
+                              nil]];
     return;
   }
   
@@ -116,9 +141,11 @@
                                                        errorDescription:&errorDesc];
   
   if (plistData) {
-    [plistData writeToFile:[self highScoresPath] atomically:YES];
+    if (![plistData writeToFile:[self highScoresPath] atomically:YES]) {
+      NSLog(@"Couldn't save high scores");
+    }
   } else {
-    NSLog(errorDesc);
+    NSLog(@"Couldn't save high scores: %@", errorDesc);
     [errorDesc release];
   }
 }
