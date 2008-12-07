@@ -13,7 +13,6 @@ M1
 - Add fall through platform
 - Use new number style
 - Use new menu style
-- Highlight most recent high score
 - Can fall through platforms when going quickly enough (at low FPS)
 - Use separate timers for physics and rendering
 
@@ -60,3 +59,4 @@ DONE
 - Add difficulty levels
 - Add slide left/right platform
 - Add local high scores
+- Highlight most recent high score

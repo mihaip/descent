@@ -23,6 +23,8 @@
 
 static PIDTextureSprite *kDifficultyButtonsSprite;
 static PIDTextureSprite *kDifficultyDisplaySprite;
+static PIDColor *kLastHighScoreColor;
+static PIDColor *kNormalHighScoreColor;
 
 + (void)initialize {
   static BOOL initialized = NO; 
@@ -37,6 +39,9 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
       [[PIDTextureSprite alloc] initWithImage:@"difficulty-display.png"
                                          size:CGSizeMake(64, 17)
                                        frames:3];  
+
+  kLastHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:0.0];
+  kNormalHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:1.0];
 }
 
 - initWithView:(EAGLView *)glView {
@@ -99,6 +104,7 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
   [highScoreRoot_ removeAllChildren];
   
   NSArray *highScores = [GetAppInstance() highScores];
+  int lastHighScoreIndex = [GetAppInstance() lastHighScoreIndex];
 
   int i = 0;
   
@@ -106,9 +112,11 @@ static PIDTextureSprite *kDifficultyDisplaySprite;
   int scoreHeight = kDigitHeight + 5;
   
   for (NSNumber *score in highScores) {
-    PIDNumbersDisplay *scoreDisplay = 
-        [[PIDNumbersDisplay alloc] initWithPosition:
-             CGPointMake(scoreX, 200 - i * scoreHeight)];
+    PIDNumbersDisplay *scoreDisplay = [[PIDNumbersDisplay alloc] 
+      initWithPosition:CGPointMake(scoreX, 200 - i * scoreHeight)
+                 color:i == lastHighScoreIndex 
+                                       ? kLastHighScoreColor 
+                                       : kNormalHighScoreColor];
     [scoreDisplay setValue:
         [NSString stringWithFormat:@"%d. %8d", ++i, [score intValue]]];
     [highScoreRoot_ addChild:scoreDisplay];

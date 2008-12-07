@@ -83,6 +83,8 @@
 }
 
 - (void)loadHighScores {
+  lastGameScore_ = -1;
+  
   highScores_ = [[NSMutableArray alloc] initWithCapacity:3];
 
   NSString *errorDesc = nil;
@@ -151,10 +153,13 @@
 }
 
 - (void)reportScore:(int)newScore {
+  lastGameDifficulty_ = difficulty_;
+  lastGameScore_ = newScore;
+  
   NSMutableArray *highScores = [self highScores];
   for (int i = 0; i < [highScores count]; i++) {
     NSNumber *score = [highScores objectAtIndex:i];
-    if (newScore > [score intValue]) {
+    if (newScore >= [score intValue]) {
       [highScores replaceObjectAtIndex:i 
                             withObject:[NSNumber numberWithInt:newScore]];
       [self saveHighScores];
@@ -165,6 +170,20 @@
 
 - (NSMutableArray *)highScores {
   return [highScores_ objectAtIndex:difficulty_];
+}
+
+- (int)lastHighScoreIndex {
+  if (difficulty_ == lastGameDifficulty_) {
+    NSMutableArray *highScores = [self highScores];
+    for (int i = 0; i < [highScores count]; i++) {
+      NSNumber *score = [highScores objectAtIndex:i];
+      if ([score intValue] == lastGameScore_) {
+        return i;
+      }
+    }
+  }
+
+  return -1;
 }
 
 - (void)dealloc {

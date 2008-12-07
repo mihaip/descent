@@ -15,7 +15,9 @@
 
 - initWithRed:(float)red green:(float)green blue:(float)blue;
 - initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha;
+
 - (void)apply;
+- (GLfloat *)asGlFloats;
 
 - (void)setAlpha:(float)alpha;
 

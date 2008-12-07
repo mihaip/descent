@@ -20,6 +20,9 @@
   PIDGameDifficulty difficulty_;
   NSMutableArray *highScores_;
   id <PIDEventTarget> eventTarget_;
+  
+  PIDGameDifficulty lastGameDifficulty_;
+  int lastGameScore_;
 }
 
 @property (nonatomic, retain) UIWindow *window;
@@ -34,6 +37,7 @@
 
 - (void)reportScore:(int)score;
 - (NSMutableArray *)highScores;
+- (int)lastHighScoreIndex;
 
 @end
 

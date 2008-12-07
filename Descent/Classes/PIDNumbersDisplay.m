@@ -10,8 +10,10 @@
 #import "PIDTextureSprite.h"
 #import "PIDSprite.h"
 #import "PIDEntityWithFrame.h"
+#import "PIDColor.h"
 
 static PIDTextureSprite *kNumbersSprite;
+static PIDColor *kDefaultColor;
 
 @interface PIDDigit : PIDEntityWithFrame {}
 
@@ -55,15 +57,30 @@ static PIDTextureSprite *kNumbersSprite;
                         initWithImage:@"numbers.png"
                                  size:CGSizeMake(kDigitWidth, kDigitHeight)
                                frames:10];  
+
+  kDefaultColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:1.0];
 }
 
 - initWithPosition:(CGPoint)position {
   return [self initWithPosition:position sprite:kNumbersSprite];
 }
 
+- initWithPosition:(CGPoint)position color:(PIDColor *)color {
+  return [self initWithPosition:position sprite:kNumbersSprite color:color]; 
+}
+
 - initWithPosition:(CGPoint)position sprite:(PIDTextureSprite *)sprite {
+  return [self initWithPosition:position
+                         sprite:kNumbersSprite
+                          color:kDefaultColor];   
+}
+ 
+- initWithPosition:(CGPoint)position
+            sprite:(PIDTextureSprite *)sprite
+             color:(PIDColor *)color {
   if (self = [super initWithSprite:kNullSprite position:position]) {
     numbersSprite_ = [sprite retain];
+    color_ = [color retain];
     [self fixPosition];
   }
   
@@ -99,12 +116,28 @@ static PIDTextureSprite *kNumbersSprite;
   return CGSizeMake(spriteSize.width *digitCount, spriteSize.height); 
 }
 
+- (void)draw {
+  GLint oldEnvMode;
+  glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &oldEnvMode);
+  
+  GLfloat *envColor = [color_ asGlFloats];
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, envColor);
+  glColor4f(0, 0, 0, 1);
+  
+  [super draw];
+  
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, oldEnvMode);
+  free(envColor);
+}
+
 - (void)dealloc {
   if (currentValue_) {
     [currentValue_ release];
   }
   
   [numbersSprite_ release];
+  [color_ release];
   
   [super dealloc]; 
 }

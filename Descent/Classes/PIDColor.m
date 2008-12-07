@@ -26,8 +26,25 @@
   return self;
 }
 
+- (NSString *)description {
+  return [NSString stringWithFormat:@"(%f, %f, %f %f)", red_, green_, blue_, alpha_];
+}
+
 - (void)apply {
   glColor4f(red_, green_, blue_, alpha_);
+}
+
+- (GLfloat*)asGlFloats {
+  NSLog(@"in asGlFloats");
+  GLfloat* color = (GLfloat*)malloc(sizeof(GLfloat) * 4);
+  NSLog(@"malloc result: %d", color);
+  
+  color[0] = red_;
+  color[1] = green_;
+  color[2] = blue_;
+  color[3] = alpha_;
+  
+  return color;
 }
 
 - (void)setAlpha:(float)alpha {
