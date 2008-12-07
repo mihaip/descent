@@ -35,9 +35,7 @@
 }
 
 - (GLfloat*)asGlFloats {
-  NSLog(@"in asGlFloats");
   GLfloat* color = (GLfloat*)malloc(sizeof(GLfloat) * 4);
-  NSLog(@"malloc result: %d", color);
   
   color[0] = red_;
   color[1] = green_;

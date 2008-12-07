@@ -13,7 +13,6 @@
 #import "PIDColor.h"
 
 static PIDTextureSprite *kNumbersSprite;
-static PIDColor *kDefaultColor;
 
 @interface PIDDigit : PIDEntityWithFrame {}
 
@@ -57,8 +56,6 @@ static PIDColor *kDefaultColor;
                         initWithImage:@"numbers.png"
                                  size:CGSizeMake(kDigitWidth, kDigitHeight)
                                frames:10];  
-
-  kDefaultColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:1.0];
 }
 
 - initWithPosition:(CGPoint)position {
@@ -71,8 +68,8 @@ static PIDColor *kDefaultColor;
 
 - initWithPosition:(CGPoint)position sprite:(PIDTextureSprite *)sprite {
   return [self initWithPosition:position
-                         sprite:kNumbersSprite
-                          color:kDefaultColor];   
+                         sprite:sprite
+                          color:nil];   
 }
  
 - initWithPosition:(CGPoint)position
@@ -118,17 +115,23 @@ static PIDColor *kDefaultColor;
 
 - (void)draw {
   GLint oldEnvMode;
-  glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &oldEnvMode);
-  
-  GLfloat *envColor = [color_ asGlFloats];
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
-  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, envColor);
-  glColor4f(0, 0, 0, 1);
+  GLfloat *envColor;
+
+  if (color_) {
+    glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &oldEnvMode);
+    
+    envColor = [color_ asGlFloats];
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+    glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, envColor);
+    glColor4f(0, 0, 0, 1);
+  }
   
   [super draw];
   
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, oldEnvMode);
-  free(envColor);
+  if (color_) {
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, oldEnvMode);
+    free(envColor);
+  }
 }
 
 - (void)dealloc {
