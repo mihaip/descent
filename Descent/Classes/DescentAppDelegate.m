@@ -159,10 +159,13 @@
   NSMutableArray *highScores = [self highScores];
   for (int i = 0; i < [highScores count]; i++) {
     NSNumber *score = [highScores objectAtIndex:i];
-    if (newScore >= [score intValue]) {
-      [highScores replaceObjectAtIndex:i 
-                            withObject:[NSNumber numberWithInt:newScore]];
+    if (newScore > [score intValue]) {
+      [highScores insertObject:[NSNumber numberWithInt:newScore]
+                       atIndex:i];
+      [highScores removeObjectAtIndex:[highScores count] - 1];
       [self saveHighScores];
+      break;
+    } else if (newScore == [score intValue]) {
       break;
     }
   }
