@@ -139,7 +139,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
 - (void)initPlatforms {
   CGSize viewSize = [glView_ size];
   platforms_ = [[NSMutableArray alloc] initWithCapacity:10];
-  
+
   for (int i = 0; i < 3; i++) {
     // Always start with a platform underneath the player (who is in the 
     // center)
@@ -161,11 +161,10 @@ static PIDTextureSprite *kFloorNumbersSprite;
       [[PIDPlatform alloc] initWithPosition:platformPosition
                                        type:type];
 
-  // Make sure we don't hit any of the existing platforms
-  // TODO(mihaip): handle cases where user can be trapped (sunken platform
-  // between two raised platforms and/or wall)
+  // Make sure we don't hit any of the existing platforms and that the player
+  // can fit between all platforms
   for (PIDPlatform *platform in platforms_) {
-    if ([platform intersectsWith:newPlatform withMargin:5]) {
+    if ([platform intersectsWith:newPlatform withMargin:[player_ size].height]) {
       [newPlatform release];
       return NO;
     }

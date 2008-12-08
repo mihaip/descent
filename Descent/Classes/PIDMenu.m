@@ -76,10 +76,10 @@ static NSString *kDifficultyNames[] = {
   [backgroundSprite release];
   [root_ addChild:background_];
   
-  int startWidth = (kLetterWidth - 3) * 5;
+  int startWidth = (kLetterWidth - 6) * 5;
   startButton_ = [[PIDTextDisplay alloc] initWithPosition:CGPointMake(viewSize.width/2 - startWidth/2,
                                                                viewSize.height/2 + 60)];
-  [startButton_ setKerningAdjustment:-3];
+  [startButton_ setKerningAdjustment:-5];
   [startButton_ setValue:@"start"];
   
   [root_ addChild:startButton_];

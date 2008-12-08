@@ -4,7 +4,6 @@ M1
 - Handle touch begin on left -> touch begin on right -> touch relase on left case (should start moving right)
 - Add falling frames for player
 - Add hurting frames for player
-- Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
 - Add stop button to the UI
 - Fix textures (numbers are slightly distorted)
 - Clean up allocation/retain pattern (prefer auto-releasing)
@@ -62,3 +61,4 @@ DONE
 - Use new menu style
 - Fix bounding box for numbers display
 - Add kerning adjustment for pause/unpause
+- Don't create platforms that it's possible to get stuck in (enforce min separation of player width)
