@@ -133,22 +133,31 @@ kerningAdjustment:(int)kerningAdjustment {
 
 - (void)draw {
   GLint oldEnvMode;
-  GLfloat *envColor;
 
   if (color_) {
     glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &oldEnvMode);
     
-    envColor = [color_ asGlFloats];
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
-    glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, envColor);
-    glColor4f(0, 0, 0, 1);
+    // Replace the source color in the texture with the tint color
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+    
+    // Modula is arg0 * arg 1
+    glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
+    
+    // Use the vertex color (applied below) as arg0
+    glTexEnvf(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_PRIMARY_COLOR);
+    glTexEnvf(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+    
+    // Use the texture's aplha as arg1
+    glTexEnvf(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_TEXTURE);
+    glTexEnvf(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_ALPHA);
+
+    [color_ apply];
   }
   
   [super draw];
   
   if (color_) {
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, oldEnvMode);
-    free(envColor);
   }
 }
 

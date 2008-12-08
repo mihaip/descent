@@ -23,7 +23,7 @@
 
 static PIDTextureSprite *kDifficultyButtonsSprite;
 static PIDColor *kLastHighScoreColor;
-static PIDColor *kNormalHighScoreColor;
+static PIDColor *kNormalHighScoreColor = nil;
 static NSString *kDifficultyNames[] = {
   @"easy",
   @"medium",
@@ -42,8 +42,7 @@ static NSString *kDifficultyNames[] = {
                                          size:CGSizeMake(25, 39)
                                        frames:2];
 
-  kLastHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:0.0];
-  kNormalHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:1.0];
+  kLastHighScoreColor = [[PIDColor alloc] initWithRed:0.8 green:0.0 blue:0.0];
 }
 
 - initWithView:(EAGLView *)glView {
