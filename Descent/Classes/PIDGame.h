@@ -9,7 +9,7 @@
 #import "EAGLView.h"
 #import "PIDPlayer.h"
 #import "PIDFence.h"
-#import "PIDNumbersDisplay.h"
+#import "PIDTextDisplay.h"
 #import "PIDHealthDisplay.h"
 #import "PIDTrail.h"
 #import "PIDTextureSprite.h"
@@ -47,19 +47,18 @@ typedef enum {
   
   // Status
 #if SHOW_FPS
-  PIDNumbersDisplay *fpsDisplay_;
+  PIDTextDisplay *fpsDisplay_;
 #endif
   PIDHealthDisplay *healthDisplay_;
   PIDFlash *flash_;
   
   // Floor display
-  PIDNumbersDisplay *currentFloorDisplay_;
-  PIDNumbersDisplay *nextFloorDisplay_;
+  PIDTextDisplay *currentFloorDisplay_;
+  PIDTextDisplay *nextFloorDisplay_;
   
   // Pausing
   PIDEntity *pauseCover_;
-  PIDTextureSprite *pauseButtonSprite_;
-  PIDEntity *pauseButton_;
+  PIDTextDisplay *pauseButton_;
   BOOL isPaused_;
 }
 

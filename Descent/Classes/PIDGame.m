@@ -108,7 +108,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
 - (void)initFloorDisplay {
   CGSize viewSize = [glView_ size];
 
-  currentFloorDisplay_ = [[PIDNumbersDisplay alloc] 
+  currentFloorDisplay_ = [[PIDTextDisplay alloc] 
                    initWithPosition:CGPointMake(viewSize.width/2 - 20, 
                                                 viewSize.height/2)
                    sprite:kFloorNumbersSprite];
@@ -116,7 +116,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [currentFloorDisplay_ unfixPosition];
   [normalLayer_ addChild:currentFloorDisplay_];
 
-  nextFloorDisplay_ = [[PIDNumbersDisplay alloc] 
+  nextFloorDisplay_ = [[PIDTextDisplay alloc] 
                        initWithPosition:CGPointMake(viewSize.width/2 + 30, 
                                                     -viewSize.height/2)
                           sprite:kFloorNumbersSprite];
@@ -259,7 +259,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [pauseCoverColor release];
   
 #if SHOW_FPS
-  fpsDisplay_ = [[PIDNumbersDisplay alloc]
+  fpsDisplay_ = [[PIDTextDisplay alloc]
                  initWithPosition:CGPointMake(7, 9)];
   [fixedLayer_ addChild:fpsDisplay_];
 #endif
@@ -271,11 +271,11 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [healthDisplay_ update:player_];
   
   // Pause button
-  pauseButtonSprite_ = [[PIDTextureSprite alloc] initWithImage:@"pause.png" 
-                                                          size:CGSizeMake(71, 16)
-                                                        frames:2];
-  pauseButton_ = [[PIDEntity alloc] initWithSprite:pauseButtonSprite_
-                                          position:CGPointMake(38, viewSize.height - 10)];
+  pauseButton_ = [[PIDTextDisplay alloc] 
+                      initWithPosition:CGPointMake(10, viewSize.height - 10)];
+  [pauseButton_ setKerningAdjustment:-3];
+  [pauseButton_ setValue:@"pause"];
+  
   [pauseButton_ fixPosition];
   [fixedLayer_ addChild:pauseButton_];
   
@@ -418,7 +418,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
          setPosition:CGPointMake(viewSize.width/2 + (random() % 100) - 50,
                                  -(floor - 1.5) * viewSize.height)];
     
-    PIDNumbersDisplay *temp;
+    PIDTextDisplay *temp;
     temp = currentFloorDisplay_;
     currentFloorDisplay_ = nextFloorDisplay_;
     nextFloorDisplay_ = temp;
@@ -469,7 +469,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [glView_ stopAnimation];
   
   [pauseCover_ enable];
-  [pauseButtonSprite_ setFrame:1];
+  [pauseButton_ setValue:@"unpause"];
   [glView_ draw];
   
   isPaused_ = true;
@@ -479,7 +479,7 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [glView_ startAnimation];
   
   [pauseCover_ disable];
-  [pauseButtonSprite_ setFrame:0];
+  [pauseButton_ setValue:@"pause"];
   [glView_ draw];
 
   isPaused_ = false;
@@ -514,7 +514,6 @@ static PIDTextureSprite *kFloorNumbersSprite;
   [pauseCover_ release];
   [healthDisplay_ release];
   [pauseButton_ release];
-  [pauseButtonSprite_ release];
 #if SHOW_FPS
   [fpsDisplay_ release];
 #endif

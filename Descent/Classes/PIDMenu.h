@@ -8,13 +8,15 @@
 
 #import "EAGLView.h"
 #import "PIDEntity.h"
+#import "PIDTextDisplay.h"
 
 @interface PIDMenu : NSObject < PIDEventTarget > {
  @private
   EAGLView *glView_;
   PIDEntity *root_;
-  PIDEntity *startButton_;
-  PIDEntity *difficultyDisplay_;
+  PIDEntity *background_;
+  PIDTextDisplay *startButton_;
+  PIDTextDisplay *difficultyDisplay_;
   PIDEntity *lowerDifficultyButton_;
   PIDEntity *raiseDifficultyButton_;
   PIDEntity *highScoreRoot_;

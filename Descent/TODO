@@ -11,8 +11,6 @@ M1
 - Add basic explanation of how to hold the iPhone on the start screen (fingerprint markers in lower left/right corners)
 - Occasional line flash in trail (when wraparound is only of one segment?)
 - Add fall through platform
-- Use new number style
-- Use new menu style
 - Can fall through platforms when going quickly enough (at low FPS)
 - Use separate timers for physics and rendering
 
@@ -60,3 +58,7 @@ DONE
 - Add slide left/right platform
 - Add local high scores
 - Highlight most recent high score
+- Use new number style
+- Use new menu style
+- Fix bounding box for numbers display
+- Add kerning adjustment for pause/unpause

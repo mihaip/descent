@@ -1,5 +1,5 @@
 //
-//  PIDNumbersDisplay.h
+//  PIDTextDisplay.h
 //  Descent
 //
 //  Created by Mihai Parparita on 9/24/08.
@@ -10,14 +10,15 @@
 #import "PIDTextureSprite.h"
 #import "PIDColor.h"
 
-#define kDigitWidth 9
-#define kDigitHeight 16
+#define kLetterWidth 16
+#define kLetterHeight 20
 
-@interface PIDNumbersDisplay : PIDEntity {
+@interface PIDTextDisplay : PIDEntity {
  @private
   NSString *currentValue_;
-  PIDTextureSprite *numbersSprite_;
+  PIDTextureSprite *lettersSprite_;
   PIDColor *color_;
+  int kerningAdjustment_;
 }
 
 - initWithPosition:(CGPoint)position;
@@ -26,6 +27,8 @@
 - initWithPosition:(CGPoint)position 
             sprite:(PIDTextureSprite *)sprite
              color:(PIDColor *)color;
+
 - (void)setValue:(NSString *)value;
+- (void)setKerningAdjustment:(int) adjustment;
 
 @end

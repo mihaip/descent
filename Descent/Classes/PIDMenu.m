@@ -22,9 +22,15 @@
 @implementation PIDMenu
 
 static PIDTextureSprite *kDifficultyButtonsSprite;
-static PIDTextureSprite *kDifficultyDisplaySprite;
 static PIDColor *kLastHighScoreColor;
 static PIDColor *kNormalHighScoreColor;
+static NSString *kDifficultyNames[] = {
+  @"easy",
+  @"medium",
+  @"hard"
+};
+
+#define kBackgroundTileSize 256
 
 + (void)initialize {
   static BOOL initialized = NO; 
@@ -35,10 +41,6 @@ static PIDColor *kNormalHighScoreColor;
       [[PIDTextureSprite alloc] initWithImage:@"difficulty-buttons.png"
                                          size:CGSizeMake(25, 39)
                                        frames:2];
-  kDifficultyDisplaySprite = 
-      [[PIDTextureSprite alloc] initWithImage:@"difficulty-display.png"
-                                         size:CGSizeMake(64, 17)
-                                       frames:3];  
 
   kLastHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:0.0];
   kNormalHighScoreColor = [[PIDColor alloc] initWithRed:1.0 green:1.0 blue:1.0];
@@ -61,20 +63,33 @@ static PIDColor *kNormalHighScoreColor;
 
 - (void)initButtons {
   CGSize viewSize = [glView_ size];
-  PIDColor *startColor = [[PIDColor alloc] initWithRed:0.6 green:0.6 blue:0.6];
-  PIDRectangleSprite *startSprite = [[PIDRectangleSprite alloc] initWithSize:CGSizeMake(120, 40)
-                                                                       color:startColor];
+
+  // Background texture is 256 x 256, we want to tile it
+  PIDTextureSprite *backgroundSprite = 
+  [[PIDTextureSprite alloc] initWithImage:@"paper.png" 
+                                     size:CGSizeMake(kBackgroundTileSize * 2, 
+                                                     kBackgroundTileSize * 3)
+                                   frames:1];
+  background_ = 
+      [[PIDEntity alloc] initWithSprite:backgroundSprite 
+                               position:CGPointMake(viewSize.width/2, 
+                                                    viewSize.height/2)];
+  [backgroundSprite release];
+  [root_ addChild:background_];
   
-  startButton_ = [[PIDEntity alloc] initWithSprite:startSprite 
-                                          position:CGPointMake(viewSize.width/2,
+  int startWidth = (kLetterWidth - 3) * 5;
+  startButton_ = [[PIDTextDisplay alloc] initWithPosition:CGPointMake(viewSize.width/2 - startWidth/2,
                                                                viewSize.height/2 + 60)];
+  [startButton_ setKerningAdjustment:-3];
+  [startButton_ setValue:@"start"];
+  
   [root_ addChild:startButton_];
 
-  difficultyDisplay_ = [[PIDEntity alloc] 
-                            initWithSprite:kDifficultyDisplaySprite
-                            position:CGPointMake(viewSize.width/2, 
+  difficultyDisplay_ = [[PIDTextDisplay alloc] 
+                            initWithPosition:CGPointMake(viewSize.width/2 - 55, 
                                                  viewSize.height/2)];
-  [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+  [difficultyDisplay_ setKerningAdjustment:-2];
+  [difficultyDisplay_ setValue:kDifficultyNames[[GetAppInstance() difficulty]]];
   
   lowerDifficultyButton_ = [[PIDEntityWithFrame alloc] 
                             initWithSprite:kDifficultyButtonsSprite
@@ -93,9 +108,6 @@ static PIDColor *kNormalHighScoreColor;
   highScoreRoot_ = [[PIDEntity alloc] initWithSprite:kNullSprite 
                                             position:CGPointMake(0, viewSize.height/2 - 60)];
   [root_ addChild:highScoreRoot_];
-  
-  [startColor release];
-  [startSprite release];
 }
 
 - (void)refreshHighScores {
@@ -108,11 +120,11 @@ static PIDColor *kNormalHighScoreColor;
 
   int i = 0;
   
-  int scoreX = viewSize.width/2 - 11 * kDigitWidth/2;
-  int scoreHeight = kDigitHeight + 5;
+  int scoreX = viewSize.width/2 - 11 * kLetterWidth/2;
+  int scoreHeight = kLetterHeight + 5;
   
   for (NSNumber *score in highScores) {
-    PIDNumbersDisplay *scoreDisplay = [[PIDNumbersDisplay alloc] 
+    PIDTextDisplay *scoreDisplay = [[PIDTextDisplay alloc] 
       initWithPosition:CGPointMake(scoreX, 200 - i * scoreHeight)
                  color:i == lastHighScoreIndex 
                                        ? kLastHighScoreColor 
@@ -131,11 +143,11 @@ static PIDColor *kNormalHighScoreColor;
     [GetAppInstance() switchToGame];
   } else if ([lowerDifficultyButton_ isPointInside:touchPoint]) {
     [GetAppInstance() lowerDifficulty];
-    [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+    [difficultyDisplay_ setValue:kDifficultyNames[[GetAppInstance() difficulty]]];
     [self refreshHighScores];
   } else if ([raiseDifficultyButton_ isPointInside:touchPoint]) {
     [GetAppInstance() raiseDifficulty];
-    [kDifficultyDisplaySprite setFrame:[GetAppInstance() difficulty]];
+    [difficultyDisplay_ setValue:kDifficultyNames[[GetAppInstance() difficulty]]];
     [self refreshHighScores];
   }
 }
@@ -159,6 +171,7 @@ static PIDColor *kNormalHighScoreColor;
 - (void)dealloc {
   [glView_ release];
   
+  [background_ release];
   [startButton_ release];
   [difficultyDisplay_ release];
   [lowerDifficultyButton_ release];
