@@ -272,7 +272,6 @@ static PIDTextureSprite *kFloorNumbersSprite;
   // Pause button
   pauseButton_ = [[PIDTextDisplay alloc] 
                       initWithPosition:CGPointMake(10, viewSize.height - 10)];
-  [pauseButton_ setKerningAdjustment:-3];
   [pauseButton_ setValue:@"pause"];
   
   [pauseButton_ fixPosition];

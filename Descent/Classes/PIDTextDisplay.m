@@ -12,22 +12,60 @@
 #import "PIDEntityWithFrame.h"
 #import "PIDColor.h"
 
+static int kLetterWidths[] = {
+  12, // 0
+   8, // 1
+  11, // 2
+  12, // 3
+  12, // 4
+  11, // 5
+  12, // 6
+  11, // 7
+  11, // 8
+  12, // 9
+   5, // .
+  11, // a
+  12, // b
+  10, // c
+  12, // d
+  12, // e
+   7, // f
+  12, // g
+  11, // h
+   5, // i
+   7, // j
+  10, // k
+   5, // l
+  16, // m
+  11, // n
+  12, // o
+  12, // p
+  12, // q
+   8, // r
+  11, // s
+   8, // t
+  11, // u
+  12, // v
+  16, // w
+  11, // x
+  11, // y
+  11  // z
+};
+
 static PIDTextureSprite *kLettersSprite;
 
 @interface PIDLetter : PIDEntityWithFrame {}
 
 - initWithValue:(unichar)value 
        position:(int)position 
-         sprite:(PIDTextureSprite *)sprite
-kerningAdjustment:(int)kerningAdjustment;
-  @end
+         sprite:(PIDTextureSprite *)sprite;
+@end
 
 @implementation PIDLetter
 
 - initWithValue:(unichar)value 
        position:(int)position 
-         sprite:(PIDTextureSprite *)sprite
-kerningAdjustment:(int)kerningAdjustment {
+         sprite:(PIDTextureSprite *)sprite {
   int frame;
   if (value >= '0' && value <= '9') {
     frame = value - '0';
@@ -43,7 +81,7 @@ kerningAdjustment:(int)kerningAdjustment {
   }
   
   return [super initWithSprite:sprite 
-                      position:CGPointMake(position * ([sprite size].width + kerningAdjustment), 0)
+                      position:CGPointMake(position * [sprite size].width, 0)
                          frame:frame];
 }
 
@@ -82,7 +120,6 @@ kerningAdjustment:(int)kerningAdjustment {
   if (self = [super initWithSprite:kNullSprite position:position]) {
     lettersSprite_ = [sprite retain];
     color_ = [color retain];
-    kerningAdjustment_ = 0;
     [self fixPosition];
   }
   
@@ -106,8 +143,7 @@ kerningAdjustment:(int)kerningAdjustment {
   for (int i = 0; i < [value length]; i++) {
     PIDLetter *letter = [[PIDLetter alloc] initWithValue:[value characterAtIndex:i] 
                                              position:i
-                                               sprite:lettersSprite_
-                                    kerningAdjustment:kerningAdjustment_];
+                                               sprite:lettersSprite_];
     [self addChild:letter];
     [letter release];
   }
@@ -116,7 +152,7 @@ kerningAdjustment:(int)kerningAdjustment {
 - (CGSize)size {
   CGSize spriteSize = [lettersSprite_ size];
   int letterCount = currentValue_ ? [currentValue_ length] : 1;
-  return CGSizeMake((spriteSize.width + kerningAdjustment_) * letterCount, 
+  return CGSizeMake(spriteSize.width * letterCount, 
                     spriteSize.height); 
 }
 
@@ -159,10 +195,6 @@ kerningAdjustment:(int)kerningAdjustment {
   if (color_) {
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, oldEnvMode);
   }
-}
-
-- (void)setKerningAdjustment:(int) adjustment {
-  kerningAdjustment_ = adjustment;
 }
 
 - (void)dealloc {

@@ -18,7 +18,6 @@
   NSString *currentValue_;
   PIDTextureSprite *lettersSprite_;
   PIDColor *color_;
-  int kerningAdjustment_;
 }
 
 - initWithPosition:(CGPoint)position;
@@ -29,6 +28,5 @@
              color:(PIDColor *)color;
 
 - (void)setValue:(NSString *)value;
-- (void)setKerningAdjustment:(int) adjustment;
 
 @end

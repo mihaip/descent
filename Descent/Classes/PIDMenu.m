@@ -79,7 +79,6 @@ static NSString *kDifficultyNames[] = {
   int startWidth = (kLetterWidth - 6) * 5;
   startButton_ = [[PIDTextDisplay alloc] initWithPosition:CGPointMake(viewSize.width/2 - startWidth/2,
                                                                viewSize.height/2 + 60)];
-  [startButton_ setKerningAdjustment:-5];
   [startButton_ setValue:@"start"];
   
   [root_ addChild:startButton_];
@@ -87,7 +86,6 @@ static NSString *kDifficultyNames[] = {
   difficultyDisplay_ = [[PIDTextDisplay alloc] 
                             initWithPosition:CGPointMake(viewSize.width/2 - 55, 
                                                  viewSize.height/2)];
-  [difficultyDisplay_ setKerningAdjustment:-2];
   [difficultyDisplay_ setValue:kDifficultyNames[[GetAppInstance() difficulty]]];
   
   lowerDifficultyButton_ = [[PIDEntityWithFrame alloc] 
